@@ -27,7 +27,7 @@ namespace MigAlarm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -48,14 +48,12 @@ namespace MigAlarm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserId,Forname,Surname,Password,Email")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(user);
+            if (!ModelState.IsValid) return View(user);
+            
+            db.Users.Add(user);
+            db.SaveChanges();
+            
+            return RedirectToAction("Index");
         }
 
         // GET: Users/Edit/5
@@ -65,11 +63,12 @@ namespace MigAlarm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+            
             return View(user);
         }
 
@@ -80,13 +79,12 @@ namespace MigAlarm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserId,Forname,Surname,Password,Email")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
+            if (!ModelState.IsValid) return View(user);
+            
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            
+            return RedirectToAction("Index");
         }
 
         // GET: Users/Delete/5
@@ -96,11 +94,12 @@ namespace MigAlarm.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+            
             return View(user);
         }
 
@@ -109,9 +108,10 @@ namespace MigAlarm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
+            
             return RedirectToAction("Index");
         }
 
