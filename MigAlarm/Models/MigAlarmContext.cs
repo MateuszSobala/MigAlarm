@@ -11,10 +11,12 @@ namespace MigAlarm.Models
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
-        public MigAlarmContext() : base("name=MigAlarmContext")
+        public MigAlarmContext() : base("name=MigAlarm")
         {
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Address> Addresses { get; set; }
     }
 }

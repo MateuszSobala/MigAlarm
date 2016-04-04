@@ -173,8 +173,17 @@
     <Compile Include="Migrations\201604042019113_Initial.Designer.cs">
       <DependentUpon>201604042019113_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604042123267_Address.cs" />
+    <Compile Include="Migrations\201604042123267_Address.Designer.cs">
+      <DependentUpon>201604042123267_Address.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\MigAlarmContext.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\RoleType.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -236,6 +245,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604042019113_Initial.resx">
       <DependentUpon>201604042019113_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604042123267_Address.resx">
+      <DependentUpon>201604042123267_Address.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,19 +1,16 @@
 namespace MigAlarm.Migrations
 {
     using Models;
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MigAlarm.Models.MigAlarmContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<MigAlarmContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(MigAlarm.Models.MigAlarmContext context)
+        protected override void Seed(MigAlarmContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -27,7 +24,7 @@ namespace MigAlarm.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            context.Users.AddOrUpdate(p => p.Email,
+            context.Users.AddOrUpdate(u => u.Email,
               new User
               {
                   Forname = "John",
@@ -35,6 +32,14 @@ namespace MigAlarm.Migrations
                   Email = "johndoe@example.com",
                   Password = "password"
               }
+            );
+
+            context.Countries.AddOrUpdate(c => c.Code,
+                new Country
+                {
+                    Name = "Polska",
+                    Code = "PL"
+                }
             );
         }
     }
