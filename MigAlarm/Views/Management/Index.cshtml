@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<MigAlarm.Models.User>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista użytkowników</h2>
+
+<p>
+    @Html.ActionLink("Utwórz użytkownika", "Create")
+</p>
+<br />
+@using (Html.BeginForm("Index", "Management", FormMethod.Get))
+{
+    <p>
+        Wyszukaj użytkownika: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Wyszukaj" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Forname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Forname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edytuj", "Edit", new {id = item.UserId}) |
+                @Html.ActionLink("Usuń", "Delete", new {id = item.UserId})
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Strona @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) z @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
