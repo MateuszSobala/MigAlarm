@@ -2,7 +2,7 @@
 
 namespace MigAlarm.Models
 {
-    public partial class Address
+    public class Address
     {
         public int AddressId { get; set; }
         public int InstitutionId { get; set; }

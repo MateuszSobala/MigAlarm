@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class RoleType
+    public sealed class RoleType
     {
         public RoleType()
         {
@@ -18,6 +15,6 @@ namespace MigAlarm.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string RoleTypeId { get; set; }
 
-        public virtual ICollection<Role> Roles { get; set; }
+        public ICollection<Role> Roles { get; set; }
     }
 }

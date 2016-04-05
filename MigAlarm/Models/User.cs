@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MigAlarm.Models
 {
-    public class User
+    public sealed class User
     {
         public User()
         {
@@ -29,6 +29,6 @@ namespace MigAlarm.Models
         [DisplayName("Adres email")]
         public string Email { get; set; }
 
-        public virtual ICollection<Role> Roles { get; set; }
+        public ICollection<Role> Roles { get; set; }
     }
 }
