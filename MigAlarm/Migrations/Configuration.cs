@@ -31,16 +31,24 @@ namespace MigAlarm.Migrations
                   Surname = "Doe",
                   Email = "johndoe@example.com",
                   Password = "password"
-              }
-            );
+              });
 
             context.Countries.AddOrUpdate(c => c.Code,
                 new Country
                 {
                     Name = "Polska",
                     Code = "PL"
-                }
-            );
+                });
+
+            context.RoleTypes.AddOrUpdate(rt => rt.RoleTypeId,
+                new RoleType
+                {
+                    RoleTypeId = "ADMIN"
+                },
+                new RoleType
+                {
+                    RoleTypeId = "USER"
+                });
         }
     }
 }
