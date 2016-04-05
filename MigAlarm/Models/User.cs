@@ -9,6 +9,7 @@ namespace MigAlarm.Models
         public User()
         {
             Roles = new HashSet<Role>();
+            Notifications = new HashSet<Notification>();
         }
 
         public int UserId { get; set; }
@@ -30,5 +31,6 @@ namespace MigAlarm.Models
         public string Email { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

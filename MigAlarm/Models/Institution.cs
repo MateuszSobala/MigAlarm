@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -9,19 +10,23 @@ namespace MigAlarm.Models
 {
     public class Institution
     {
-        public int InstitutionId { get; set; }
+        public Institution()
+        {
+            Roles = new HashSet<Role>();
+        }
+
+        [Key]
+        public int Id { get; set; }       
 
         [DisplayName("Nazwa")]
         public string Name { get; set; }
 
-        public int AddressId { get; set; }
-        public int CoordinateId { get; set; }
-        public int RoleId { get; set; }
+        [Required]
+        public virtual Address Address { get; set; }
 
         [Required]
         public virtual Coordinate Coordinate { get; set; }
-        [Required]
-        public virtual Address Address { get; set; }
-        public virtual Role Role { get; set; }
+
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

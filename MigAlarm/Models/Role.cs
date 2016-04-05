@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,12 +15,15 @@ namespace MigAlarm.Models
         }
 
         public int RoleId { get; set; }
-        public int RoleTypeId { get; set; }
+        public int InstitutionId { get; set; }
+
+        [Required]
+        public RoleType RoleType { get; set; }
+
+        [Required]
+        [ForeignKey("InstitutionId")]
+        public virtual Institution Institution { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
-        [Required]
-        public virtual Institution Institution { get; set; }
-        [Required]
-        public virtual RoleType RoleType { get; set; }
     }
 }

@@ -7,17 +7,9 @@ using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class RoleType
+    public enum RoleType
     {
-        public RoleType()
-        {
-            Roles = new HashSet<Role>();
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string RoleTypeId { get; set; }
-
-        public virtual ICollection<Role> Roles { get; set; }
+        ADMIN = 1,
+        USER
     }
 }

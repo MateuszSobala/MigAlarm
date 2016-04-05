@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -16,9 +17,10 @@ namespace MigAlarm.Utils
         /// <returns></returns>
         public static DbGeography CreatePoint(double latitude, double longitude)
         {
-            var text = string.Format("POINT({0} {1})", longitude, latitude);
-            // 4326 is most common coordinate system used by GPS/Maps
-            return DbGeography.PointFromText(text, 4326);
+            var lon = longitude.ToString(CultureInfo.InvariantCulture);
+            var lat = latitude.ToString(CultureInfo.InvariantCulture);
+            var point = string.Format("POINT({0} {1})", lon, lat);
+            return DbGeography.PointFromText(point, DbGeography.DefaultCoordinateSystemId);
         }
 
         /// <summary>
@@ -34,9 +36,10 @@ namespace MigAlarm.Utils
         {
             var tokens = latitudeLongitude.Split(',', ' ');
             if (tokens.Length != 2)
-                //throw new ArgumentException(Resources.InvalidLocationStringPassed);
                 throw new ArgumentException();
-            var text = string.Format("POINT({0} {1})", tokens[1], tokens[0]);
+            var lon = tokens[1].ToString(CultureInfo.InvariantCulture);
+            var lat = tokens[0].ToString(CultureInfo.InvariantCulture);
+            var text = string.Format("POINT({0} {1})", lon, lat);
             return DbGeography.PointFromText(text, 4326);
         }
     }

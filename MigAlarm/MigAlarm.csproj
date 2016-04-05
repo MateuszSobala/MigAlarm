@@ -179,13 +179,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MailHelper.cs" />
-    <Compile Include="Migrations\201604042019113_Initial.cs" />
-    <Compile Include="Migrations\201604042019113_Initial.Designer.cs">
-      <DependentUpon>201604042019113_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604051826027_UserRolesAndInstitution.cs" />
-    <Compile Include="Migrations\201604051826027_UserRolesAndInstitution.Designer.cs">
-      <DependentUpon>201604051826027_UserRolesAndInstitution.cs</DependentUpon>
+    <Compile Include="Migrations\201604052225541_Initial.cs" />
+    <Compile Include="Migrations\201604052225541_Initial.Designer.cs">
+      <DependentUpon>201604052225541_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
@@ -194,6 +190,7 @@
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventNode.cs" />
     <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\MigAlarmContext.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -264,20 +261,17 @@
     <Content Include="Views\Management\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604042019113_Initial.resx">
-      <DependentUpon>201604042019113_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604051826027_UserRolesAndInstitution.resx">
-      <DependentUpon>201604051826027_UserRolesAndInstitution.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604052225541_Initial.resx">
+      <DependentUpon>201604052225541_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
