@@ -52,20 +52,25 @@ namespace MigAlarm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (_db.Users.FirstOrDefault(x => x.Email.Equals(user.Email)) != null)
+                    {
+                        throw new Exception("W systemie istnieje użytkownik z podanym adresem email.");
+                    }
+
                     user.Password = System.Web.Security.Membership.GeneratePassword(8, 4);
 
                     _db.Users.Add(user);
 
-                    _db.SaveChanges();
-
                     _mailClient.Send(user.Email, "Hasło do aplikacji MigHelp", $"Twoje hasło to: {user.Password}", false);
+
+                    _db.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "Wystąpił błąd, spróbuj ponownie.");
+                ModelState.AddModelError("", ex.Message);
             }
 
             return View(user);

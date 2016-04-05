@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 namespace MigAlarm.Models
 {
@@ -22,7 +21,6 @@ namespace MigAlarm.Models
         [DataType(DataType.EmailAddress)]
         [Required]
         [DisplayName("Adres email")]
-        //Unique attribute
         public string Email { get; set; }
     }
 }
