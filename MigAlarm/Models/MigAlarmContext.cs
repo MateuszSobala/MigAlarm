@@ -18,5 +18,9 @@ namespace MigAlarm.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RoleType> RoleTypes { get; set; }
+        public DbSet<Institution> Institutions { get; set; }
+        public DbSet<Coordinate> Coordinates { get; set; }
     }
 }

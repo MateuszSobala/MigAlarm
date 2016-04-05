@@ -1,10 +1,16 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace MigAlarm.Models
 {
     public class User
     {
+        public User()
+        {
+            Roles = new HashSet<Role>();
+        }
+
         public int UserId { get; set; }
 
         [Required]
@@ -22,5 +28,7 @@ namespace MigAlarm.Models
         [Required]
         [DisplayName("Adres email")]
         public string Email { get; set; }
+
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }
