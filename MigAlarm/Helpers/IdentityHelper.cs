@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -22,15 +21,12 @@ namespace MigAlarm.Helpers
                     // The user is authenticated. Return the user from the forms auth ticket.
                     return ((AppPrincipal)HttpContext.Current.User).User;
                 }
-                else if (HttpContext.Current.Items.Contains("User"))
+                if (HttpContext.Current.Items.Contains("User"))
                 {
                     // The user is not authenticated, but has successfully logged in.
                     return (User)HttpContext.Current.Items["User"];
                 }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
         }
 
@@ -43,32 +39,26 @@ namespace MigAlarm.Helpers
 
         public static bool ValidateUser(LoginViewModel logon, HttpResponseBase response)
         {
-            bool result = false;
+            if (!Membership.ValidateUser(logon.Email, logon.Password)) return false;
+            // Create the authentication ticket with custom user data.
+            var serializer = new JavaScriptSerializer();
+            var userData = serializer.Serialize(User);
 
-            if (Membership.ValidateUser(logon.Email, logon.Password))
-            {
-                // Create the authentication ticket with custom user data.
-                var serializer = new JavaScriptSerializer();
-                string userData = serializer.Serialize(User);
+            var ticket = new FormsAuthenticationTicket(1,
+                logon.Email,
+                DateTime.Now,
+                DateTime.Now.AddDays(30),
+                true,
+                userData,
+                FormsAuthentication.FormsCookiePath);
 
-                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
-                        logon.Email,
-                        DateTime.Now,
-                        DateTime.Now.AddDays(30),
-                        true,
-                        userData,
-                        FormsAuthentication.FormsCookiePath);
+            // Encrypt the ticket.
+            var encTicket = FormsAuthentication.Encrypt(ticket);
 
-                // Encrypt the ticket.
-                string encTicket = FormsAuthentication.Encrypt(ticket);
+            // Create the cookie.
+            response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
 
-                // Create the cookie.
-                response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
-
-                result = true;
-            }
-
-            return result;
+            return true;
         }
 
         public static void Logoff(HttpSessionStateBase session, HttpResponseBase response)
@@ -80,8 +70,7 @@ namespace MigAlarm.Helpers
             FormsAuthentication.SignOut();
 
             // Clear authentication cookie.
-            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "");
-            cookie.Expires = DateTime.Now.AddYears(-1);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "") {Expires = DateTime.Now.AddYears(-1)};
             response.Cookies.Add(cookie);
         }
     }
@@ -91,25 +80,16 @@ namespace MigAlarm.Helpers
         public override bool ValidateUser(string username, string password)
         {
             var user = IdentityHelper.AuthenticateUser(username, password);
-            if (user != null)
-            {
-                HttpContext.Current.Items.Add("User", user);
+            if (user == null) return false;
+            HttpContext.Current.Items.Add("User", user);
 
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
             var user = IdentityHelper.User;
-            if (user != null)
-            {
-                return new MembershipUser("IdentityHelper", username, user.UserId, user.Email, null, null, true, false, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
-            }
-
-            return null;
+            return user != null ? new MembershipUser("IdentityHelper", username, user.UserId, user.Email, null, null, true, false, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue) : null;
         }
 
         #region Not Used
@@ -271,7 +251,7 @@ namespace MigAlarm.Helpers
             Identity = identity;
         }
 
-        public IIdentity Identity { get; private set; }
+        public IIdentity Identity { get; }
 
         public User User { get; set; }
 

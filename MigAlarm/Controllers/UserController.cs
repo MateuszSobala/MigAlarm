@@ -7,7 +7,12 @@ namespace MigAlarm.Controllers
 {
     public class UserController : Controller
     {
-        private MigAlarmContext db = new MigAlarmContext();
+        public MigAlarmContext Db { get; }
+
+        public UserController(MigAlarmContext db)
+        {
+            Db = db;
+        }
 
         [HttpGet]
         public ActionResult Login()
@@ -20,22 +25,20 @@ namespace MigAlarm.Controllers
         {
             logon.RedirectUrl = "~/";
             // Verify the fields.
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return Redirect(logon.RedirectUrl);
+            // Authenticate the user.
+            if (IdentityHelper.ValidateUser(logon, Response))
             {
-                // Authenticate the user.
-                if (IdentityHelper.ValidateUser(logon, Response))
+                // Redirect to the secure area.
+                if (string.IsNullOrWhiteSpace(logon.RedirectUrl))
                 {
-                    // Redirect to the secure area.
-                    if (string.IsNullOrWhiteSpace(logon.RedirectUrl))
-                    {
-                        logon.RedirectUrl = "~/User/Login";
-                    }
-                }
-                else
-                {
-                    // Invalid email or password or data not in db
                     logon.RedirectUrl = "~/User/Login";
                 }
+            }
+            else
+            {
+                // Invalid email or password or data not in db
+                logon.RedirectUrl = "~/User/Login";
             }
             return Redirect(logon.RedirectUrl);
         }
