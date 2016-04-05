@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class Role
+    public sealed class Role
     {
         public Role()
         {
@@ -16,10 +16,10 @@ namespace MigAlarm.Models
         public int RoleId { get; set; }
         public int RoleTypeId { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public ICollection<User> Users { get; set; }
         [Required]
-        public virtual Institution Institution { get; set; }
+        public Institution Institution { get; set; }
         [Required]
-        public virtual RoleType RoleType { get; set; }
+        public RoleType RoleType { get; set; }
     }
 }
