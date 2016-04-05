@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "Edit";
 }
-
+<br />
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Strona główna</a></li>
+    <li><a href="@Url.Action("Index", "Management")">Zarządzaj użytkownikami</a></li>
+    <li class="active">Edytuj użytkownika</li>
+</ol>
 <h2>@($"Edytuj użytkownika {Model.Forname} {Model.Surname}")</h2>
 
 
