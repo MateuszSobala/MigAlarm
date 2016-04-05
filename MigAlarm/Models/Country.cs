@@ -2,7 +2,7 @@
 
 namespace MigAlarm.Models
 {
-    public class Country
+    public sealed class Country
     {
         public Country()
         {
@@ -13,6 +13,6 @@ namespace MigAlarm.Models
         public string Name { get; set; }
         public string Code { get; set; }
 
-        public virtual ICollection<Address> Addresses { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }
