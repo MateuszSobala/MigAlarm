@@ -7,12 +7,7 @@ namespace MigAlarm.Controllers
 {
     public class UserController : Controller
     {
-        public MigAlarmContext Db { get; }
-
-        public UserController(MigAlarmContext db)
-        {
-            Db = db;
-        }
+        private readonly MigAlarmContext _db = new MigAlarmContext();
 
         [HttpGet]
         public ActionResult Login()
