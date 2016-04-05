@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "Delete";
 }
-
+<br />
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Strona główna</a></li>
+    <li><a href="@Url.Action("Index", "Management")">Zarządzaj użytkownikami</a></li>
+    <li class="active">Usuń użytkownika</li>
+</ol>
 <h2>@($"Usuń użytkownika {Model.Forname} {Model.Surname}")</h2>
 
 <h3>Jesteś pewień, że chcesz usunąć tego użytkownika?</h3>
