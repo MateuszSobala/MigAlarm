@@ -124,7 +124,7 @@ namespace MigAlarm.Controllers
             return View(userToUpdate);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
