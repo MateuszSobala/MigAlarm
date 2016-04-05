@@ -14,6 +14,7 @@ namespace MigAlarm.Controllers
         private readonly MigAlarmContext _db = new MigAlarmContext();
         private readonly MailHelper _mailClient = new MailHelper();
 
+        [Authorize]
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
             var users = _db.Users.ToList();
@@ -39,11 +40,13 @@ namespace MigAlarm.Controllers
             return View(users.ToPagedList(pageNumber, pageSize));
         }
 
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Forname,Surname,Email")] User user)
@@ -76,6 +79,7 @@ namespace MigAlarm.Controllers
             return View(user);
         }
 
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -91,6 +95,7 @@ namespace MigAlarm.Controllers
             return View(user);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public ActionResult EditPost(int? id)
@@ -119,6 +124,7 @@ namespace MigAlarm.Controllers
             return View(userToUpdate);
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
@@ -141,6 +147,7 @@ namespace MigAlarm.Controllers
             return View(user);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
