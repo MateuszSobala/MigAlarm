@@ -1,0 +1,29 @@
+﻿@using MigAlarm.Helpers
+@if (User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + IdentityHelper.User.Forname + " " + IdentityHelper.User.Surname + "!", "", "", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        @if (Request.IsAuthenticated)
+        {
+            <li>@Html.Encode(User.Identity.Name)</li>
+            <li>@Html.ActionLink("Logout", "Logout", "User", routeValues: null, htmlAttributes: new { id = "logoutLink" })</li>
+        }
+        else
+        {
+            <li>@Html.ActionLink("Log in", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        }
+    </ul>
+}
