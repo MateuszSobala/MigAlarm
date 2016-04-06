@@ -1,54 +1,40 @@
-﻿<br/>
+﻿@using MigAlarm.Helpers
+@using MigAlarm.Models
+@{
+    var user = IdentityHelper.User;
+}
+
+<br/>
 <ol class="breadcrumb">
     <li>Strona główna</li>
 </ol>
 <div class="row">
     <div class="col-md-6">
         <h2>Zarządzaj użytkownikami</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-            is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="@Url.Action("Index", "Management")">Przejdź &raquo;</a>
+        <p>W tym miejscu możesz dodawać, usuwać oraz edytować pracowników w wybranym przy logowaniu Centrum Zarządzania Kryzysowego.</p>
+        <p>
+            @if (user.Roles.Any(x => x.RoleType == RoleType.Admin))
+            {
+                <a class="btn btn-default" href="@Url.Action("Index", "Management")">Przejdź &raquo;</a>
+            }
+            else
+            {
+                <p class="btn btn-default">Opcja niedostępna</p>
+            }
         </p>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Zarządzaj kontem</h2>
-            <p>
-                ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-                a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-                is an ideal platform for building RESTful applications on the .NET Framework.
-            </p>
-            <p><a class="btn btn-default" href="">Przejdź &raquo;</a>
-            </p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-md-6">
         <h2>Przeglądaj zdarzenia</h2>
+        <p>W tym miejscu znajdują się zdarzenia alarmowe napływające do systemu. Dostępne jedynie dla pracowników Centrum Zarządzania Kryzysowego.</p>
         <p>
-            ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-            is an ideal platform for building RESTful applications on the .NET Framework.
-        </p>
-        <p>
-            <a class="btn btn-default" href="">Przejdź &raquo;</a>
-        </p>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Zarządzaj kontem</h2>
-            <p>
-                ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-                a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-                is an ideal platform for building RESTful applications on the .NET Framework.
-            </p>
-            <p>
+            @if (user.Roles.Any(x => x.RoleType == RoleType.User))
+            {
                 <a class="btn btn-default" href="">Przejdź &raquo;</a>
-            </p>
-        </div>
+            }
+            else
+            {
+                <p class="btn btn-default">Opcja niedostępna</p>
+            }
+        </p>
     </div>
 </div>
-
