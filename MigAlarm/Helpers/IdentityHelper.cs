@@ -47,7 +47,7 @@ namespace MigAlarm.Helpers
             var ticket = new FormsAuthenticationTicket(1,
                 logon.Email,
                 DateTime.Now,
-                DateTime.Now.AddDays(30),
+                DateTime.Now.AddMinutes(30),
                 true,
                 userData,
                 FormsAuthentication.FormsCookiePath);

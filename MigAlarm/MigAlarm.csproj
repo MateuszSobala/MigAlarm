@@ -139,7 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Nofitication\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -187,11 +186,14 @@
     <Compile Include="Migrations\201604052225541_Initial.Designer.cs">
       <DependentUpon>201604052225541_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604061905129_V2.cs" />
+    <Compile Include="Migrations\201604061905129_V2.Designer.cs">
+      <DependentUpon>201604061905129_V2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
     <Compile Include="Models\AdditionalDataType.cs" />
     <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Converters\ItemConverter.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Event.cs" />
@@ -276,6 +278,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604052225541_Initial.resx">
       <DependentUpon>201604052225541_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604061905129_V2.resx">
+      <DependentUpon>201604061905129_V2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

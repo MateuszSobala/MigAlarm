@@ -19,8 +19,7 @@ namespace MigAlarm.Utils
         {
             var lon = longitude.ToString(CultureInfo.InvariantCulture);
             var lat = latitude.ToString(CultureInfo.InvariantCulture);
-            var point = string.Format("POINT({0} {1})", lon, lat);
-            return DbGeography.PointFromText(point, DbGeography.DefaultCoordinateSystemId);
+            return CreatePoint(lat, lon);
         }
 
         /// <summary>
@@ -39,7 +38,18 @@ namespace MigAlarm.Utils
                 throw new ArgumentException();
             var lon = tokens[1].ToString(CultureInfo.InvariantCulture);
             var lat = tokens[0].ToString(CultureInfo.InvariantCulture);
-            var text = string.Format("POINT({0} {1})", lon, lat);
+            return CreatePoint(lat, lon);
+        }
+
+        /// <summary>
+        /// Create a GeoLocation point based on latitude and longitude
+        /// </summary>
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
+        /// <returns></returns>
+        public static DbGeography CreatePoint(string latitude, string longitude)
+        {
+            var text = string.Format("POINT({0} {1})", longitude, latitude);
             return DbGeography.PointFromText(text, DbGeography.DefaultCoordinateSystemId);
         }
     }

@@ -8,6 +8,8 @@ namespace MigAlarm.Models
     {
         private readonly List<Item> _institutions;
 
+        public LoginViewModel() { }
+
         public LoginViewModel(List<Item> institutions)
         {
             _institutions = institutions;

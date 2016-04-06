@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity.Spatial;
 using System.Web.Http;
 using MigAlarm.Models;
+using MigAlarm.Utils;
 
 namespace MigAlarm.Areas.Nofitication
 {
@@ -12,8 +13,7 @@ namespace MigAlarm.Areas.Nofitication
             if (json == null) return Json("An Error Has occoured");
             var coordinate = new Coordinate
             {
-                Location =
-                    DbGeography.FromText("POINT(" + json.Localizations.Latitude + " " + json.Localizations.Longitude + ")")
+                Location = GeoUtils.CreatePoint(json.Localizations.Latitude, json.Localizations.Longitude)
             };
 
             GetNearestInstitution(coordinate.Location);
