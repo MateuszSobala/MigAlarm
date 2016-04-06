@@ -6,17 +6,15 @@ using System.Web;
 
 namespace MigAlarm.Models
 {
-    public sealed class AdditionalDataType
+    public enum AdditionalDataType
     {
-        public AdditionalDataType()
-        {
-            AdditionalData = new HashSet<AdditionalData>();
-        }
-        public int AdditionalDataTypeId { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        public ICollection<AdditionalData> AdditionalData { get; set; }
+        Name = 1, //imie i nazwisko
+        Birthday,
+        HomeAddress,
+        Diseases,
+        Medicines, //przyjmowane leki
+        BloodGroup,
+        Appearance, //wyglad
+        Other = 100
     }
 }

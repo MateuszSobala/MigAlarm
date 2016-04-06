@@ -40,7 +40,7 @@ namespace MigAlarm.Utils
             var lon = tokens[1].ToString(CultureInfo.InvariantCulture);
             var lat = tokens[0].ToString(CultureInfo.InvariantCulture);
             var text = string.Format("POINT({0} {1})", lon, lat);
-            return DbGeography.PointFromText(text, 4326);
+            return DbGeography.PointFromText(text, DbGeography.DefaultCoordinateSystemId);
         }
     }
 }
