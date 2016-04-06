@@ -17,7 +17,12 @@ namespace MigAlarm.Controllers
         [Authorize]
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
-            var users = _db.Users.ToList();
+            var currentUser = IdentityHelper.User;
+
+            var users =
+                _db.Users.Where(
+                    u => u.Roles.FirstOrDefault(r => r.RoleType == RoleType.User && r.InstitutionId == 1) != null && u.UserId != currentUser.UserId)
+                    .ToList();
 
             if (searchString != null)
             {

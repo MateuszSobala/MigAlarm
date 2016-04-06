@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MigAlarm.Models
 {
-    public sealed class Role
+    public class Role
     {
         public Role()
         {
@@ -21,6 +21,6 @@ namespace MigAlarm.Models
         [ForeignKey("InstitutionId")]
         public Institution Institution { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

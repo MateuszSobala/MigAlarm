@@ -1,4 +1,9 @@
-﻿using System.Data.Entity.Spatial;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Spatial;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Web.Http;
 using MigAlarm.Models;
 using MigAlarm.Utils;
@@ -7,6 +12,8 @@ namespace MigAlarm.Areas.Nofitication
 {
     public class NotificationController : ApiController
     {
+        private readonly MigAlarmContext _db = new MigAlarmContext();
+
         [HttpPost]
         public IHttpActionResult AddNotification(JsonReceiveItem json)
         {
@@ -16,7 +23,7 @@ namespace MigAlarm.Areas.Nofitication
                 Location = GeoUtils.CreatePoint(json.Localizations.Latitude, json.Localizations.Longitude)
             };
 
-            GetNearestInstitution(coordinate.Location);
+            var institution = GetNearestInstitution(coordinate.Location);
 
             var notification = new Notification {EventId = json.EventId};
 
@@ -65,9 +72,36 @@ namespace MigAlarm.Areas.Nofitication
             return Json("Success");
         }
 
-        private static Institution GetNearestInstitution(DbGeography currentLocalization)
+        private class Difference : IEquatable<Difference>
         {
-            return new Institution();
+            public int institutionId;
+            public DbGeography difference;
+            public bool Equals(Difference other)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private Institution GetNearestInstitution(DbGeography currentLocalization)
+        {
+            var differenceList = new List<Difference>();
+            Parallel.ForEach(_db.Institutions, (currentInstitution) =>
+            {
+                var difference = currentLocalization.Difference(currentInstitution.Coordinate.Location);
+                
+                var diffObj = new Difference
+                {
+                    institutionId = currentInstitution.Id,
+                    difference = difference
+                };
+
+                differenceList.Add(diffObj);
+            });
+
+            var sortedDiff = differenceList.OrderBy(l => l.difference).ToList();
+            var nearestInstotution = _db.Institutions.Find(sortedDiff.First());
+
+            return nearestInstotution;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace MigAlarm.Helpers
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     // The user is authenticated. Return the user from the forms auth ticket.
-                    return ((AppPrincipal)HttpContext.Current.User).User;
+                    return Db.Users.First(x => x.UserId == ((AppPrincipal)HttpContext.Current.User).User.UserId);
                 }
                 if (HttpContext.Current.Items.Contains("User"))
                 {
@@ -40,9 +40,15 @@ namespace MigAlarm.Helpers
         public static bool ValidateUser(LoginViewModel logon, HttpResponseBase response)
         {
             if (!Membership.ValidateUser(logon.Email, logon.Password)) return false;
-            // Create the authentication ticket with custom user data.
+
+            Db.Configuration.LazyLoadingEnabled = false;
+            Db.Configuration.ProxyCreationEnabled = false;
+
             var serializer = new JavaScriptSerializer();
             var userData = serializer.Serialize(User);
+
+            Db.Configuration.LazyLoadingEnabled = true;
+            Db.Configuration.ProxyCreationEnabled = true;
 
             var ticket = new FormsAuthenticationTicket(1,
                 logon.Email,
