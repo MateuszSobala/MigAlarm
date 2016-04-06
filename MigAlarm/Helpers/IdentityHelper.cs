@@ -101,8 +101,6 @@ namespace MigAlarm.Helpers
             return true;
         }
 
-        
-
         public static void Logoff(HttpSessionStateBase session, HttpResponseBase response)
         {
             // Delete the user details from cache.

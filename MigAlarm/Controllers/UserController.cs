@@ -28,6 +28,8 @@ namespace MigAlarm.Controllers
             // Authenticate the user.
             if (IdentityHelper.ValidateUser(logon, Response))
             {
+                TempData["Institution"] = logon.SelectedInstitutionId;
+
                 // Redirect to the secure area.
                 if (string.IsNullOrWhiteSpace(logon.RedirectUrl))
                 {

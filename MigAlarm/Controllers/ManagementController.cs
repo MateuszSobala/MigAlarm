@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
@@ -18,11 +19,11 @@ namespace MigAlarm.Controllers
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
             var currentUser = IdentityHelper.User;
+            var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
 
-            //dorobic liste z wybranej instytucji tylko
             var users =
                 _db.Users.Where(
-                    u => u.Roles.FirstOrDefault(r => r.RoleType == RoleType.User && r.InstitutionId == 1) != null && u.UserId != currentUser.UserId)
+                    u => u.Roles.FirstOrDefault(r => r.RoleType == RoleType.User && r.InstitutionId == selectedInstitution) != null && u.UserId != currentUser.UserId)
                     .ToList();
 
             if (searchString != null)
@@ -41,8 +42,9 @@ namespace MigAlarm.Controllers
                 users = users.Where(s => s.Surname.ToLower().Contains(searchString) || s.Forname.ToLower().Contains(searchString)).ToList();
             }
 
-            var pageSize = users.Count / 10 == 0 ? 1 : users.Count / 10;
+            var pageSize = users.Count / 10 == 0 ? 10 : users.Count / 10;
             var pageNumber = page ?? 1;
+
             return View(users.ToPagedList(pageNumber, pageSize));
         }
 
@@ -61,13 +63,22 @@ namespace MigAlarm.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //create do wybranej instytucji tylko
+                    if (Request.Cookies["institution"] == null)
+                    {
+                        throw new Exception("Skontaktuj się z administratorem systemu.");
+                    }
+
                     if (_db.Users.FirstOrDefault(x => x.Email.Equals(user.Email)) != null)
                     {
                         throw new Exception("W systemie istnieje użytkownik z podanym adresem email.");
                     }
 
                     user.Password = System.Web.Security.Membership.GeneratePassword(8, 4);
+                    user.Roles.Add(new Role
+                    {
+                        Institution = _db.Institutions.Find(int.Parse(Request.Cookies["institution"].Value)),
+                        RoleType = RoleType.User
+                    });
 
                     _db.Users.Add(user);
 
@@ -107,14 +118,22 @@ namespace MigAlarm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditPost(int? id)
         {
-            //sprawdzic czyz z wbranej instytucji
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            if (Request.Cookies["institution"] == null)
+            {
+                throw new Exception("Skontaktuj się z administratorem systemu.");
+            }
+
             var userToUpdate = _db.Users.Find(id);
+
+            if(!userToUpdate.Roles.Any(x => x.InstitutionId == int.Parse(Request.Cookies["institution"].Value) && x.RoleType == RoleType.User))
+            {
+                throw new Exception("Nie masz uprawnień do edycji tego użytkownika.");
+            }
 
             if (TryUpdateModel(userToUpdate, "", new [] { "Forname", "Surname"}))
             {
@@ -136,8 +155,6 @@ namespace MigAlarm.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
-            //sprawdzic czyz z wbranej instytucji
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -166,6 +183,11 @@ namespace MigAlarm.Controllers
             try
             {
                 var user = _db.Users.Find(id);
+
+                if (!user.Roles.Any(x => x.InstitutionId == int.Parse(Request.Cookies["institution"].Value) && x.RoleType == RoleType.User))
+                {
+                    throw new Exception("Nie masz uprawnień do usunięcia tego użytkownika.");
+                }
 
                 _db.Users.Remove(user);
 
