@@ -16,14 +16,16 @@ namespace MigAlarm.Models
         }
 
         [Required]
+        [Display(Name = "Adres email")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Hasło")]
         public string Password { get; set; }
 
         [Required]
-        [Display(Name = "Institution")]
+        [Display(Name = "Instytucja")]
         public int SelectedInstitutionId { get; set; }
 
         public IEnumerable<SelectListItem> InstitutionItems

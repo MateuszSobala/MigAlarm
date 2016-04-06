@@ -1,8 +1,4 @@
-﻿@{
-    ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<h2>Login</h2>
+﻿<h2>Logowanie</h2>
 @model MigAlarm.Models.LoginViewModel
 @{
     ViewBag.Title = "Login";
@@ -15,7 +11,7 @@
         <fieldset>
             <div>
                 <fieldset>
-                    <legend>Login</legend>
+                    <legend>Logowanie</legend>
                     <div class="editor-label">
                         @Html.LabelFor(u => u.Email)
                     </div>
@@ -34,10 +30,11 @@
                         @Html.LabelFor(u => u.SelectedInstitutionId)
                     </div>
                     <div class="editor-field">
-                        @Html.DropDownListFor(u => u.SelectedInstitutionId, Model.InstitutionItems, "Select an Institution")
+                        @Html.DropDownListFor(u => u.SelectedInstitutionId, Model.InstitutionItems, "Wybierz instytucję")
                         @Html.ValidationMessageFor(u => u.SelectedInstitutionId)
                     </div>
-                    <input type="submit" value="Log In"/>
+                    <br />
+                    <input type="submit" value="Zaloguj"/>
                 </fieldset>
             </div>
         </fieldset>
