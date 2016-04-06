@@ -10,8 +10,8 @@ namespace MigAlarm.Models
 
         public class User
         {
-            public int Name { get; set; }
-            public int YearOfBirth { get; set; }
+            public string Name { get; set; }
+            public string YearOfBirth { get; set; }
             public string Address { get; set; }
             public string Diseases { get; set; }
             public string Other { get; set; }
@@ -20,8 +20,8 @@ namespace MigAlarm.Models
         public class Localization
         {
             public string Address { get; set; }
-            public double Latitude { get; set; }
-            public double Longitude { get; set; }
+            public string Latitude { get; set; }
+            public string Longitude { get; set; }
         }
     }
 }
