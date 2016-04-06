@@ -37,9 +37,26 @@ namespace MigAlarm.Helpers
             return user;
         }
 
+        private static bool CheckUserInstitutionRights(string email, int institutionId)
+        {
+            var user = Db.Users.FirstOrDefault(x => x.Email == email);
+            if (user == null)
+                return false;
+
+            var role = user.Roles.FirstOrDefault(x => x.InstitutionId == institutionId);
+            if (role == null)
+                return false;
+
+            return true;
+        }
+
         public static bool ValidateUser(LoginViewModel logon, HttpResponseBase response)
         {
-            if (!Membership.ValidateUser(logon.Email, logon.Password)) return false;
+            if (!CheckUserInstitutionRights(logon.Email, logon.SelectedInstitutionId))
+                return false;
+
+            if (!Membership.ValidateUser(logon.Email, logon.Password))
+                return false;
 
             Db.Configuration.LazyLoadingEnabled = false;
             Db.Configuration.ProxyCreationEnabled = false;

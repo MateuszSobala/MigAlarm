@@ -98,10 +98,10 @@ namespace MigAlarm.Areas.Nofitication
                 differenceList.Add(diffObj);
             });
 
-            var sortedDiff = differenceList.OrderBy(l => l.difference).ToList();
-            var nearestInstotution = _db.Institutions.Find(sortedDiff.First());
+            var sortedDiff = differenceList.OrderBy(l => l.difference).Select(d => d.institutionId).ToList();
+            var nearestInstitution = _db.Institutions.Find(sortedDiff.First());
 
-            return nearestInstotution;
+            return nearestInstitution;
         }
     }
 }
