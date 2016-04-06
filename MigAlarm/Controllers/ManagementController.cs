@@ -19,6 +19,7 @@ namespace MigAlarm.Controllers
         {
             var currentUser = IdentityHelper.User;
 
+            //dorobic liste z wybranej instytucji tylko
             var users =
                 _db.Users.Where(
                     u => u.Roles.FirstOrDefault(r => r.RoleType == RoleType.User && r.InstitutionId == 1) != null && u.UserId != currentUser.UserId)
@@ -60,6 +61,7 @@ namespace MigAlarm.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    //create do wybranej instytucji tylko
                     if (_db.Users.FirstOrDefault(x => x.Email.Equals(user.Email)) != null)
                     {
                         throw new Exception("W systemie istnieje użytkownik z podanym adresem email.");
@@ -105,6 +107,8 @@ namespace MigAlarm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditPost(int? id)
         {
+            //sprawdzic czyz z wbranej instytucji
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -132,6 +136,8 @@ namespace MigAlarm.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
+            //sprawdzic czyz z wbranej instytucji
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
