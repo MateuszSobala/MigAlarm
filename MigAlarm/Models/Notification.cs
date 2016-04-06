@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class Notification
+    public sealed class Notification
     {
         public Notification()
         {
@@ -35,14 +33,14 @@ namespace MigAlarm.Models
 
         [Required]
         [ForeignKey("EventId")]
-        public virtual Event Event { get; set; }
+        public Event Event { get; set; }
 
         [Required]
-        public virtual Coordinate Coordinate { get; set; }
+        public Coordinate Coordinate { get; set; }
 
         [Required]
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
-        public virtual ICollection<AdditionalData> AdditionalData { get; set; }
+        public User User { get; set; }
+        public ICollection<AdditionalData> AdditionalData { get; set; }
     }
 }
