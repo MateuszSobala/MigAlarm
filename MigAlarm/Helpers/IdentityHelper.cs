@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -61,8 +62,22 @@ namespace MigAlarm.Helpers
             Db.Configuration.LazyLoadingEnabled = false;
             Db.Configuration.ProxyCreationEnabled = false;
 
+            Db.Set<User>().Local.ToList().ForEach(x =>
+            {
+                Db.Entry(x).State = EntityState.Detached;
+                x = null;
+            });
+
+            var user = Db.Users.First(x => x.UserId == User.UserId);
+
             var serializer = new JavaScriptSerializer();
-            var userData = serializer.Serialize(User);
+            var userData = serializer.Serialize(user);
+
+            Db.Set<User>().Local.ToList().ForEach(x =>
+            {
+                Db.Entry(x).State = EntityState.Detached;
+                x = null;
+            });
 
             Db.Configuration.LazyLoadingEnabled = true;
             Db.Configuration.ProxyCreationEnabled = true;
