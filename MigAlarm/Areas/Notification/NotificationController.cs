@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web.Http;
 using MigAlarm.Models;
@@ -25,7 +24,12 @@ namespace MigAlarm.Areas.Nofitication
 
             var institution = GetNearestInstitution(coordinate.Location);
 
-            var notification = new Notification {EventId = json.EventId};
+            var notification = new Notification
+            {
+                EventId = json.EventId,
+                Coordinate = coordinate
+            };
+
 
             var userName = new AdditionalData
             {
