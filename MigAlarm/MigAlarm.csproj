@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201604052225541_Initial.Designer.cs">
       <DependentUpon>201604052225541_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604061905129_V2.cs" />
+    <Compile Include="Migrations\201604061905129_V2.Designer.cs">
+      <DependentUpon>201604061905129_V2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
     <Compile Include="Models\AdditionalDataType.cs" />
@@ -195,6 +199,7 @@
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventNode.cs" />
     <Compile Include="Models\Institution.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\JsonReceiveItem.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MigAlarmContext.cs" />
@@ -273,6 +278,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604052225541_Initial.resx">
       <DependentUpon>201604052225541_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604061905129_V2.resx">
+      <DependentUpon>201604061905129_V2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web.Http;
 using MigAlarm.Models;
+using MigAlarm.Utils;
 
 namespace MigAlarm.Areas.Nofitication
 {
@@ -19,8 +20,7 @@ namespace MigAlarm.Areas.Nofitication
             if (json == null) return Json("An Error Has occoured");
             var coordinate = new Coordinate
             {
-                Location =
-                    DbGeography.FromText("POINT(" + json.Localizations.Latitude + " " + json.Localizations.Longitude + ")")
+                Location = GeoUtils.CreatePoint(json.Localizations.Latitude, json.Localizations.Longitude)
             };
 
             var institution = GetNearestInstitution(coordinate.Location);
@@ -103,10 +103,10 @@ namespace MigAlarm.Areas.Nofitication
                 differenceList.Add(diffObj);
             });
 
-            var sortedDiff = differenceList.OrderBy(l => l.difference).ToList();
-            var nearestInstotution = _db.Institutions.Find(sortedDiff.First());
+            var sortedDiff = differenceList.OrderBy(l => l.difference).Select(d => d.institutionId).ToList();
+            var nearestInstitution = _db.Institutions.Find(sortedDiff.First());
 
-            return nearestInstotution;
+            return nearestInstitution;
         }
     }
 }

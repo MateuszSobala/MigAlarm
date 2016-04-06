@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -37,15 +38,46 @@ namespace MigAlarm.Helpers
             return user;
         }
 
+        private static bool CheckUserInstitutionRights(string email, int institutionId)
+        {
+            var user = Db.Users.FirstOrDefault(x => x.Email == email);
+            if (user == null)
+                return false;
+
+            var role = user.Roles.FirstOrDefault(x => x.InstitutionId == institutionId);
+            if (role == null)
+                return false;
+
+            return true;
+        }
+
         public static bool ValidateUser(LoginViewModel logon, HttpResponseBase response)
         {
-            if (!Membership.ValidateUser(logon.Email, logon.Password)) return false;
+            if (!CheckUserInstitutionRights(logon.Email, logon.SelectedInstitutionId))
+                return false;
+
+            if (!Membership.ValidateUser(logon.Email, logon.Password))
+                return false;
 
             Db.Configuration.LazyLoadingEnabled = false;
             Db.Configuration.ProxyCreationEnabled = false;
 
+            Db.Set<User>().Local.ToList().ForEach(x =>
+            {
+                Db.Entry(x).State = EntityState.Detached;
+                x = null;
+            });
+
+            var user = Db.Users.First(x => x.UserId == User.UserId);
+
             var serializer = new JavaScriptSerializer();
-            var userData = serializer.Serialize(User);
+            var userData = serializer.Serialize(user);
+
+            Db.Set<User>().Local.ToList().ForEach(x =>
+            {
+                Db.Entry(x).State = EntityState.Detached;
+                x = null;
+            });
 
             Db.Configuration.LazyLoadingEnabled = true;
             Db.Configuration.ProxyCreationEnabled = true;
@@ -53,7 +85,7 @@ namespace MigAlarm.Helpers
             var ticket = new FormsAuthenticationTicket(1,
                 logon.Email,
                 DateTime.Now,
-                DateTime.Now.AddDays(30),
+                DateTime.Now.AddMinutes(30),
                 true,
                 userData,
                 FormsAuthentication.FormsCookiePath);

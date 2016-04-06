@@ -2,6 +2,8 @@
 using System.Web.Security;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MigAlarm.Controllers
 {
@@ -12,7 +14,9 @@ namespace MigAlarm.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            return View();
+            var allInstitutions = _db.Institutions.Select(x => new Item { Id = x.Id, Name = x.Name }).ToList();
+            var logon = new LoginViewModel(allInstitutions);
+            return View(logon);
         }
 
         [HttpPost]
