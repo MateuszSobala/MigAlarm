@@ -93,7 +93,7 @@ namespace MigAlarm.Migrations
             var defaultRole = new Role
             {
                 Institution = centrumZarzadzaniaKryzysowegoWroclaw,
-                RoleType = RoleType.USER
+                RoleType = RoleType.User
             };
             defaultRole.Users.Add(defaultUser);
             context.Roles.AddOrUpdate(defaultRole);

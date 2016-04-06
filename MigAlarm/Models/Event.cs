@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class Event
+    public sealed class Event
     {
         public Event()
         {
@@ -21,12 +18,12 @@ namespace MigAlarm.Models
         public int? ParentEventId { get; set; }
 
         [ForeignKey("ParentEventId")]
-        public virtual Event ParentEvent { get; set; }
-        public virtual ICollection<Event> ChildEvents { get; set; }
-        public virtual ICollection<Notification> Notifications { get; set; }
+        public Event ParentEvent { get; set; }
+        public ICollection<Event> ChildEvents { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
 
-        public virtual ICollection<EventNode> Ancestors { get; set; }
-        public virtual ICollection<EventNode> Offspring { get; set; }
+        public ICollection<EventNode> Ancestors { get; set; }
+        public ICollection<EventNode> Offspring { get; set; }
 
         /**
          * In order to get all ancestors or offspring the EventNode entity was provided.

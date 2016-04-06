@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class Institution
+    public sealed class Institution
     {
         public Institution()
         {
@@ -22,11 +18,11 @@ namespace MigAlarm.Models
         public string Name { get; set; }
 
         [Required]
-        public virtual Address Address { get; set; }
+        public Address Address { get; set; }
 
         [Required]
-        public virtual Coordinate Coordinate { get; set; }
+        public Coordinate Coordinate { get; set; }
 
-        public virtual ICollection<Role> Roles { get; set; }
+        public ICollection<Role> Roles { get; set; }
     }
 }

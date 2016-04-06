@@ -54,7 +54,7 @@ namespace MigAlarm.Models
 
                 throw new DbEntityValidationException(
                     "Entity Validation Failed - errors follow:\n" +
-                    sb.ToString(), ex
+                    sb, ex
                     ); // Add the original exception as the innerException
             }
         }

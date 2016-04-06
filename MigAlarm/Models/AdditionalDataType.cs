@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class AdditionalDataType
+    public sealed class AdditionalDataType
     {
         public AdditionalDataType()
         {
@@ -17,6 +17,6 @@ namespace MigAlarm.Models
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<AdditionalData> AdditionalData { get; set; }
+        public ICollection<AdditionalData> AdditionalData { get; set; }
     }
 }
