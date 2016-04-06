@@ -22,42 +22,42 @@ namespace MigAlarm.Areas.Nofitication
 
             var userName = new AdditionalData
             {
-                AdditionalDataType = {Name = "Name"},
+                AdditionalDataType = AdditionalDataType.Name,
                 Text = json.Users.Name,
                 Notification = notification
             };
 
             var userYearOfBirth = new AdditionalData
             {
-                AdditionalDataType = {Name = "Year of birth"},
+                AdditionalDataType = AdditionalDataType.Birthday,
                 Text = json.Users.YearOfBirth,
                 Notification = notification
             };
 
             var userAddress = new AdditionalData
             {
-                AdditionalDataType = {Name = "Address"},
+                AdditionalDataType = AdditionalDataType.HomeAddress,
                 Text = json.Users.Address,
                 Notification = notification
             };
 
             var userDiseases = new AdditionalData
             {
-                AdditionalDataType = {Name = "Diseases"},
+                AdditionalDataType = AdditionalDataType.Diseases,
                 Text = json.Users.Diseases,
                 Notification = notification
             };
 
             var other = new AdditionalData
             {
-                AdditionalDataType = {Name = "Other"},
+                AdditionalDataType = AdditionalDataType.Other,
                 Text = json.Users.Other,
                 Notification = notification
             };
 
             var userCurrentAddress = new AdditionalData
             {
-                AdditionalDataType = {Name = "Localization address"},
+                AdditionalDataType = AdditionalDataType.Appearance,
                 Text = json.Localizations.Address,
                 Notification = notification
             };
