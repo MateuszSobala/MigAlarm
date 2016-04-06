@@ -25,7 +25,12 @@ namespace MigAlarm.Areas.Nofitication
 
             var institution = GetNearestInstitution(coordinate.Location);
 
-            var notification = new Notification {EventId = json.EventId};
+            var notification = new Notification
+            {
+                EventId = json.EventId,
+                Coordinate = coordinate
+            };
+
 
             var userName = new AdditionalData
             {
