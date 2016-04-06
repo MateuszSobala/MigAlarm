@@ -64,7 +64,7 @@ namespace MigAlarm.Controllers
 
                     _db.Users.Add(user);
 
-                    _mailClient.Send(user.Email, "Hasło do aplikacji MigHelp", $"Twoje hasło to: {user.Password}", false);
+                    _mailClient.Send(user.Email, "Hasło do aplikacji MigAlarm", $"Twoje hasło to: {user.Password}", false);
 
                     _db.SaveChanges();
 
