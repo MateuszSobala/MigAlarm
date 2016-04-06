@@ -68,10 +68,8 @@ namespace MigAlarm.Helpers
                 x = null;
             });
 
-            var user = Db.Users.First(x => x.UserId == User.UserId);
-
             var serializer = new JavaScriptSerializer();
-            var userData = serializer.Serialize(user);
+            var userData = serializer.Serialize(User);
 
             Db.Set<User>().Local.ToList().ForEach(x =>
             {
@@ -96,8 +94,14 @@ namespace MigAlarm.Helpers
             // Create the cookie.
             response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
 
+            HttpCookie myCookie = new HttpCookie("institution", logon.SelectedInstitutionId.ToString());
+            myCookie.Expires = DateTime.Now.AddMinutes(30);
+            response.SetCookie(myCookie);
+
             return true;
         }
+
+        
 
         public static void Logoff(HttpSessionStateBase session, HttpResponseBase response)
         {
@@ -108,8 +112,15 @@ namespace MigAlarm.Helpers
             FormsAuthentication.SignOut();
 
             // Clear authentication cookie.
-            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "") {Expires = DateTime.Now.AddYears(-1)};
-            response.Cookies.Add(cookie);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "") {Expires = DateTime.Now.AddYears(-1)};      
+            response.SetCookie(cookie);
+
+            var institution = new HttpCookie("institution")
+            {
+                Expires = DateTime.Now.AddDays(-1),
+                Value = null
+            };
+            response.SetCookie(institution);
         }
     }
 

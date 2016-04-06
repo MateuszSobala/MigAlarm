@@ -1,10 +1,21 @@
 ﻿@using MigAlarm.Helpers
+@{ 
+    var institutionInCookie = Request.Cookies["institution"];
+}
 @if (User.Identity.IsAuthenticated)
 {
     using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
+        <ul class="nav navbar-nav navbar-brand">
+            @if (institutionInCookie != null && institutionInCookie.Value != null)
+            {
+                <li>
+                    @IdentityHelper.User.Roles.FirstOrDefault(r => r.InstitutionId.ToString() == institutionInCookie.Value).Institution.Name
+                </li>
+            }
+        </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
                 @Html.ActionLink("Hello " + IdentityHelper.User.Forname + " " + IdentityHelper.User.Surname + "!", "", "", routeValues: null, htmlAttributes: new { title = "Manage" })

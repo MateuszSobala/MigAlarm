@@ -19,7 +19,7 @@ namespace MigAlarm.Models
 
         [Required]
         [ForeignKey("InstitutionId")]
-        public Institution Institution { get; set; }
+        public virtual Institution Institution { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
     }
