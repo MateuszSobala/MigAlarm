@@ -18,13 +18,13 @@ namespace MigAlarm
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new MigAlarmInitializer());
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            Database.SetInitializer(new DropCreateDatabaseAlways<MigAlarmContext>());
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)

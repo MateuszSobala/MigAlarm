@@ -15,8 +15,6 @@ namespace MigAlarm.Models
     
         public MigAlarmContext() : base("name=MigAlarm")
         {
-            //Database.Delete();
-            //SaveChanges();
             Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
