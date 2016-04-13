@@ -29,7 +29,7 @@
         <p>
             @if (user.Roles.Any(x => x.RoleType == RoleType.User))
             {
-                <a class="btn btn-default" href="">Przejdź &raquo;</a>
+                <a class="btn btn-default" href="@Url.Action("Index", "Event")">Przejdź &raquo;</a>
             }
             else
             {
