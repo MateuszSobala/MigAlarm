@@ -24,7 +24,7 @@ namespace MigAlarm
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer<MigAlarmContext>(null);
+            Database.SetInitializer(new DropCreateDatabaseAlways<MigAlarmContext>());
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
