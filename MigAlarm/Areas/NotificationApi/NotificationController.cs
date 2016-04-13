@@ -7,7 +7,7 @@ using System.Web.Http;
 using MigAlarm.Models;
 using MigAlarm.Utils;
 
-namespace MigAlarm.Areas.Nofitication
+namespace MigAlarm.Areas.NofiticationApi
 {
     public class NotificationController : ApiController
     {
@@ -29,7 +29,6 @@ namespace MigAlarm.Areas.Nofitication
                 EventId = json.EventId,
                 Coordinate = coordinate
             };
-
 
             var userName = new AdditionalData
             {
@@ -66,12 +65,10 @@ namespace MigAlarm.Areas.Nofitication
                 Notification = notification
             };
 
-            var userCurrentAddress = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Appearance,
-                Text = json.Localizations.Address,
-                Notification = notification
-            };
+            _db.Coordinates.Add(coordinate);
+            _db.Notifications.Add(notification);
+            _db.AdditionalData.AddRange(new List<AdditionalData>() { userName, userYearOfBirth, userAddress, userDiseases, other });
+            _db.SaveChanges();
 
             return Json("Success");
         }
@@ -82,7 +79,19 @@ namespace MigAlarm.Areas.Nofitication
             public DbGeography difference;
             public bool Equals(Difference other)
             {
-                throw new NotImplementedException();
+                if (other == null)
+                {
+                    return false;
+                }
+                if (institutionId == other.institutionId)
+                {
+                    return true;
+                }
+                if (difference.SpatialEquals(other.difference))
+                {
+                    return true;
+                }
+                return false;
             }
         }
 
