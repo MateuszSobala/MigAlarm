@@ -19,6 +19,10 @@ namespace MigAlarm
         protected void Application_Start()
         {
             Database.SetInitializer(new MigAlarmInitializer());
+            using (MigAlarmContext context = new MigAlarmContext())
+            {
+                context.Database.Initialize(true);
+            }
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

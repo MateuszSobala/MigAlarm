@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class MigAlarmInitializer : CreateDatabaseIfNotExists<MigAlarmContext>
+    public class MigAlarmInitializer : DropCreateDatabaseAlways<MigAlarmContext>
     {
         protected override void Seed(MigAlarmContext context)
         {
