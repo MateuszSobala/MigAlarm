@@ -18,11 +18,6 @@ namespace MigAlarm
     {
         protected void Application_Start()
         {
-            /*Database.SetInitializer(new MigAlarmInitializer());
-            using (MigAlarmContext context = new MigAlarmContext())
-            {
-                context.Database.Initialize(true);
-            }*/
             Database.SetInitializer<MigAlarmContext>(null);
 
             AreaRegistration.RegisterAllAreas();
