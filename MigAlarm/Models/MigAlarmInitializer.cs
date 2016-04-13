@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MigAlarm.Models
 {
-    public class MigAlarmInitializer : DropCreateDatabaseAlways<MigAlarmContext>
+    public class MigAlarmInitializer : CreateDatabaseIfNotExists<MigAlarmContext>
     {
         protected override void Seed(MigAlarmContext context)
         {
@@ -123,6 +123,7 @@ namespace MigAlarm.Models
             };
             defaultAdminRole.Users.Add(defaultAdmin);
             context.Roles.Add(defaultAdminRole);
+            context.SaveChanges();
         }
     }
 }
