@@ -138,6 +138,7 @@ namespace MigAlarm.Migrations
             };
             defaultAdminRole.Users.Add(defaultAdmin);
             context.Roles.AddOrUpdate(defaultAdminRole);
+            context.SaveChanges();
         }
     }
 }
