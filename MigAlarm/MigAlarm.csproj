@@ -174,7 +174,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Areas\NotificationApi\NotificationController.cs" />
-	<Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -190,6 +190,14 @@
     <Compile Include="Migrations\201604061905129_V2.cs" />
     <Compile Include="Migrations\201604061905129_V2.Designer.cs">
       <DependentUpon>201604061905129_V2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604132331168_Notification-User-relation.cs" />
+    <Compile Include="Migrations\201604132331168_Notification-User-relation.Designer.cs">
+      <DependentUpon>201604132331168_Notification-User-relation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604140003194_Institution-Name-Required.cs" />
+    <Compile Include="Migrations\201604140003194_Institution-Name-Required.Designer.cs">
+      <DependentUpon>201604140003194_Institution-Name-Required.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
@@ -285,6 +293,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604061905129_V2.resx">
       <DependentUpon>201604061905129_V2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604132331168_Notification-User-relation.resx">
+      <DependentUpon>201604132331168_Notification-User-relation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604140003194_Institution-Name-Required.resx">
+      <DependentUpon>201604140003194_Institution-Name-Required.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,7 +14,7 @@ namespace MigAlarm.Models
         [Key]
         public int Id { get; set; }       
 
-        [DisplayName("Nazwa")]
+        [DisplayName("Nazwa"), Required]
         public string Name { get; set; }
 
         [Required]
