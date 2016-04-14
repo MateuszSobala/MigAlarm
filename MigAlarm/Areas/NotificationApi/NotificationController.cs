@@ -7,7 +7,7 @@ using System.Web.Http;
 using MigAlarm.Models;
 using MigAlarm.Utils;
 
-namespace MigAlarm.Areas.Nofitication
+namespace MigAlarm.Areas.NofiticationApi
 {
     public class NotificationController : ApiController
     {
@@ -24,12 +24,15 @@ namespace MigAlarm.Areas.Nofitication
 
             var institution = GetNearestInstitution(coordinate.Location);
 
+            var notificationEvent = _db.Events.Find(json.EventId);
+
             var notification = new Notification
             {
-                EventId = json.EventId,
-                Coordinate = coordinate
+                Event = notificationEvent,
+                EventId = notificationEvent.EventId,
+                Coordinate = coordinate,
+                PhoneNumber = json.Users.PhoneNumber
             };
-
 
             var userName = new AdditionalData
             {
@@ -66,44 +69,67 @@ namespace MigAlarm.Areas.Nofitication
                 Notification = notification
             };
 
-            var userCurrentAddress = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Appearance,
-                Text = json.Localizations.Address,
-                Notification = notification
-            };
+            _db.Coordinates.Add(coordinate);
+            _db.Notifications.Add(notification);
+            _db.AdditionalData.AddRange(new List<AdditionalData>() { userName, userYearOfBirth, userAddress, userDiseases, other });
+            _db.SaveChanges();
 
-            return Json("Success");
+            return Json("Sukces! Najbliższa instytucja, to " + institution.Name + " znajdująca się pod adresem: " + institution.Address.Street + " " + institution.Address.HouseNo + ", " + institution.Address.ZipCode + " " + institution.Address.City + " " + institution.Address.Country.Name);
         }
 
-        private class Difference : IEquatable<Difference>
+        private class Difference : IComparable<Difference>
         {
             public int institutionId;
-            public DbGeography difference;
+            public double difference;
             public bool Equals(Difference other)
             {
-                throw new NotImplementedException();
+                if (other == null)
+                {
+                    return false;
+                }
+                if (institutionId == other.institutionId)
+                {
+                    return true;
+                }
+                if (difference == other.difference)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            public int CompareTo(Difference other)
+            {
+                if(Equals(other))
+                {
+                    return 0;
+                }
+                if (other == null || difference > other.difference)
+                {
+                    return 1;
+                }
+                return -1;
             }
         }
 
         private Institution GetNearestInstitution(DbGeography currentLocalization)
         {
             var differenceList = new List<Difference>();
-            Parallel.ForEach(_db.Institutions, (currentInstitution) =>
+            Parallel.ForEach(_db.Institutions.Include("Coordinate"), (currentInstitution) =>
             {
-                var difference = currentLocalization.Difference(currentInstitution.Coordinate.Location);
+                var difference = currentLocalization.Distance(currentInstitution.Coordinate.Location);
                 
                 var diffObj = new Difference
                 {
                     institutionId = currentInstitution.Id,
-                    difference = difference
+                    difference = difference ?? 0
                 };
 
                 differenceList.Add(diffObj);
             });
 
-            var sortedDiff = differenceList.OrderBy(l => l.difference).Select(d => d.institutionId).ToList();
-            var nearestInstitution = _db.Institutions.Find(sortedDiff.First());
+            var nearestId = differenceList.OrderBy(l => l.difference).Select(d => d.institutionId).First();
+            var nearestInstitution = _db.Institutions.Include("Address").FirstOrDefault(i => i.Id == nearestId);
 
             return nearestInstitution;
         }

@@ -10,18 +10,18 @@ namespace MigAlarm.Models
         public Notification()
         {
             AdditionalData = new HashSet<AdditionalData>();
+            DateAdded = DateTime.Now;
         }
 
         [Key]
         public int Id { get; set; }
         public int EventId { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         [Required]
         public string PhoneNumber { get; set; }
 
-        [Required]
-        [Column(TypeName = "datetime2")]
+        [Column(TypeName = "datetime2"), Required]
         public DateTime DateAdded { get; set; }
 
         [Column(TypeName = "datetime2")]
@@ -37,7 +37,6 @@ namespace MigAlarm.Models
         [Required]
         public Coordinate Coordinate { get; set; }
 
-        [Required]
         [ForeignKey("UserId")]
         public User User { get; set; }
         public ICollection<AdditionalData> AdditionalData { get; set; }

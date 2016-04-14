@@ -1,7 +1,9 @@
 namespace MigAlarm.Migrations
 {
     using Models;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
+    using System.Text;
     using Utils;
     internal sealed class Configuration : DbMigrationsConfiguration<MigAlarmContext>
     {
@@ -25,14 +27,16 @@ namespace MigAlarm.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            var defaultUser = new User
+            //clearData(context);
+
+            /*var defaultUser = new User
             {
                 Forname = "John",
                 Surname = "Doe",
                 Email = "johndoe@example.com",
                 Password = "password"
             };
-            context.Users.AddOrUpdate(u => u.Email, defaultUser);
+            context.Users.Add(defaultUser);
 
             var defaultAdmin = new User
             {
@@ -41,14 +45,14 @@ namespace MigAlarm.Migrations
                 Email = "admin@example.com",
                 Password = "p@ssword"
             };
-            context.Users.AddOrUpdate(u => u.Email, defaultAdmin);
+            context.Users.Add(defaultAdmin);
 
             var poland = new Country
             {
                 Name = "Polska",
                 Code = "PL"
             };
-            context.Countries.AddOrUpdate(c => c.Code, poland);
+            context.Countries.Add(poland);
 
             var police = new Event
             {
@@ -72,14 +76,13 @@ namespace MigAlarm.Migrations
                 Name = "CarAccident",
                 ParentEvent = police
             };
-            context.Events.AddOrUpdate(ev => ev.Name,
-                police, fireDepartment, emergencyService, robbery, carAccident);
+            context.Events.AddRange(new List<Event>() { police, fireDepartment, emergencyService, robbery, carAccident });
 
             var centrumZarzadzaniaKryzysowegoWroclawCoordinates = new Coordinate
             {
-                Location = GeoUtils.CreatePoint(51.114265, 16.972300),
+                Location = GeoUtils.CreatePoint(51.114265, 16.972300)
             };
-            context.Coordinates.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclawCoordinates);
+            context.Coordinates.Add(centrumZarzadzaniaKryzysowegoWroclawCoordinates);
 
             var centrumZarzadzaniaKryzysowegoWroclawAddress = new Address
             {
@@ -89,7 +92,7 @@ namespace MigAlarm.Migrations
                 Street = "Pl. Powstancow Warszawy",
                 HouseNo = 1
             };
-            context.Addresses.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclawAddress);
+            context.Addresses.Add(centrumZarzadzaniaKryzysowegoWroclawAddress);
 
             var centrumZarzadzaniaKryzysowegoWroclaw = new Institution
             {
@@ -97,13 +100,13 @@ namespace MigAlarm.Migrations
                 Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates,
                 Address = centrumZarzadzaniaKryzysowegoWroclawAddress
             };
-            context.Institutions.AddOrUpdate(i => i.Name, centrumZarzadzaniaKryzysowegoWroclaw);
+            context.Institutions.Add(centrumZarzadzaniaKryzysowegoWroclaw);
 
             var centrumZarzadzaniaKryzysowegoLodzCoordinates = new Coordinate
             {
-                Location = GeoUtils.CreatePoint(51.765161, 19.457474),
+                Location = GeoUtils.CreatePoint(51.765161, 19.457474)
             };
-            context.Coordinates.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodzCoordinates);
+            context.Coordinates.Add(centrumZarzadzaniaKryzysowegoLodzCoordinates);
 
             var centrumZarzadzaniaKryzysowegoLodzAddress = new Address
             {
@@ -113,7 +116,7 @@ namespace MigAlarm.Migrations
                 Street = "Piotrkowska",
                 HouseNo = 104
             };
-            context.Addresses.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodzAddress);
+            context.Addresses.Add(centrumZarzadzaniaKryzysowegoLodzAddress);
 
             var centrumZarzadzaniaKryzysowegoLodz = new Institution
             {
@@ -121,15 +124,15 @@ namespace MigAlarm.Migrations
                 Coordinate = centrumZarzadzaniaKryzysowegoLodzCoordinates,
                 Address = centrumZarzadzaniaKryzysowegoLodzAddress
             };
-            context.Institutions.AddOrUpdate(i => i.Name, centrumZarzadzaniaKryzysowegoLodz);
-            
+            context.Institutions.Add(centrumZarzadzaniaKryzysowegoLodz);
+
             var defaultUserRole = new Role
             {
                 Institution = centrumZarzadzaniaKryzysowegoWroclaw,
                 RoleType = RoleType.User
             };
             defaultUserRole.Users.Add(defaultUser);
-            context.Roles.AddOrUpdate(defaultUserRole);
+            context.Roles.Add(defaultUserRole);
 
             var defaultAdminRole = new Role
             {
@@ -137,7 +140,22 @@ namespace MigAlarm.Migrations
                 RoleType = RoleType.Admin
             };
             defaultAdminRole.Users.Add(defaultAdmin);
-            context.Roles.AddOrUpdate(defaultAdminRole);
+            context.Roles.Add(defaultAdminRole);
+            context.SaveChanges();*/
+        }
+
+        private void clearData(MigAlarmContext context)
+        {
+            context.Database.ExecuteSqlCommand("DELETE UserRoles");
+            context.Database.ExecuteSqlCommand("DELETE Roles");
+            context.Database.ExecuteSqlCommand("DELETE Institutions");
+            context.Database.ExecuteSqlCommand("DELETE Addresses");
+            context.Database.ExecuteSqlCommand("DELETE Countries");
+            context.Database.ExecuteSqlCommand("DELETE AdditionalDatas");
+            context.Database.ExecuteSqlCommand("DELETE Notifications");
+            context.Database.ExecuteSqlCommand("DELETE Coordinates");
+            context.Database.ExecuteSqlCommand("DELETE Events");
+            context.Database.ExecuteSqlCommand("DELETE Users");
             context.SaveChanges();
         }
     }

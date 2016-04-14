@@ -15,6 +15,7 @@ namespace MigAlarm.Models
             public string Address { get; set; }
             public string Diseases { get; set; }
             public string Other { get; set; }
+            public string PhoneNumber { get; set; }
         }
 
         public class Localization
