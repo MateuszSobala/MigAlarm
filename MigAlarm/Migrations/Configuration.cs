@@ -28,7 +28,7 @@ namespace MigAlarm.Migrations
             //    );
             //
             //clearData(context);
-
+            
             /*var defaultUser = new User
             {
                 Forname = "John",
@@ -36,7 +36,7 @@ namespace MigAlarm.Migrations
                 Email = "johndoe@example.com",
                 Password = "password"
             };
-            context.Users.Add(defaultUser);
+            context.Users.AddOrUpdate(defaultUser);
 
             var defaultAdmin = new User
             {
@@ -45,14 +45,14 @@ namespace MigAlarm.Migrations
                 Email = "admin@example.com",
                 Password = "p@ssword"
             };
-            context.Users.Add(defaultAdmin);
+            context.Users.AddOrUpdate(defaultAdmin);
 
             var poland = new Country
             {
                 Name = "Polska",
                 Code = "PL"
             };
-            context.Countries.Add(poland);
+            context.Countries.AddOrUpdate(poland);
 
             var police = new Event
             {
@@ -76,13 +76,13 @@ namespace MigAlarm.Migrations
                 Name = "CarAccident",
                 ParentEvent = police
             };
-            context.Events.AddRange(new List<Event>() { police, fireDepartment, emergencyService, robbery, carAccident });
+            context.Events.AddOrUpdate(police, fireDepartment, emergencyService, robbery, carAccident );
 
             var centrumZarzadzaniaKryzysowegoWroclawCoordinates = new Coordinate
             {
                 Location = GeoUtils.CreatePoint(51.114265, 16.972300)
             };
-            context.Coordinates.Add(centrumZarzadzaniaKryzysowegoWroclawCoordinates);
+            context.Coordinates.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclawCoordinates);
 
             var centrumZarzadzaniaKryzysowegoWroclawAddress = new Address
             {
@@ -90,23 +90,23 @@ namespace MigAlarm.Migrations
                 ZipCode = "50-153",
                 City = "Wroclaw",
                 Street = "Pl. Powstancow Warszawy",
-                HouseNo = 1
+                HouseNo = 1,
+                Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates
             };
-            context.Addresses.Add(centrumZarzadzaniaKryzysowegoWroclawAddress);
+            context.Addresses.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclawAddress);
 
             var centrumZarzadzaniaKryzysowegoWroclaw = new Institution
             {
                 Name = "Dolnoslaskie Centrum Zarzadzania Kryzysowego",
-                Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates,
                 Address = centrumZarzadzaniaKryzysowegoWroclawAddress
             };
-            context.Institutions.Add(centrumZarzadzaniaKryzysowegoWroclaw);
+            context.Institutions.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclaw);
 
             var centrumZarzadzaniaKryzysowegoLodzCoordinates = new Coordinate
             {
                 Location = GeoUtils.CreatePoint(51.765161, 19.457474)
             };
-            context.Coordinates.Add(centrumZarzadzaniaKryzysowegoLodzCoordinates);
+            context.Coordinates.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodzCoordinates);
 
             var centrumZarzadzaniaKryzysowegoLodzAddress = new Address
             {
@@ -114,17 +114,17 @@ namespace MigAlarm.Migrations
                 ZipCode = "90-004",
                 City = "Lodz",
                 Street = "Piotrkowska",
-                HouseNo = 104
+                HouseNo = 104,
+                Coordinate = centrumZarzadzaniaKryzysowegoLodzCoordinates
             };
-            context.Addresses.Add(centrumZarzadzaniaKryzysowegoLodzAddress);
+            context.Addresses.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodzAddress);
 
             var centrumZarzadzaniaKryzysowegoLodz = new Institution
             {
                 Name = "Wojewodzkie Centrum Zarzadzania Kryzysowego w Lodzi",
-                Coordinate = centrumZarzadzaniaKryzysowegoLodzCoordinates,
                 Address = centrumZarzadzaniaKryzysowegoLodzAddress
             };
-            context.Institutions.Add(centrumZarzadzaniaKryzysowegoLodz);
+            context.Institutions.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodz);
 
             var defaultUserRole = new Role
             {
@@ -132,7 +132,7 @@ namespace MigAlarm.Migrations
                 RoleType = RoleType.User
             };
             defaultUserRole.Users.Add(defaultUser);
-            context.Roles.Add(defaultUserRole);
+            context.Roles.AddOrUpdate(defaultUserRole);
 
             var defaultAdminRole = new Role
             {
@@ -140,7 +140,7 @@ namespace MigAlarm.Migrations
                 RoleType = RoleType.Admin
             };
             defaultAdminRole.Users.Add(defaultAdmin);
-            context.Roles.Add(defaultAdminRole);
+            context.Roles.AddOrUpdate(defaultAdminRole);
             context.SaveChanges();*/
         }
 

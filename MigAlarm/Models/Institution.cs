@@ -20,9 +20,6 @@ namespace MigAlarm.Models
         [Required]
         public Address Address { get; set; }
 
-        [Required]
-        public Coordinate Coordinate { get; set; }
-
         public ICollection<Role> Roles { get; set; }
     }
 }

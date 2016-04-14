@@ -72,14 +72,14 @@ namespace MigAlarm.Models
                 ZipCode = "50-153",
                 City = "Wroclaw",
                 Street = "Pl. Powstancow Warszawy",
-                HouseNo = 1
+                HouseNo = 1,
+                Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates
             };
             context.Addresses.Add(centrumZarzadzaniaKryzysowegoWroclawAddress);
 
             var centrumZarzadzaniaKryzysowegoWroclaw = new Institution
             {
                 Name = "Dolnoslaskie Centrum Zarzadzania Kryzysowego",
-                Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates,
                 Address = centrumZarzadzaniaKryzysowegoWroclawAddress
             };
             context.Institutions.Add(centrumZarzadzaniaKryzysowegoWroclaw);
@@ -96,14 +96,14 @@ namespace MigAlarm.Models
                 ZipCode = "90-004",
                 City = "Lodz",
                 Street = "Piotrkowska",
-                HouseNo = 104
+                HouseNo = 104,
+                Coordinate = centrumZarzadzaniaKryzysowegoLodzCoordinates
             };
             context.Addresses.Add(centrumZarzadzaniaKryzysowegoLodzAddress);
 
             var centrumZarzadzaniaKryzysowegoLodz = new Institution
             {
                 Name = "Wojewodzkie Centrum Zarzadzania Kryzysowego w Lodzi",
-                Coordinate = centrumZarzadzaniaKryzysowegoLodzCoordinates,
                 Address = centrumZarzadzaniaKryzysowegoLodzAddress
             };
             context.Institutions.Add(centrumZarzadzaniaKryzysowegoLodz);

@@ -5,7 +5,7 @@ namespace MigAlarm.Models
 {
     public class Address
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None), Key]
         public int Id { get; set; }
         public int CountryId { get; set; }
         public string ZipCode { get; set; }
@@ -18,6 +18,9 @@ namespace MigAlarm.Models
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }
 
-        public virtual Institution Institution { get; set; }
+        [Required]
+        public Coordinate Coordinate { get; set; }
+
+        public Institution Institution { get; set; }
     }
 }

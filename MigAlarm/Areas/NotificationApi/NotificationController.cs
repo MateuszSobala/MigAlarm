@@ -115,9 +115,9 @@ namespace MigAlarm.Areas.NofiticationApi
         private Institution GetNearestInstitution(DbGeography currentLocalization)
         {
             var differenceList = new List<Difference>();
-            Parallel.ForEach(_db.Institutions.Include("Coordinate"), (currentInstitution) =>
+            Parallel.ForEach(_db.Institutions.Include("Address").Include("Coordinate"), (currentInstitution) =>
             {
-                var difference = currentLocalization.Distance(currentInstitution.Coordinate.Location);
+                var difference = currentLocalization.Distance(currentInstitution.Address.Coordinate.Location);
                 
                 var diffObj = new Difference
                 {

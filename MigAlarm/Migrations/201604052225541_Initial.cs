@@ -77,7 +77,7 @@ namespace MigAlarm.Migrations
                 "dbo.Addresses",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
                         CountryId = c.Int(nullable: false),
                         ZipCode = c.String(),
                         City = c.String(),
