@@ -225,6 +225,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RoleType.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Views\EventViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\GeoUtils.cs" />
   </ItemGroup>
@@ -286,6 +287,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Event\NewEvents.cshtml" />
+    <Content Include="Views\Event\ActiveEvents.cshtml" />
+    <Content Include="Views\Event\DoneEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -8,11 +8,11 @@ namespace MigAlarm.Controllers
 {
     public class EventController : Controller
     {
-
         [Authorize]
         public ActionResult Index()
         {
             return View();
-        }
+        } 
+
     }
 }

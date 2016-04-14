@@ -2,8 +2,13 @@
 @{
     ViewBag.Title = "Index";
 }
+<br />
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Strona główna</a></li>
+    <li class="active">Zarządzaj zdarzeniami</li>
+</ol>
+<h2>Zarządzanie zdarzeniami</h2>
 
-<h2>Index</h2>
 
 <div id="tabs">
     <ul class="nav nav-tabs">
@@ -20,13 +25,13 @@
 
     <div class="tab-content">
         <div class="tab-pane active" id="New">
-            Nowe
+            @Html.Partial("NewEvents")
         </div>
         <div class="tab-pane" id="Active">
-            Przyjęte
+            @Html.Partial("ActiveEvents")
         </div>
         <div class="tab-pane" id="Done">
-            Wykonane
+            @Html.Partial("DoneEvents")
         </div>
     </div>
 </div>
