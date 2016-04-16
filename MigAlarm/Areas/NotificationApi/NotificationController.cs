@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using MigAlarm.Models;
 using MigAlarm.Utils;
+using System.Data.Entity;
 
 namespace MigAlarm.Areas.NofiticationApi
 {
@@ -116,7 +117,8 @@ namespace MigAlarm.Areas.NofiticationApi
         private Institution GetNearestInstitution(DbGeography currentLocalization)
         {
             var differenceList = new List<Difference>();
-            Parallel.ForEach(_db.Institutions.Include("Address").Include("Coordinate"), (currentInstitution) =>
+            var institutions = _db.Institutions.Include(i => i.Address.Coordinate).ToList();
+            Parallel.ForEach(institutions, (currentInstitution) =>
             {
                 var difference = currentLocalization.Distance(currentInstitution.Address.Coordinate.Location);
                 
