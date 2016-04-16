@@ -23,6 +23,7 @@ namespace MigAlarm.Areas.NofiticationApi
             };
 
             var institution = GetNearestInstitution(coordinate.Location);
+            //coordinate.Institution = institution;
 
             var notificationEvent = _db.Events.Find(json.EventId);
 

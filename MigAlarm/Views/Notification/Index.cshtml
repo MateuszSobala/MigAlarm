@@ -25,13 +25,13 @@
 
     <div class="tab-content">
         <div class="tab-pane active" id="New">
-            @Html.Partial("NewEvents")
+            @{Html.RenderAction("GetNewNotifications");}
         </div>
         <div class="tab-pane" id="Active">
-            @Html.Partial("ActiveEvents")
+            @{Html.RenderAction("GetActiveNotifications");}
         </div>
         <div class="tab-pane" id="Done">
-            @Html.Partial("DoneEvents")
+            @{Html.RenderAction("GetDoneNotifications");}
         </div>
     </div>
 </div>

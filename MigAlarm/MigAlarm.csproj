@@ -174,7 +174,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Areas\NotificationApi\NotificationController.cs" />
-    <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -278,10 +278,10 @@
     <Content Include="Views\Management\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Event\Index.cshtml" />
-    <Content Include="Views\Event\NewEvents.cshtml" />
-    <Content Include="Views\Event\ActiveEvents.cshtml" />
-    <Content Include="Views\Event\DoneEvents.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Notification\NewNotifications.cshtml" />
+    <Content Include="Views\Notification\ActiveNotifications.cshtml" />
+    <Content Include="Views\Notification\DoneNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
