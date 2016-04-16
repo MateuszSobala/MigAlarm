@@ -22,8 +22,7 @@ namespace MigAlarm.Areas.NofiticationApi
                 Location = GeoUtils.CreatePoint(json.Localizations.Latitude, json.Localizations.Longitude)
             };
 
-            var institution = GetNearestInstitution(coordinate.Location);
-            //coordinate.Institution = institution;
+            var nearestInstitution = GetNearestInstitution(coordinate.Location);
 
             var notificationEvent = _db.Events.Find(json.EventId);
 
@@ -32,7 +31,8 @@ namespace MigAlarm.Areas.NofiticationApi
                 Event = notificationEvent,
                 EventId = notificationEvent.EventId,
                 Coordinate = coordinate,
-                PhoneNumber = json.Users.PhoneNumber
+                PhoneNumber = json.Users.PhoneNumber,
+                Institution = nearestInstitution
             };
 
             var userName = new AdditionalData
@@ -75,7 +75,7 @@ namespace MigAlarm.Areas.NofiticationApi
             _db.AdditionalData.AddRange(new List<AdditionalData>() { userName, userYearOfBirth, userAddress, userDiseases, other });
             _db.SaveChanges();
 
-            return Json("Sukces! Najbliższa instytucja, to " + institution.Name + " znajdująca się pod adresem: " + institution.Address.Street + " " + institution.Address.HouseNo + ", " + institution.Address.ZipCode + " " + institution.Address.City + " " + institution.Address.Country.Name);
+            return Json("Sukces! Najbliższa instytucja, to " + nearestInstitution.Name + " znajdująca się pod adresem: " + nearestInstitution.Address.Street + " " + nearestInstitution.Address.HouseNo + ", " + nearestInstitution.Address.ZipCode + " " + nearestInstitution.Address.City + " " + nearestInstitution.Address.Country.Name);
         }
 
         private class Difference : IComparable<Difference>
@@ -116,9 +116,9 @@ namespace MigAlarm.Areas.NofiticationApi
         private Institution GetNearestInstitution(DbGeography currentLocalization)
         {
             var differenceList = new List<Difference>();
-            Parallel.ForEach(_db.Institutions.Include("Coordinate"), (currentInstitution) =>
+            Parallel.ForEach(_db.Institutions.Include("Address").Include("Coordinate"), (currentInstitution) =>
             {
-                var difference = currentLocalization.Distance(currentInstitution.Coordinate.Location);
+                var difference = currentLocalization.Distance(currentInstitution.Address.Coordinate.Location);
                 
                 var diffObj = new Difference
                 {

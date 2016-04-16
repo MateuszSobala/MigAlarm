@@ -17,6 +17,7 @@ namespace MigAlarm.Models
         public int Id { get; set; }
         public int EventId { get; set; }
         public int? UserId { get; set; }
+        public int InstitutionId { get; set; }
 
         [Required]
         public string PhoneNumber { get; set; }
@@ -37,8 +38,12 @@ namespace MigAlarm.Models
         [Required]
         public Coordinate Coordinate { get; set; }
 
+        [ForeignKey("InstitutionId"), Required]
+        public Institution Institution { get; set; }
+
         [ForeignKey("UserId")]
         public User User { get; set; }
+
         public ICollection<AdditionalData> AdditionalData { get; set; }
     }
 }
