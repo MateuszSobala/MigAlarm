@@ -9,6 +9,7 @@ namespace MigAlarm.Models
         public Institution()
         {
             Roles = new HashSet<Role>();
+            Notifications = new HashSet<Notification>();
         }
 
         [Key]
@@ -19,6 +20,8 @@ namespace MigAlarm.Models
 
         [Required]
         public Address Address { get; set; }
+
+        public ICollection<Notification> Notifications { get; set; }
 
         public ICollection<Role> Roles { get; set; }
     }
