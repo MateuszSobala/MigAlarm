@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MigAlarm.Models
 {
-    public sealed class Event
+    public class Event
     {
         public Event()
         {

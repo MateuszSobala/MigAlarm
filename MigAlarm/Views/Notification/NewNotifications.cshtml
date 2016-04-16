@@ -1,1 +1,24 @@
-﻿<h4>Nowe zdarzenia</h4>
+﻿@model MigAlarm.Models.Views.NotificationViewModel
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().Event.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Notifications)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Przyjmij", "Index", new { id = item.Id }) |
+                @Html.ActionLink("Szczegóły", "Index", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

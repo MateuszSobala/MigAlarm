@@ -10,7 +10,7 @@ namespace MigAlarm.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            //AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(MigAlarmContext context)

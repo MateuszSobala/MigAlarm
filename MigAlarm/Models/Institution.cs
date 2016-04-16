@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MigAlarm.Models
 {
-    public sealed class Institution
+    public class Institution
     {
         public Institution()
         {

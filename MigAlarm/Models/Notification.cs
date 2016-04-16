@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MigAlarm.Models
 {
-    public sealed class Notification
+    public class Notification
     {
         public Notification()
         {
@@ -33,16 +33,16 @@ namespace MigAlarm.Models
 
         [Required]
         [ForeignKey("EventId")]
-        public Event Event { get; set; }
+        public virtual Event Event { get; set; }
 
         [Required]
-        public Coordinate Coordinate { get; set; }
+        public virtual Coordinate Coordinate { get; set; }
 
         [ForeignKey("InstitutionId"), Required]
-        public Institution Institution { get; set; }
+        public virtual Institution Institution { get; set; }
 
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public ICollection<AdditionalData> AdditionalData { get; set; }
     }

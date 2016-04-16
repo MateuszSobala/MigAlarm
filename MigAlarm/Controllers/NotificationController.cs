@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using MigAlarm.Helpers;
 using MigAlarm.Models;
+using MigAlarm.Models.Views;
 
 namespace MigAlarm.Controllers
 {
@@ -17,21 +19,23 @@ namespace MigAlarm.Controllers
         [Authorize]
         public ActionResult GetNewNotifications()
         {
-            var events = _db.Events.Where(x => x.)
+            var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
 
-            return PartialView("NewEvents");
+            var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && !x.DateAccepted.HasValue && !x.DateClosed.HasValue);
+
+            return PartialView("NewNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
         }
 
         [Authorize]
         public ActionResult GetActiveNotifications()
         {
-            return PartialView("ActiveEvents");
+            return PartialView("ActiveNotifications");
         }
 
         [Authorize]
         public ActionResult GetDoneNotifications()
         {
-            return PartialView("DoneEvents");
+            return PartialView("DoneNotifications");
         }
     }
 }

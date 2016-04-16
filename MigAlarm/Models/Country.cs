@@ -2,7 +2,7 @@
 
 namespace MigAlarm.Models
 {
-    public sealed class Country
+    public class Country
     {
         public Country()
         {
