@@ -28,8 +28,8 @@ namespace MigAlarm.Migrations
             //    );
             //
             //clearData(context);
-            
-            /*var defaultUser = new User
+
+            var defaultUser = new User
             {
                 Forname = "John",
                 Surname = "Doe",
@@ -76,7 +76,7 @@ namespace MigAlarm.Migrations
                 Name = "CarAccident",
                 ParentEvent = police
             };
-            context.Events.AddOrUpdate(police, fireDepartment, emergencyService, robbery, carAccident );
+            context.Events.AddOrUpdate(police, fireDepartment, emergencyService, robbery, carAccident);
 
             var centrumZarzadzaniaKryzysowegoWroclawCoordinates = new Coordinate
             {
@@ -141,7 +141,7 @@ namespace MigAlarm.Migrations
             };
             defaultAdminRole.Users.Add(defaultAdmin);
             context.Roles.AddOrUpdate(defaultAdminRole);
-            context.SaveChanges();*/
+            context.SaveChanges();
         }
 
         private void clearData(MigAlarmContext context)

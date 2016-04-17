@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace MigAlarm.Models
 {
@@ -42,10 +43,14 @@ namespace MigAlarm.Models
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
-        public ICollection<AdditionalData> AdditionalData { get; set; }
+        public virtual ICollection<AdditionalData> AdditionalData { get; set; }
 
         [NotMapped]
         [DisplayName("Adres")]
-        public string NotificationAddress => $"{Coordinate.Address.Street} {Coordinate.Address.HouseNo} {Coordinate.Address.City}";
+        public string NotificationAddress
+            =>
+                AdditionalData.Any(x => x.AdditionalDataType == AdditionalDataType.Localization)
+                    ? AdditionalData.First(x => x.AdditionalDataType == AdditionalDataType.Localization).Text
+                    : "";
     }
 }

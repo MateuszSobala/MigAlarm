@@ -20,17 +20,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Event.Name)
             </td>
-            <th>
+            <td>
                 @Html.DisplayFor(modelItem => item.NotificationAddress)
-            </th>
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateAdded)
             </td>
             <td>
-                @Html.ActionLink("Przyjmij", "Index", new { id = item.Id }) |
+                @Ajax.ActionLink("Przyjmij", "SetActive", new { id = item.Id }, new AjaxOptions  { HttpMethod = "POST"}) |
                 @Html.ActionLink("Szczegóły", "Index", new { id = item.Id })
             </td>
         </tr>
     }
-
 </table>
