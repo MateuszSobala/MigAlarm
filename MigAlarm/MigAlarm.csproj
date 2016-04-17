@@ -299,10 +299,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
-    <Content Include="Views\Notification\NewNotifications.cshtml" />
-    <Content Include="Views\Notification\ActiveNotifications.cshtml" />
-    <Content Include="Views\Notification\DoneNotifications.cshtml" />
+    <Content Include="Views\Notification\_NewNotifications.cshtml" />
+    <Content Include="Views\Notification\_ActiveNotifications.cshtml" />
+    <Content Include="Views\Notification\_DoneNotifications.cshtml" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
+    <Content Include="Views\Notification\_Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

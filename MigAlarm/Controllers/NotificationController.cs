@@ -25,7 +25,7 @@ namespace MigAlarm.Controllers
 
             var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && !x.DateAccepted.HasValue && !x.DateClosed.HasValue);
 
-            return PartialView("NewNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
+            return PartialView("_NewNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
         }
 
         [Authorize]
@@ -35,7 +35,7 @@ namespace MigAlarm.Controllers
 
             var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.DateAccepted.HasValue && !x.DateClosed.HasValue);
 
-            return PartialView("ActiveNotifications", new NotificationViewModel {Notifications = notifications.ToList()});
+            return PartialView("_ActiveNotifications", new NotificationViewModel {Notifications = notifications.ToList()});
         }
 
         [Authorize]
@@ -45,7 +45,13 @@ namespace MigAlarm.Controllers
 
             var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.DateClosed.HasValue);
 
-            return PartialView("DoneNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
+            return PartialView("_DoneNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
+        }
+
+        [Authorize]
+        public ActionResult GetDetails(int id)
+        {
+            return PartialView("_Details");
         }
 
         [Authorize]
