@@ -40,8 +40,7 @@ namespace MigAlarm.Controllers
         }
 
         [Authorize]
-        [HttpPost]
-        public JsonResult SetActive(int id)
+        public ActionResult SetActive(int id)
         {
             try
             {
@@ -51,11 +50,11 @@ namespace MigAlarm.Controllers
                 notification.UserId = IdentityHelper.User.UserId;
                 _db.SaveChanges();
 
-                return Json(new {Success = "True"});
+                return Json(new {Success = "True"}, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { Success = "False" });
+                return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
 
             }
         }
