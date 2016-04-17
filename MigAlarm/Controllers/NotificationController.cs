@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Linq;
 using System.Web.Mvc;
 using MigAlarm.Helpers;
@@ -44,8 +45,11 @@ namespace MigAlarm.Controllers
         {
             try
             {
-                var notification = _db.Notifications.First(x => x.Id == id && x.UserId == null && x.DateAccepted == null);
-
+                var notification =
+                    _db.Notifications.Include("Event")
+                        .Include("Coordinate")
+                        .Include("Institution")
+                        .First(x => x.Id == id && x.UserId == null && x.DateAccepted == null);
                 notification.DateAccepted = DateTime.Now;
                 notification.UserId = IdentityHelper.User.UserId;
                 _db.SaveChanges();
