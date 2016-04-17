@@ -31,13 +31,21 @@ namespace MigAlarm.Controllers
         [Authorize]
         public ActionResult GetActiveNotifications()
         {
-            return PartialView("ActiveNotifications");
+            var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
+
+            var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.DateAccepted.HasValue && !x.DateClosed.HasValue);
+
+            return PartialView("ActiveNotifications", new NotificationViewModel {Notifications = notifications.ToList()});
         }
 
         [Authorize]
         public ActionResult GetDoneNotifications()
         {
-            return PartialView("DoneNotifications");
+            var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
+
+            var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.DateClosed.HasValue);
+
+            return PartialView("DoneNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
         }
 
         [Authorize]
@@ -55,6 +63,29 @@ namespace MigAlarm.Controllers
                 _db.SaveChanges();
 
                 return Json(new {Success = "True"}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+        [Authorize]
+        public ActionResult SetClosed(int id)
+        {
+            try
+            {
+                var notification =
+                    _db.Notifications.Include("Event")
+                        .Include("Coordinate")
+                        .Include("Institution")
+                        .First(x => x.Id == id && x.UserId == IdentityHelper.User.UserId && x.DateAccepted.HasValue);
+                notification.DateClosed = DateTime.Now;
+                notification.UserId = IdentityHelper.User.UserId;
+                _db.SaveChanges();
+
+                return Json(new { Success = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

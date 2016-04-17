@@ -1,4 +1,5 @@
-﻿@*@model MigAlarm.Models.Views.NotificationViewModel
+﻿@using MigAlarm.Helpers
+@model MigAlarm.Models.Views.NotificationViewModel
 
 <table class="table">
     <tr>
@@ -9,7 +10,10 @@
             @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().NotificationAddress)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().DateAdded)
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().DateAccepted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().CurrentUser)
         </th>
         <th></th>
     </tr>
@@ -24,12 +28,21 @@
                 @Html.DisplayFor(modelItem => item.NotificationAddress)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateAdded)
+                @Html.DisplayFor(modelItem => item.DateAccepted)
             </td>
             <td>
-                @Html.ActionLink("Przyjmij", "SetActive", new { id = item.Id }) |
-                @Html.ActionLink("Szczegóły", "Index", new { id = item.Id })
+                @Html.DisplayFor(model => item.CurrentUser)
+            </td>
+            <td>
+                @if (item.UserId != IdentityHelper.User.UserId)
+                {
+                    <td>Przejmij</td>
+                }
+                else
+                {
+                    @Ajax.ActionLink("Zamknij", "SetClosed", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" })
+                }
             </td>
         </tr>
     }
-</table>*@
+</table>

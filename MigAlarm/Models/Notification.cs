@@ -52,5 +52,11 @@ namespace MigAlarm.Models
                 AdditionalData.Any(x => x.AdditionalDataType == AdditionalDataType.Localization)
                     ? AdditionalData.First(x => x.AdditionalDataType == AdditionalDataType.Localization).Text
                     : "";
+
+        [NotMapped]
+        [DisplayName("Użytkownik")]
+        public string CurrentUser
+            =>
+                User != null ? $"{User.Forname} {User.Surname}" : "";
     }
 }
