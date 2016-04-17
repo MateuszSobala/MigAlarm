@@ -182,6 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\IdentityHelper.cs" />
+    <Compile Include="Helpers\ImageActionLinkHelper.cs" />
     <Compile Include="Helpers\MailHelper.cs" />
     <Compile Include="Migrations\201604052225541_Initial.cs" />
     <Compile Include="Migrations\201604052225541_Initial.Designer.cs">

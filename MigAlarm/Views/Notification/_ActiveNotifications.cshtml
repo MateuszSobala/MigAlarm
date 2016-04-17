@@ -36,11 +36,13 @@
             <td>
                 @if (item.UserId != IdentityHelper.User.UserId)
                 {
-                    <td>Przejmij</td>
+                    <a href=''>
+                        <img style="height: 20px;" src='@Url.Content("~/Content/Images/change.png")' />
+                    </a>
                 }
                 else
                 {
-                    @Ajax.ActionLink("Zamknij", "SetClosed", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" })
+                    @Ajax.ImageActionLink(@Url.Content("~/Content/Images/close.png"), "Zamknij", "SetClosed", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "image-size" })
                 }
             </td>
         </tr>

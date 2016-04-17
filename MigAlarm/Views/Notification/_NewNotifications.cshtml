@@ -1,4 +1,12 @@
-﻿@model MigAlarm.Models.Views.NotificationViewModel
+﻿@using MigAlarm.Helpers
+@model MigAlarm.Models.Views.NotificationViewModel
+
+<style>
+    .image-size
+    {
+        height: 20px
+    }
+</style>
 
 <table class="table">
     <tr>
@@ -27,8 +35,8 @@
                 @Html.DisplayFor(modelItem => item.DateAdded)
             </td>
             <td>
-                @Ajax.ActionLink("Przyjmij", "SetActive", new {id = item.Id}, new AjaxOptions {HttpMethod = "POST"}) |
-                @Ajax.ActionLink("Szczegóły", "GetDetails", new {id = item.Id}, new AjaxOptions { OnSuccess = "loadDetails(data);" })
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/start.png"), "Przyjmij", "SetActive", new {id = item.Id}, new AjaxOptions {HttpMethod = "POST"}, new { @class = "image-size" })
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.Id }, new AjaxOptions { OnSuccess = "loadDetails(data);" }, new { @class = "image-size" })
             </td>
         </tr>
     }
