@@ -20,9 +20,6 @@ namespace MigAlarm.Models
         public int? UserId { get; set; }
         public int InstitutionId { get; set; }
 
-        [Required]
-        public string PhoneNumber { get; set; }
-
         [Column(TypeName = "datetime2"), Required]
         public DateTime DateAdded { get; set; }
 

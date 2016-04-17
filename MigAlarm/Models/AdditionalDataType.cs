@@ -12,6 +12,8 @@ namespace MigAlarm.Models
         Medicines, //przyjmowane leki
         BloodGroup,
         Appearance, //wyglad
+        PhoneNumber,
+        Localization,
         Other = 100
     }
 }

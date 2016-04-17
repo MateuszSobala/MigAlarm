@@ -17,7 +17,9 @@ namespace MigAlarm.Areas.NofiticationApi
         [HttpPost]
         public IHttpActionResult AddNotification(JsonReceiveItem json)
         {
-            if (json == null) return Json("An Error Has occoured");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var coordinate = new Coordinate
             {
                 Location = GeoUtils.CreatePoint(json.Localizations.Latitude, json.Localizations.Longitude)
@@ -26,15 +28,30 @@ namespace MigAlarm.Areas.NofiticationApi
             var nearestInstitution = GetNearestInstitution(coordinate.Location);
 
             var notificationEvent = _db.Events.Find(json.EventId);
+            if (notificationEvent == null)
+                return BadRequest("Invalid EventId");
 
             var notification = new Notification
             {
                 Event = notificationEvent,
                 EventId = notificationEvent.EventId,
                 Coordinate = coordinate,
-                PhoneNumber = json.Users.PhoneNumber,
                 Institution = nearestInstitution
             };
+
+            var additionalData = FillInAdditionalData(json, ref notification);
+
+            _db.Coordinates.Add(coordinate);
+            _db.Notifications.Add(notification);
+            _db.AdditionalData.AddRange(additionalData);
+            _db.SaveChanges();
+
+            return Json("Sukces! Najbliższa instytucja, to " + nearestInstitution.Name + " znajdująca się pod adresem: " + nearestInstitution.Address.Street + " " + nearestInstitution.Address.HouseNo + ", " + nearestInstitution.Address.ZipCode + " " + nearestInstitution.Address.City + " " + nearestInstitution.Address.Country.Name);
+        }
+
+        private static IEnumerable<AdditionalData> FillInAdditionalData(JsonReceiveItem json, ref Notification notification)
+        {
+            var additionalData = new List<AdditionalData>();
 
             var userName = new AdditionalData
             {
@@ -42,41 +59,106 @@ namespace MigAlarm.Areas.NofiticationApi
                 Text = json.Users.Name,
                 Notification = notification
             };
+            additionalData.Add(userName);
 
-            var userYearOfBirth = new AdditionalData
+            var phoneNumber = new AdditionalData
             {
-                AdditionalDataType = AdditionalDataType.Birthday,
-                Text = json.Users.YearOfBirth,
+                AdditionalDataType = AdditionalDataType.PhoneNumber,
+                Text = json.Users.PhoneNumber,
                 Notification = notification
             };
+            additionalData.Add(phoneNumber);
 
-            var userAddress = new AdditionalData
+
+            if (!string.IsNullOrWhiteSpace(json.Users.YearOfBirth))
             {
-                AdditionalDataType = AdditionalDataType.HomeAddress,
-                Text = json.Users.Address,
-                Notification = notification
-            };
+                var userYearOfBirth = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Birthday,
+                    Text = json.Users.YearOfBirth,
+                    Notification = notification
+                };
+                additionalData.Add(userYearOfBirth);
+            }
 
-            var userDiseases = new AdditionalData
+            if (!string.IsNullOrWhiteSpace(json.Users.Address))
             {
-                AdditionalDataType = AdditionalDataType.Diseases,
-                Text = json.Users.Diseases,
-                Notification = notification
-            };
+                var userAddress = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.HomeAddress,
+                    Text = json.Users.Address,
+                    Notification = notification
+                };
+                additionalData.Add(userAddress);
+            }
 
-            var other = new AdditionalData
+            if (!string.IsNullOrWhiteSpace(json.Users.Diseases))
             {
-                AdditionalDataType = AdditionalDataType.Other,
-                Text = json.Users.Other,
-                Notification = notification
-            };
+                var userDiseases = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Diseases,
+                    Text = json.Users.Diseases,
+                    Notification = notification
+                };
+                additionalData.Add(userDiseases);
+            }
 
-            _db.Coordinates.Add(coordinate);
-            _db.Notifications.Add(notification);
-            _db.AdditionalData.AddRange(new List<AdditionalData>() { userName, userYearOfBirth, userAddress, userDiseases, other });
-            _db.SaveChanges();
+            if (!string.IsNullOrWhiteSpace(json.Users.Medicines))
+            {
+                var userMedicines = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Medicines,
+                    Text = json.Users.Medicines,
+                    Notification = notification
+                };
+                additionalData.Add(userMedicines);
+            }
 
-            return Json("Sukces! Najbliższa instytucja, to " + nearestInstitution.Name + " znajdująca się pod adresem: " + nearestInstitution.Address.Street + " " + nearestInstitution.Address.HouseNo + ", " + nearestInstitution.Address.ZipCode + " " + nearestInstitution.Address.City + " " + nearestInstitution.Address.Country.Name);
+            if (!string.IsNullOrWhiteSpace(json.Users.Appearance))
+            {
+                var userAppearance = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Appearance,
+                    Text = json.Users.Appearance,
+                    Notification = notification
+                };
+                additionalData.Add(userAppearance);
+            }
+
+            if (!string.IsNullOrWhiteSpace(json.Users.BloodGroup))
+            {
+                var userBloodGroup = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.BloodGroup,
+                    Text = json.Users.BloodGroup,
+                    Notification = notification
+                };
+                additionalData.Add(userBloodGroup);
+            }
+
+            if (!string.IsNullOrWhiteSpace(json.Localizations.Address))
+            {
+                var localization = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Localization,
+                    Text = json.Localizations.Address,
+                    Notification = notification
+                };
+                additionalData.Add(localization);
+            }
+
+            if (!string.IsNullOrWhiteSpace(json.Users.Other))
+            {
+                var other = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Other,
+                    Text = json.Users.Other,
+                    Notification = notification
+                };
+                additionalData.Add(other);
+            }
+
+            return additionalData;
         }
 
         private class Difference : IComparable<Difference>
