@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201604161836483_Notification-Institution-direct_relationship.Designer.cs">
       <DependentUpon>201604161836483_Notification-Institution-direct_relationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604171131300_AdditionalData-extended.cs" />
+    <Compile Include="Migrations\201604171131300_AdditionalData-extended.Designer.cs">
+      <DependentUpon>201604171131300_AdditionalData-extended.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
     <Compile Include="Models\AdditionalDataType.cs" />
@@ -324,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604161836483_Notification-Institution-direct_relationship.resx">
       <DependentUpon>201604161836483_Notification-Institution-direct_relationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604171131300_AdditionalData-extended.resx">
+      <DependentUpon>201604171131300_AdditionalData-extended.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
