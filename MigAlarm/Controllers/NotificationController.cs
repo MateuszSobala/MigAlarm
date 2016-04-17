@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
@@ -36,6 +37,27 @@ namespace MigAlarm.Controllers
         public ActionResult GetDoneNotifications()
         {
             return PartialView("DoneNotifications");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public JsonResult SetActive(int id)
+        {
+            try
+            {
+                var notification = _db.Notifications.First(x => x.Id == id && x.UserId == null && x.DateAccepted == null);
+
+                notification.DateAccepted = DateTime.Now;
+                notification.UserId = IdentityHelper.User.UserId;
+                _db.SaveChanges();
+
+                return Json(new {Success = "True"});
+            }
+            catch (Exception)
+            {
+                return Json(new { Success = "False" });
+
+            }
         }
     }
 }
