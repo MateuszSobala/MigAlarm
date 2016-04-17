@@ -223,6 +223,7 @@
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventNode.cs" />
+    <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\JsonReceiveItem.cs" />
