@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -45,5 +46,9 @@ namespace MigAlarm.Models
         public virtual User User { get; set; }
 
         public ICollection<AdditionalData> AdditionalData { get; set; }
+
+        [NotMapped]
+        [DisplayName("Adres")]
+        public string NotificationAddress => $"{Coordinate.Address.Street} {Coordinate.Address.HouseNo} {Coordinate.Address.City}";
     }
 }

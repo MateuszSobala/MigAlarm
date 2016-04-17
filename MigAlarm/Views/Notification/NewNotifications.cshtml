@@ -5,6 +5,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().Event.Name)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().NotificationAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().DateAdded)
+        </th>
         <th></th>
     </tr>
 
@@ -13,6 +19,12 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Event.Name)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.NotificationAddress)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAdded)
             </td>
             <td>
                 @Html.ActionLink("Przyjmij", "Index", new { id = item.Id }) |
