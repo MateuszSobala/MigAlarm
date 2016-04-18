@@ -29,24 +29,23 @@ namespace MigAlarm
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (authCookie != null)
-            {
-                // Get the forms authentication ticket.
-                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                var identity = new GenericIdentity(authTicket.Name, "Forms");
-                var principal = new AppPrincipal(identity);
+            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie == null) return;
+            // Get the forms authentication ticket.
+            var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            if (authTicket == null) return;
+            var identity = new GenericIdentity(authTicket.Name, "Forms");
+            var principal = new AppPrincipal(identity);
 
-                // Get the custom user data encrypted in the ticket.
-                string userData = ((FormsIdentity)(Context.User.Identity)).Ticket.UserData;
+            // Get the custom user data encrypted in the ticket.
+            var userData = ((FormsIdentity)(Context.User.Identity)).Ticket.UserData;
 
-                // Deserialize the json data and set it on the custom principal.
-                var serializer = new JavaScriptSerializer();
-                principal.User = (User)serializer.Deserialize(userData, typeof(User));
+            // Deserialize the json data and set it on the custom principal.
+            var serializer = new JavaScriptSerializer();
+            principal.User = (User)serializer.Deserialize(userData, typeof(User));
 
-                // Set the context user.
-                Context.User = principal;
-            }
+            // Set the context user.
+            Context.User = principal;
         }
     }
 }

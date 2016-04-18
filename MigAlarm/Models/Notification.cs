@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace MigAlarm.Models
 {
-    public class Notification
+    public sealed class Notification
     {
         public Notification()
         {
@@ -32,18 +32,18 @@ namespace MigAlarm.Models
 
         [Required]
         [ForeignKey("EventId")]
-        public virtual Event Event { get; set; }
+        public Event Event { get; set; }
 
         [Required]
-        public virtual Coordinate Coordinate { get; set; }
+        public Coordinate Coordinate { get; set; }
 
         [ForeignKey("InstitutionId"), Required]
-        public virtual Institution Institution { get; set; }
+        public Institution Institution { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public User User { get; set; }
 
-        public virtual ICollection<AdditionalData> AdditionalData { get; set; }
+        public ICollection<AdditionalData> AdditionalData { get; set; }
 
         [NotMapped]
         [DisplayName("Adres")]

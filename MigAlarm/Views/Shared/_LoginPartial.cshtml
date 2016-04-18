@@ -9,16 +9,16 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-brand">
-            @if (institutionInCookie != null && institutionInCookie.Value != null)
+            @if (institutionInCookie?.Value != null)
             {
                 <li>
-                    @IdentityHelper.User.Roles.FirstOrDefault(r => r.InstitutionId.ToString() == institutionInCookie.Value).Institution.Name
+                    @IdentityHelper.User.Roles.FirstOrDefault(r => r.InstitutionId.ToString() == institutionInCookie.Value)?.Institution.Name
                 </li>
             }
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Cześć " + IdentityHelper.User.Forname + " " + IdentityHelper.User.Surname + "!", "", "", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Cześć " + IdentityHelper.User.Forname + " " + IdentityHelper.User.Surname + "!", string.Empty, string.Empty, null, new { title = "Manage" })
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
         </ul>

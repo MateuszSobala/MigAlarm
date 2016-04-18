@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
@@ -184,7 +183,12 @@ namespace MigAlarm.Controllers
             {
                 var user = _db.Users.Find(id);
 
-                if (!user.Roles.Any(x => x.InstitutionId == int.Parse(Request.Cookies["institution"].Value) && x.RoleType == RoleType.User))
+                if (!user.Roles.Any(x =>
+                {
+                    var httpCookie = Request.Cookies["institution"];
+                    return httpCookie != null && (x.InstitutionId == int.Parse(httpCookie.Value) &&
+                                                                      x.RoleType == RoleType.User);
+                }))
                 {
                     throw new Exception("Nie masz uprawnień do usunięcia tego użytkownika.");
                 }

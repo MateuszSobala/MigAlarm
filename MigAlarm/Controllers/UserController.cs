@@ -2,7 +2,6 @@
 using System.Web.Security;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace MigAlarm.Controllers

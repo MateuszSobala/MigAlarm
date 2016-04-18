@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Linq;
 using System.Web.Mvc;
 using MigAlarm.Helpers;
@@ -70,7 +69,7 @@ namespace MigAlarm.Controllers
 
                 return Json(new {Success = "True"}, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
 
@@ -93,7 +92,7 @@ namespace MigAlarm.Controllers
 
                 return Json(new { Success = "True" }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
 
