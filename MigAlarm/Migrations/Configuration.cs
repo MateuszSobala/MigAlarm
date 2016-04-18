@@ -38,6 +38,15 @@ namespace MigAlarm.Migrations
             };
             context.Users.AddOrUpdate(defaultUser);
 
+            var secondUser = new User
+            {
+                Forname = "Ben",
+                Surname = "Murphy",
+                Email = "benmurphy@example.com",
+                Password = "ben"
+            };
+            context.Users.AddOrUpdate(secondUser);
+
             var defaultAdmin = new User
             {
                 Forname = "Mr",
