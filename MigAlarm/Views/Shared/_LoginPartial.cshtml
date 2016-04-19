@@ -9,32 +9,29 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-brand">
-            @if (institutionInCookie != null && institutionInCookie.Value != null)
+            @if (institutionInCookie?.Value != null)
             {
                 <li>
-                    @IdentityHelper.User.Roles.FirstOrDefault(r => r.InstitutionId.ToString() == institutionInCookie.Value).Institution.Name
+                    @{
+                        var firstOrDefault = IdentityHelper.User.Roles.FirstOrDefault(r => r.InstitutionId.ToString() == institutionInCookie.Value);
+                    }
+                    @if (firstOrDefault != null)
+                    {
+                        @firstOrDefault.Institution.Name
+                    }
                 </li>
             }
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Cześć " + IdentityHelper.User.Forname + " " + IdentityHelper.User.Surname + "!", "", "", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
+            <li>@Html.ActionLink(IdentityHelper.User.Forname + " " + IdentityHelper.User.Surname, string.Empty, string.Empty, null, new { title = "Manage" })</li>
+            <li>@Html.ActionLink("Zmień hasło", "ChangePassword", "User", routeValues: null, htmlAttributes: new { id = "logoutLink" })</li>
+            <li>@Html.ActionLink("Wyloguj", "Logout", "User", routeValues: null, htmlAttributes: new {id = "logoutLink"})</li>
         </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        @if (Request.IsAuthenticated)
-        {
-            <li>@Html.Encode(User.Identity.Name)</li>
-            <li>@Html.ActionLink("Wyloguj", "Logout", "User", routeValues: null, htmlAttributes: new { id = "logoutLink" })</li>
-        }
-        else
-        {
-            <li>@Html.ActionLink("Zaloguj", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-        }
+    <ul class="nav navbar-nav navbar-right dropdown-menu" role="menu">
+        <li>@Html.ActionLink("Zaloguj", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

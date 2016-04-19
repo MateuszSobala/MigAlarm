@@ -1,0 +1,10 @@
+﻿@model MigAlarm.Models.Views.UserDetailsViewModel
+
+<h4>@Model.Username</h4>
+
+@Html.DisplayNameFor(x => x.ActiveEventsCounter)
+<span class="badge">@Html.DisplayFor(x => x.ActiveEventsCounter)</span>
+<br/>
+@Html.DisplayNameFor(x => x.ClosedEventsCounter)
+<span class="badge">@Html.DisplayFor(x => x.ClosedEventsCounter)</span>
+<br />

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
+using MigAlarm.Models.Views;
 using PagedList;
 using static System.String;
 
@@ -184,7 +184,12 @@ namespace MigAlarm.Controllers
             {
                 var user = _db.Users.Find(id);
 
-                if (!user.Roles.Any(x => x.InstitutionId == int.Parse(Request.Cookies["institution"].Value) && x.RoleType == RoleType.User))
+                if (!user.Roles.Any(x =>
+                {
+                    var httpCookie = Request.Cookies["institution"];
+                    return httpCookie != null && (x.InstitutionId == int.Parse(httpCookie.Value) &&
+                                                                      x.RoleType == RoleType.User);
+                }))
                 {
                     throw new Exception("Nie masz uprawnień do usunięcia tego użytkownika.");
                 }
@@ -199,6 +204,21 @@ namespace MigAlarm.Controllers
             }
             
             return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public ActionResult GetDetails(int id)
+        {
+            var model = new UserDetailsViewModel
+            {
+                Username = $"{IdentityHelper.User.Forname} {IdentityHelper.User.Forname}",
+                ActiveEventsCounter =
+                    _db.Notifications.Count(x => x.UserId == id && x.DateAccepted.HasValue && !x.DateClosed.HasValue),
+                ClosedEventsCounter = 
+                    _db.Notifications.Count(x => x.UserId == id && x.DateAccepted.HasValue && x.DateClosed.HasValue)
+            };
+
+            return PartialView("_Details", model);
         }
 
         protected override void Dispose(bool disposing)

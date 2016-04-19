@@ -1,0 +1,78 @@
+﻿@using MigAlarm.Helpers
+@model MigAlarm.Models.Views.NotificationViewModel
+
+<style>
+    .image-size
+    {
+        height: 20px
+    }
+</style>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().Event.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().NotificationAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().DateAdded)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Notifications)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotificationAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAdded)
+            </td>
+            <td>
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/start.png"), "Przyjmij", "SetActive", new {id = item.Id}, new AjaxOptions {HttpMethod = "POST"}, new { @class = "image-size" })
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.Id }, new AjaxOptions { OnSuccess = "loadDetails(data);" }, new { @class = "image-size" })
+            </td>
+        </tr>
+    }
+</table>
+
+
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Szczegóły zgłoszenia</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default modal-close-btn" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function loadDetails(data) {
+        $('.modal-body').html(data);
+        $('#modal-container').modal('show');
+    };
+
+    $(document).ready(function() {
+        $('body').on('click', '.modal-link', function(e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container');
+            $(this).attr('data-toggle', 'modal');
+        });
+
+        $('#modal-container').on('hidden.bs.modal', function() {
+            $(this).removeData('bs.modal');
+            document.getElementById('map').style.display = "none";
+        });
+    });
+</script>

@@ -24,19 +24,35 @@ namespace MigAlarm.Controllers
 
             var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && !x.DateAccepted.HasValue && !x.DateClosed.HasValue);
 
-            return PartialView("NewNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
+            return PartialView("_NewNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
         }
 
         [Authorize]
         public ActionResult GetActiveNotifications()
         {
-            return PartialView("ActiveNotifications");
+            var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
+
+            var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.DateAccepted.HasValue && !x.DateClosed.HasValue);
+
+            return PartialView("_ActiveNotifications", new NotificationViewModel {Notifications = notifications.ToList()});
         }
 
         [Authorize]
         public ActionResult GetDoneNotifications()
         {
-            return PartialView("DoneNotifications");
+            var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
+
+            var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.DateClosed.HasValue);
+
+            return PartialView("_DoneNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
+        }
+
+        [Authorize]
+        public ActionResult GetDetails(int id)
+        {
+            var selectedNotification = _db.Notifications.First(x => x.Id == id);
+
+            return PartialView("_Details", new NotificationViewModel { Notification = selectedNotification});
         }
 
         [Authorize]
@@ -44,19 +60,47 @@ namespace MigAlarm.Controllers
         {
             try
             {
-                var notification = _db.Notifications.First(x => x.Id == id && x.UserId == null && x.DateAccepted == null);
-
+                var notification =
+                    _db.Notifications.Include("Event")
+                        .Include("Coordinate")
+                        .Include("Institution")
+                        .First(x => x.Id == id && x.UserId == null && x.DateAccepted == null);
                 notification.DateAccepted = DateTime.Now;
                 notification.UserId = IdentityHelper.User.UserId;
                 _db.SaveChanges();
 
                 return Json(new {Success = "True"}, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
 
             }
         }
+
+        [Authorize]
+        public ActionResult SetClosed(int id)
+        {
+            try
+            {
+                var notification =
+                    _db.Notifications.Include("Event")
+                        .Include("Coordinate")
+                        .Include("Institution")
+                        .First(x => x.Id == id && x.UserId == IdentityHelper.User.UserId && x.DateAccepted.HasValue);
+                notification.DateClosed = DateTime.Now;
+                notification.UserId = IdentityHelper.User.UserId;
+                _db.SaveChanges();
+
+                return Json(new { Success = "True" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
     }
 }

@@ -181,7 +181,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\IdentityHelper.cs" />
+    <Compile Include="Helpers\ImageActionLinkHelper.cs" />
     <Compile Include="Helpers\MailHelper.cs" />
     <Compile Include="Migrations\201604052225541_Initial.cs" />
     <Compile Include="Migrations\201604052225541_Initial.Designer.cs">
@@ -227,14 +229,16 @@
     <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\JsonReceiveItem.cs" />
-    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\Views\LoginViewModel.cs" />
     <Compile Include="Models\MigAlarmContext.cs" />
     <Compile Include="Models\MigAlarmInitializer.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RoleType.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Views\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Views\NotificationViewModel.cs" />
+    <Compile Include="Models\Views\UserDetailsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\GeoUtils.cs" />
   </ItemGroup>
@@ -301,10 +305,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
-    <Content Include="Views\Notification\NewNotifications.cshtml" />
-    <Content Include="Views\Notification\ActiveNotifications.cshtml" />
-    <Content Include="Views\Notification\DoneNotifications.cshtml" />
+    <Content Include="Views\Notification\_NewNotifications.cshtml" />
+    <Content Include="Views\Notification\_ActiveNotifications.cshtml" />
+    <Content Include="Views\Notification\_DoneNotifications.cshtml" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
+    <Content Include="Views\Notification\_Details.cshtml" />
+    <Content Include="Views\Management\_Details.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -338,6 +345,9 @@
     <EmbeddedResource Include="Migrations\201604171131300_AdditionalData-extended.resx">
       <DependentUpon>201604171131300_AdditionalData-extended.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

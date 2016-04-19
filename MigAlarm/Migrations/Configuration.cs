@@ -1,9 +1,10 @@
+using System.Collections.Generic;
+using System.Data.Entity;
+
 namespace MigAlarm.Migrations
 {
     using Models;
-    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    using System.Text;
     using Utils;
     internal sealed class Configuration : DbMigrationsConfiguration<MigAlarmContext>
     {
@@ -37,6 +38,15 @@ namespace MigAlarm.Migrations
                 Password = "password"
             };
             context.Users.AddOrUpdate(defaultUser);
+
+            var secondUser = new User
+            {
+                Forname = "Ben",
+                Surname = "Murphy",
+                Email = "benmurphy@example.com",
+                Password = "ben"
+            };
+            context.Users.AddOrUpdate(secondUser);
 
             var defaultAdmin = new User
             {
@@ -134,6 +144,13 @@ namespace MigAlarm.Migrations
             defaultUserRole.Users.Add(defaultUser);
             context.Roles.AddOrUpdate(defaultUserRole);
 
+            var secondUserRole = new Role
+            {
+                Institution = centrumZarzadzaniaKryzysowegoWroclaw,
+                RoleType = RoleType.User
+            };
+            context.Roles.AddOrUpdate(secondUserRole);
+
             var defaultAdminRole = new Role
             {
                 Institution = centrumZarzadzaniaKryzysowegoWroclaw,
@@ -141,10 +158,106 @@ namespace MigAlarm.Migrations
             };
             defaultAdminRole.Users.Add(defaultAdmin);
             context.Roles.AddOrUpdate(defaultAdminRole);
+
+            var exampleNotification = new Notification
+            {
+                Event = police,
+                EventId = 102,
+                Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates,
+                Institution = centrumZarzadzaniaKryzysowegoWroclaw,
+                User = defaultUser
+            };
+            context.Notifications.Add(exampleNotification);
+
+            var exmapleAdditionalData = new List<AdditionalData>();
+
+            var exampleUserName = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.Name,
+                Text = "Jan Kowalski",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleUserName);
+
+            var examplePhoneNumber = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.PhoneNumber,
+                Text = "123456789",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(examplePhoneNumber);
+
+
+            var exampleUserYearOfBirth = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.Birthday,
+                Text = "1992",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleUserYearOfBirth);
+
+            var exampleUserAddress = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.HomeAddress,
+                Text = "Ul. åmieszna 4\nWroclaw",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleUserAddress);
+
+            var exampleUserDiseases = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.Diseases,
+                Text = "Alergia na trawy",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleUserDiseases);
+
+            var exampleUserMedicines = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.Medicines,
+                Text = "Brak",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleUserMedicines);
+
+            var exampleUserAppearance = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.Appearance,
+                Text = "?",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleUserAppearance);
+
+            var exampleUserBloodGroup = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.BloodGroup,
+                Text = "0",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleUserBloodGroup);
+
+            var exampleLocalization = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.Localization,
+                Text = "Micha≥a Wroc≥awczyka 10\n50-380 Wroc≥aw\n",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleLocalization);
+
+            var exampleOther = new AdditionalData
+            {
+                AdditionalDataType = AdditionalDataType.Other,
+                Text = "W domu groüny pies",
+                Notification = exampleNotification
+            };
+            exmapleAdditionalData.Add(exampleOther);
+
+            context.AdditionalData.AddRange(exmapleAdditionalData);
+
             context.SaveChanges();
         }
 
-        private void clearData(MigAlarmContext context)
+        private void ClearData(DbContext context)
         {
             context.Database.ExecuteSqlCommand("DELETE UserRoles");
             context.Database.ExecuteSqlCommand("DELETE Roles");
