@@ -1,4 +1,5 @@
-﻿@model MigAlarm.Models.Views.NotificationViewModel
+﻿@using MigAlarm.Helpers
+@model MigAlarm.Models.Views.NotificationViewModel
 
 <table class="table">
     <tr>
@@ -31,6 +32,9 @@
             </td>
             <td>
                 @Html.DisplayFor(model => item.CurrentUser)
+            </td>
+            <td>
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.Id }, new AjaxOptions { OnSuccess = "loadDetails(data);" }, new { @class = "image-size" })
             </td>
         </tr>
     }
