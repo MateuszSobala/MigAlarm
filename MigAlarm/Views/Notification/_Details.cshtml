@@ -3,7 +3,7 @@
 @model MigAlarm.Models.Views.NotificationViewModel
 
 <table class="detailsTable">
-    @foreach (var item in Model.Notification.AdditionalData)
+    @foreach (var item in Model.Notification.AdditionalData )
     {
         <tr>
             <th>
@@ -11,14 +11,49 @@
                 {
                     @Html.DisplayFor(x => displayName)
                 }
-
                 <td>
                     @Html.DisplayFor(x => item.Text)
                 </td>
             </th>
         </tr>
+        
     }
-
-
-
+    <tr>
+        <div id="map" style="height: 500px; margin: 0 auto;"></div>
+    </tr>
+    <tr>
+        @Html.HiddenFor(model => model.Notification.Coordinate.Location.WellKnownValue.WellKnownText)
+    </tr>
 </table>
+
+<script>
+    
+    function initMap() {
+        var coordintes = document.getElementById("Notification_Coordinate_Location_WellKnownValue_WellKnownText").value;
+        coordintes = coordintes.slice(7);
+        coordintes = coordintes.substring(0, coordintes.length - 1);
+        coordintes = coordintes.split(" ");
+
+        var latitude = parseFloat(coordintes[1]);
+        var longitude = parseFloat(coordintes[0]);
+
+        var myOptions = {
+            zoom: 14,
+            center: { lat: latitude - 0.002, lng: longitude + 0.003 }
+        }
+        var map = new google.maps.Map(document.getElementById('map'), myOptions);
+
+        var marker = new google.maps.Marker({
+            position: { lat: latitude, lng: longitude },
+            map: map,
+            title: 'Tu nastąpiło zgłoszenie!'
+        });
+
+        google.maps.event.trigger(map, "resize");
+        map.panTo(marker.getPosition());
+        map.setZoom(14);
+
+        document.getElementById('map').style.display = "block";
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuYqUXi-eExz_1aJb-SdoCXHbMvFMC_oY&callback=initMap" async defer></script>

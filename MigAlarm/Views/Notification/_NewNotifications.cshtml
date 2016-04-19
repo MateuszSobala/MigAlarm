@@ -60,11 +60,10 @@
 <script type="text/javascript">
     function loadDetails(data) {
         $('.modal-body').html(data);
-
         $('#modal-container').modal('show');
     };
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('body').on('click', '.modal-link', function(e) {
             e.preventDefault();
             $(this).attr('data-target', '#modal-container');
@@ -73,6 +72,7 @@
 
         $('#modal-container').on('hidden.bs.modal', function() {
             $(this).removeData('bs.modal');
+            document.getElementById('map').style.display = "none";
         });
     });
 </script>
