@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Mvc;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
+using MigAlarm.Models.Views;
 using PagedList;
 using static System.String;
 
@@ -203,6 +204,21 @@ namespace MigAlarm.Controllers
             }
             
             return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public ActionResult GetDetails(int id)
+        {
+            var model = new UserDetailsViewModel
+            {
+                Username = $"{IdentityHelper.User.Forname} {IdentityHelper.User.Forname}",
+                ActiveEventsCounter =
+                    _db.Notifications.Count(x => x.UserId == id && x.DateAccepted.HasValue && !x.DateClosed.HasValue),
+                ClosedEventsCounter = 
+                    _db.Notifications.Count(x => x.UserId == id && x.DateAccepted.HasValue && x.DateClosed.HasValue)
+            };
+
+            return PartialView("_Details", model);
         }
 
         protected override void Dispose(bool disposing)

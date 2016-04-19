@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace MigAlarm.Models
 {
@@ -32,5 +34,9 @@ namespace MigAlarm.Models
 
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
+
+        [NotMapped]
+        [DisplayName("Aktywne zdarzenia")]
+        public int ActiveEventsCounter => Notifications.Count(x => x.DateAccepted.HasValue && !x.DateClosed.HasValue);
     }
 }

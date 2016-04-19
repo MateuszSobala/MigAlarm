@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Security;
 using MigAlarm.Models;
+using MigAlarm.Models.Views;
 
 namespace MigAlarm.Helpers
 {

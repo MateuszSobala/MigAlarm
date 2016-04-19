@@ -44,6 +44,7 @@
                 {
                     @Ajax.ImageActionLink(@Url.Content("~/Content/Images/close.png"), "Zamknij", "SetClosed", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "image-size" })
                 }
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.Id }, new AjaxOptions { OnSuccess = "loadDetails(data);" }, new { @class = "image-size" })
             </td>
         </tr>
     }
