@@ -1,9 +1,9 @@
+using System.Data.Entity;
+
 namespace MigAlarm.Migrations
 {
     using Models;
-    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    using System.Text;
     using Utils;
     internal sealed class Configuration : DbMigrationsConfiguration<MigAlarmContext>
     {
@@ -143,6 +143,14 @@ namespace MigAlarm.Migrations
             defaultUserRole.Users.Add(defaultUser);
             context.Roles.AddOrUpdate(defaultUserRole);
 
+            var secondUserRole = new Role
+            {
+                Institution = centrumZarzadzaniaKryzysowegoWroclaw,
+                RoleType = RoleType.User
+            };
+            defaultUserRole.Users.Add(secondUser);
+            context.Roles.AddOrUpdate(secondUserRole);
+
             var defaultAdminRole = new Role
             {
                 Institution = centrumZarzadzaniaKryzysowegoWroclaw,
@@ -153,7 +161,7 @@ namespace MigAlarm.Migrations
             context.SaveChanges();
         }
 
-        private void clearData(MigAlarmContext context)
+        private void ClearData(DbContext context)
         {
             context.Database.ExecuteSqlCommand("DELETE UserRoles");
             context.Database.ExecuteSqlCommand("DELETE Roles");
