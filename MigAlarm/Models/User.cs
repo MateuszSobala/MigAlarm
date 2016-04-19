@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,6 +32,12 @@ namespace MigAlarm.Models
         [Required]
         [DisplayName("Adres email")]
         public string Email { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? LastLogin { get; set; }
+
+        [Required, DefaultValue(false)]
+        public bool IsLoggedIn { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }

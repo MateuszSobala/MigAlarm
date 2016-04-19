@@ -28,7 +28,7 @@ namespace MigAlarm.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            //clearData(context);
+            /*ClearData(context);
 
             var defaultUser = new User
             {
@@ -254,7 +254,7 @@ namespace MigAlarm.Migrations
 
             context.AdditionalData.AddRange(exmapleAdditionalData);
 
-            context.SaveChanges();
+            context.SaveChanges();*/
         }
 
         private void ClearData(DbContext context)

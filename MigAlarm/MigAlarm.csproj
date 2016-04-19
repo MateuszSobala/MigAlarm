@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201604171131300_AdditionalData-extended.Designer.cs">
       <DependentUpon>201604171131300_AdditionalData-extended.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604192127039_user-loggedin-info.cs" />
+    <Compile Include="Migrations\201604192127039_user-loggedin-info.Designer.cs">
+      <DependentUpon>201604192127039_user-loggedin-info.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
     <Compile Include="Models\AdditionalDataType.cs" />
@@ -344,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604171131300_AdditionalData-extended.resx">
       <DependentUpon>201604171131300_AdditionalData-extended.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604192127039_user-loggedin-info.resx">
+      <DependentUpon>201604192127039_user-loggedin-info.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
