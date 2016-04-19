@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace MigAlarm.Models
+namespace MigAlarm.Models.Views
 {
     public class LoginViewModel
     {

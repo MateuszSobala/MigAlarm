@@ -205,6 +205,12 @@ namespace MigAlarm.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+        public ActionResult GetDetails(int id)
+        {
+            return PartialView("_Details");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -3,6 +3,7 @@ using System.Web.Security;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
 using System.Linq;
+using MigAlarm.Models.Views;
 
 namespace MigAlarm.Controllers
 {
@@ -47,6 +48,30 @@ namespace MigAlarm.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View(new ChangePasswordViewModel());
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _db.Users.Find(IdentityHelper.User.UserId);
+
+                user.Password = model.Password;
+
+                _db.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
         }
     }
 }

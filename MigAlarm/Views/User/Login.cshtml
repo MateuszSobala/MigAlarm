@@ -1,9 +1,14 @@
-﻿<h2>Logowanie</h2>
-@model MigAlarm.Models.LoginViewModel
+﻿@model MigAlarm.Models.Views.LoginViewModel
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Zaloguj się";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<br />
+<ol class="breadcrumb">
+    <li class="active">Logowanie</li>
+</ol>
+
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true, "Login failed. Check your login details.")
@@ -11,7 +16,7 @@
         <fieldset>
             <div>
                 <fieldset>
-                    <legend>Logowanie</legend>
+                    <legend>Zaloguj się do systemu</legend>
                     <div class="editor-label">
                         @Html.LabelFor(u => u.Email)
                     </div>
