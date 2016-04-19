@@ -12,7 +12,13 @@
             @if (institutionInCookie?.Value != null)
             {
                 <li>
-                    @IdentityHelper.User.Roles.FirstOrDefault(r => r.InstitutionId.ToString() == institutionInCookie.Value)?.Institution.Name
+                    @{
+                        var firstOrDefault = IdentityHelper.User.Roles.FirstOrDefault(r => r.InstitutionId.ToString() == institutionInCookie.Value);
+                    }
+                    @if (firstOrDefault != null)
+                    {
+                        @firstOrDefault.Institution.Name
+                    }
                 </li>
             }
         </ul>
