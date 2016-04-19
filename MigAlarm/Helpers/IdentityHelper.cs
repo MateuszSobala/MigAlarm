@@ -40,15 +40,15 @@ namespace MigAlarm.Helpers
 
         private static bool CheckUserInstitutionRights(string email, int institutionId)
         {
+            Db.Users.Include("Roles");
             var user = Db.Users.FirstOrDefault(x => x.Email == email);
-            if (user == null)
-                return false;
 
-            var role = user.Roles.FirstOrDefault(x => x.InstitutionId == institutionId);
-            if (role == null)
-                return false;
-
-            return true;
+            if (user == null) return false;
+            {
+                //var role = user.Roles.FirstOrDefault(x => x.Institution.Id == institutionId);
+                var role = user.Roles.FirstOrDefault(x => x.InstitutionId == institutionId);
+                return role != null;
+            }
         }
 
         public static bool ValidateUser(LoginViewModel logon, HttpResponseBase response)
@@ -65,7 +65,6 @@ namespace MigAlarm.Helpers
             Db.Set<User>().Local.ToList().ForEach(x =>
             {
                 Db.Entry(x).State = EntityState.Detached;
-                x = null;
             });
 
             var serializer = new JavaScriptSerializer();
@@ -74,7 +73,6 @@ namespace MigAlarm.Helpers
             Db.Set<User>().Local.ToList().ForEach(x =>
             {
                 Db.Entry(x).State = EntityState.Detached;
-                x = null;
             });
 
             Db.Configuration.LazyLoadingEnabled = true;

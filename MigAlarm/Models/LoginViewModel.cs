@@ -28,10 +28,7 @@ namespace MigAlarm.Models
         [Display(Name = "Instytucja")]
         public int SelectedInstitutionId { get; set; }
 
-        public IEnumerable<SelectListItem> InstitutionItems
-        {
-            get { return new SelectList(_institutions, "Id", "Name"); }
-        }
+        public IEnumerable<SelectListItem> InstitutionItems => _institutions != null ? new SelectList(_institutions, "Id", "Name") : null;
 
         public string RedirectUrl { get; set; }
     }
