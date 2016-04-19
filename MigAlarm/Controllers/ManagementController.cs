@@ -212,6 +212,8 @@ namespace MigAlarm.Controllers
             var model = new UserDetailsViewModel
             {
                 Username = $"{IdentityHelper.User.Forname} {IdentityHelper.User.Forname}",
+                IsOnline = IdentityHelper.User.IsLoggedIn,
+                LastLoginDate = IdentityHelper.User.LastLogin,
                 ActiveEventsCounter =
                     _db.Notifications.Count(x => x.UserId == id && x.DateAccepted.HasValue && !x.DateClosed.HasValue),
                 ClosedEventsCounter = 

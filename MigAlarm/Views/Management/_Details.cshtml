@@ -2,6 +2,9 @@
 
 <h4>@Model.Username</h4>
 
+@Html.DisplayNameFor(x => x.LastLoginDate)
+<span class="badge">@Html.DisplayFor(x => x.LastLoginDate)</span>
+<br />
 @Html.DisplayNameFor(x => x.ActiveEventsCounter)
 <span class="badge">@Html.DisplayFor(x => x.ActiveEventsCounter)</span>
 <br/>

@@ -316,6 +316,7 @@
     <Content Include="Views\Notification\_Details.cshtml" />
     <Content Include="Views\Management\_Details.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\_Modal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
