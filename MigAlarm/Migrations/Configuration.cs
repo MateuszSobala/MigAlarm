@@ -163,9 +163,9 @@ namespace MigAlarm.Migrations
             {
                 Event = police,
                 EventId = 102,
-                Coordinate = centrumZarzadzaniaKryzysowegoLodzCoordinates,
-                Institution = centrumZarzadzaniaKryzysowegoLodz,
-                UserId = 1,
+                Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates,
+                Institution = centrumZarzadzaniaKryzysowegoWroclaw,
+                User = defaultUser
             };
             context.Notifications.Add(exampleNotification);
 
@@ -215,7 +215,7 @@ namespace MigAlarm.Migrations
             var exampleUserMedicines = new AdditionalData
             {
                 AdditionalDataType = AdditionalDataType.Medicines,
-                Text = string.Empty,
+                Text = "Brak",
                 Notification = exampleNotification
             };
             exmapleAdditionalData.Add(exampleUserMedicines);
@@ -223,7 +223,7 @@ namespace MigAlarm.Migrations
             var exampleUserAppearance = new AdditionalData
             {
                 AdditionalDataType = AdditionalDataType.Appearance,
-                Text = "Micha³a Wroc³awczyka 10\n50-380 Wroc³aw\n",
+                Text = "?",
                 Notification = exampleNotification
             };
             exmapleAdditionalData.Add(exampleUserAppearance);
@@ -239,7 +239,7 @@ namespace MigAlarm.Migrations
             var exampleLocalization = new AdditionalData
             {
                 AdditionalDataType = AdditionalDataType.Localization,
-                Text = "51.1111787 17.0561944",
+                Text = "Micha³a Wroc³awczyka 10\n50-380 Wroc³aw\n",
                 Notification = exampleNotification
             };
             exmapleAdditionalData.Add(exampleLocalization);
@@ -251,6 +251,8 @@ namespace MigAlarm.Migrations
                 Notification = exampleNotification
             };
             exmapleAdditionalData.Add(exampleOther);
+
+            context.AdditionalData.AddRange(exmapleAdditionalData);
 
             context.SaveChanges();
         }

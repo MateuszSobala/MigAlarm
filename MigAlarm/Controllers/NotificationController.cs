@@ -50,7 +50,9 @@ namespace MigAlarm.Controllers
         [Authorize]
         public ActionResult GetDetails(int id)
         {
-            return PartialView("_Details");
+            var selectedNotification = _db.Notifications.First(x => x.Id == id);
+
+            return PartialView("_Details", new NotificationViewModel { Notification = selectedNotification});
         }
 
         [Authorize]

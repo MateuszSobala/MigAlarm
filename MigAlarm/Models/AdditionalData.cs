@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MigAlarm.Models
@@ -11,7 +12,6 @@ namespace MigAlarm.Models
         [Required]
         public string Text { get; set; }
 
-        [Required]
         public AdditionalDataType AdditionalDataType { get; set; }
 
         [Required]
