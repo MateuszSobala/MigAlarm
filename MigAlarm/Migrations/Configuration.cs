@@ -164,8 +164,7 @@ namespace MigAlarm.Migrations
                 Event = police,
                 EventId = 102,
                 Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates,
-                Institution = centrumZarzadzaniaKryzysowegoWroclaw,
-                User = defaultUser
+                Institution = centrumZarzadzaniaKryzysowegoWroclaw
             };
             context.Notifications.Add(exampleNotification);
 

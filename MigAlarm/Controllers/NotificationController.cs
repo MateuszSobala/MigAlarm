@@ -71,7 +71,7 @@ namespace MigAlarm.Controllers
 
                 return Json(new {Success = "True"}, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
 
@@ -94,7 +94,7 @@ namespace MigAlarm.Controllers
 
                 return Json(new { Success = "True" }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
 
