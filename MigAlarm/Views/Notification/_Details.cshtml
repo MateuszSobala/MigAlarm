@@ -3,7 +3,7 @@
 @model MigAlarm.Models.Views.NotificationViewModel
 
 <table class="detailsTable">
-    @foreach (var item in Model.Notification.AdditionalData )
+    @foreach (var item in Model.Notification.AdditionalData)
     {
         <tr>
             <th>
@@ -16,7 +16,7 @@
                 </td>
             </th>
         </tr>
-        
+
     }
     <tr>
         <div id="map" style="height: 500px; margin: 0 auto;"></div>
@@ -27,7 +27,7 @@
 </table>
 
 <script>
-    
+
     function initMap() {
         var coordintes = document.getElementById("Notification_Coordinate_Location_WellKnownValue_WellKnownText").value;
         coordintes = coordintes.slice(7);
