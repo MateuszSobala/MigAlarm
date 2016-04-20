@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using MigAlarm.Models;
 using MigAlarm.Utils;
+using System.Data.Entity;
 
-namespace MigAlarm.Areas.NotificationApi
+namespace MigAlarm.Areas.NofiticationApi
 {
     public class NotificationController : ApiController
     {
@@ -147,41 +147,39 @@ namespace MigAlarm.Areas.NotificationApi
                 additionalData.Add(localization);
             }
 
-            if (string.IsNullOrWhiteSpace(json.Users.Other)) return additionalData;
-            var other = new AdditionalData
+            if (!string.IsNullOrWhiteSpace(json.Users.Other))
             {
-                AdditionalDataType = AdditionalDataType.Other,
-                Text = json.Users.Other,
-                Notification = notification
-            };
-            additionalData.Add(other);
+                var other = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Other,
+                    Text = json.Users.Other,
+                    Notification = notification
+                };
+                additionalData.Add(other);
+            }
 
             return additionalData;
         }
 
         private class Difference : IComparable<Difference>
         {
-            private readonly int _institutionId;
-            private readonly double? _difference;
-
-            public Difference(double? difference, int institutionId)
-            {
-                _difference = difference;
-                _institutionId = institutionId;
-            }
-
-            private bool Equals(Difference other)
+            public int institutionId;
+            public double difference;
+            public bool Equals(Difference other)
             {
                 if (other == null)
                 {
                     return false;
                 }
-                if (_institutionId == other._institutionId)
+                if (institutionId == other.institutionId)
                 {
                     return true;
                 }
-                var d = _difference - other._difference;
-                return d != null && Math.Abs((double) d) < 0.001;
+                if (difference == other.difference)
+                {
+                    return true;
+                }
+                return false;
             }
 
             public int CompareTo(Difference other)
@@ -190,21 +188,11 @@ namespace MigAlarm.Areas.NotificationApi
                 {
                     return 0;
                 }
-                if (other == null || _difference > other._difference)
+                if (other == null || difference > other.difference)
                 {
                     return 1;
                 }
                 return -1;
-            }
-
-            public double? GetDifference()
-            {
-                return _difference;
-            }
-
-            public int GetInstitutionId()
-            {
-                return _institutionId;
             }
         }
 
@@ -212,17 +200,21 @@ namespace MigAlarm.Areas.NotificationApi
         {
             var differenceList = new List<Difference>();
             var institutions = _db.Institutions.Include(i => i.Address.Coordinate).ToList();
-            Parallel.ForEach(institutions, currentInstitution =>
+            Parallel.ForEach(institutions, (currentInstitution) =>
             {
                 var difference = currentLocalization.Distance(currentInstitution.Address.Coordinate.Location);
-
-                var diffObj = new Difference(difference, currentInstitution.Id);
+                
+                var diffObj = new Difference
+                {
+                    institutionId = currentInstitution.Id,
+                    difference = difference ?? 0
+                };
 
                 differenceList.Add(diffObj);
             });
 
-            var nearestId = differenceList.OrderBy(x => x.GetDifference()).ThenBy(x => x.GetInstitutionId());
-            var nearestInstitution = _db.Institutions.Include("Address").FirstOrDefault(i => i.Id == nearestId.First().GetDifference());
+            var nearestId = differenceList.OrderBy(l => l.difference).Select(d => d.institutionId).First();
+            var nearestInstitution = _db.Institutions.Include("Address").FirstOrDefault(i => i.Id == nearestId);
 
             return nearestInstitution;
         }
