@@ -12,6 +12,8 @@ namespace MigAlarm.Models
             ChildEvents = new HashSet<Event>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EventId { get; set; }
         [Required]
         public string Name { get; set; }

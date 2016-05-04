@@ -28,232 +28,408 @@ namespace MigAlarm.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            /*ClearData(context);
-
-            var defaultUser = new User
+            using (var ts = context.Database.BeginTransaction())
             {
-                Forname = "John",
-                Surname = "Doe",
-                Email = "johndoe@example.com",
-                Password = "password"
-            };
-            context.Users.AddOrUpdate(defaultUser);
+                ClearData(context);
 
-            var secondUser = new User
-            {
-                Forname = "Ben",
-                Surname = "Murphy",
-                Email = "benmurphy@example.com",
-                Password = "ben"
-            };
-            context.Users.AddOrUpdate(secondUser);
+                var defaultUser = new User
+                {
+                    Forname = "John",
+                    Surname = "Doe",
+                    Email = "johndoe@example.com",
+                    Password = "password"
+                };
+                context.Users.AddOrUpdate(defaultUser);
 
-            var defaultAdmin = new User
-            {
-                Forname = "Mr",
-                Surname = "Admin",
-                Email = "admin@example.com",
-                Password = "p@ssword"
-            };
-            context.Users.AddOrUpdate(defaultAdmin);
+                var secondUser = new User
+                {
+                    Forname = "Ben",
+                    Surname = "Murphy",
+                    Email = "benmurphy@example.com",
+                    Password = "ben"
+                };
+                context.Users.AddOrUpdate(secondUser);
 
-            var poland = new Country
-            {
-                Name = "Polska",
-                Code = "PL"
-            };
-            context.Countries.AddOrUpdate(poland);
+                var defaultAdmin = new User
+                {
+                    Forname = "Mr",
+                    Surname = "Admin",
+                    Email = "admin@example.com",
+                    Password = "p@ssword"
+                };
+                context.Users.AddOrUpdate(defaultAdmin);
 
-            var police = new Event
-            {
-                Name = "Police"
-            };
-            var fireDepartment = new Event
-            {
-                Name = "FireDeparment"
-            };
-            var emergencyService = new Event
-            {
-                Name = "EmergencyService"
-            };
-            var robbery = new Event
-            {
-                Name = "Robbery",
-                ParentEvent = police
-            };
-            var carAccident = new Event
-            {
-                Name = "CarAccident",
-                ParentEvent = police
-            };
-            context.Events.AddOrUpdate(police, fireDepartment, emergencyService, robbery, carAccident);
+                var poland = new Country
+                {
+                    Name = "Polska",
+                    Code = "PL"
+                };
+                context.Countries.AddOrUpdate(poland);
 
-            var centrumZarzadzaniaKryzysowegoWroclawCoordinates = new Coordinate
-            {
-                Location = GeoUtils.CreatePoint(51.114265, 16.972300)
-            };
-            context.Coordinates.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclawCoordinates);
+                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Events ON");
 
-            var centrumZarzadzaniaKryzysowegoWroclawAddress = new Address
-            {
-                Country = poland,
-                ZipCode = "50-153",
-                City = "Wroclaw",
-                Street = "Pl. Powstancow Warszawy",
-                HouseNo = 1,
-                Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates
-            };
-            context.Addresses.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclawAddress);
+                var carCollision = new Event
+                {
+                    EventId = 1,
+                    Name = "St³uczka"
+                };
+                var carAccidentWithInjured = new Event
+                {
+                    EventId = 2,
+                    Name = "Wypadek z rannymi"
+                };
+                var hitPedestrian = new Event
+                {
+                    EventId = 3,
+                    Name = "Potr¹cenie pieszego"
+                };
+                var multiVehicleAccident = new Event
+                {
+                    EventId = 4,
+                    Name = "Kraksa wielu samochodów"
+                };
+                var theft = new Event
+                {
+                    EventId = 10,
+                    Name = "Kradzie¿"
+                };
+                var burglar = new Event
+                {
+                    EventId = 11,
+                    Name = "W³amanie"
+                };
+                var physicalViolence = new Event
+                {
+                    EventId = 20,
+                    Name = "Przemoc fizyczna"
+                };
+                var psychologicalViolence = new Event
+                {
+                    EventId = 21,
+                    Name = "Przemoc psychiczna"
+                };
+                var sexualViolence = new Event
+                {
+                    EventId = 22,
+                    Name = "Przemoc seksualna"
+                };
+                var criminalDamage = new Event
+                {
+                    EventId = 23,
+                    Name = "Niszczenie mienia"
+                };
+                var breachOfTheDutyToCare = new Event
+                {
+                    EventId = 24,
+                    Name = "Naruszenie obowi¹zku do opieki"
+                };
+                var murder = new Event
+                {
+                    EventId = 90,
+                    Name = "Zabójstwo"
+                };
+                var rape = new Event
+                {
+                    EventId = 91,
+                    Name = "Gwa³t"
+                };
+                var assaultWithWeapon = new Event
+                {
+                    EventId = 92,
+                    Name = "Napaœæ z broni¹"
+                };
+                var otherPolice = new Event
+                {
+                    EventId = 99,
+                    Name = "Policja"
+                };
+                var faint = new Event
+                {
+                    EventId = 101,
+                    Name = "Omdlenie"
+                };
+                var lossOfVitalFunctions = new Event
+                {
+                    EventId = 102,
+                    Name = "Utrata funkcji ¿yciowych"
+                };
+                var seriousRoadAccident = new Event
+                {
+                    EventId = 103,
+                    Name = "Powa¿ny wypadek drogowy"
+                };
+                var severeInjury = new Event
+                {
+                    EventId = 104,
+                    Name = "Ciê¿kie zranienie"
+                };
+                var severeBurns = new Event
+                {
+                    EventId = 105,
+                    Name = "Ciê¿kie oparzenia"
+                };
+                var drowningOrElectricShock = new Event
+                {
+                    EventId = 106,
+                    Name = "Utoniêcie lub pora¿enie pr¹dem"
+                };
+                var painInChest = new Event
+                {
+                    EventId = 110,
+                    Name = "Ból w klatce piersiowej"
+                };
+                var headache = new Event
+                {
+                    EventId = 111,
+                    Name = "Ból g³owy"
+                };
+                var stomachAche = new Event
+                {
+                    EventId = 112,
+                    Name = "Ból brzucha"
+                };
+                var limbPain = new Event
+                {
+                    EventId = 113,
+                    Name = "Ból koñczyny"
+                };
+                var backPain = new Event
+                {
+                    EventId = 114,
+                    Name = "Ból pleców"
+                };
+                var otherPain = new Event
+                {
+                    EventId = 115,
+                    Name = "Inny ból"
+                };
+                var childbirth = new Event
+                {
+                    EventId = 190,
+                    Name = "Poród"
+                };
+                var otherEmergency = new Event
+                {
+                    EventId = 199,
+                    Name = "Pogotowie ratunkowe"
+                };
+                var smallFire = new Event
+                {
+                    EventId = 201,
+                    Name = "Ma³y ogieñ"
+                };
+                var largeFire = new Event
+                {
+                    EventId = 202,
+                    Name = "Du¿y ogieñ"
+                };
+                var conflagration = new Event
+                {
+                    EventId = 203,
+                    Name = "Po¿oga"
+                };
+                var carAccident = new Event
+                {
+                    EventId = 210,
+                    Name = "Wypadek drogowy"
+                };
+                var multiVehicleAccidentFireBrigade = new Event
+                {
+                    EventId = 211,
+                    Name = "Kraksa wielu samochodów"
+                };
+                var accidentInHome = new Event
+                {
+                    EventId = 212,
+                    Name = "Wypadek w domu"
+                };
+                var animalInNeed = new Event
+                {
+                    EventId = 290,
+                    Name = "Zwierzê w potrzebie"
+                };
+                var otherFireBrigade = new Event
+                {
+                    EventId = 299,
+                    Name = "Stra¿ po¿arna"
+                };
+                context.Events.AddOrUpdate(carCollision, carAccidentWithInjured, hitPedestrian, multiVehicleAccident, theft, burglar,
+                    physicalViolence, psychologicalViolence, sexualViolence, criminalDamage, breachOfTheDutyToCare, murder,
+                    rape, assaultWithWeapon, otherPolice, faint, lossOfVitalFunctions, seriousRoadAccident, severeInjury,
+                    severeBurns, drowningOrElectricShock, painInChest, headache, stomachAche, limbPain, backPain, otherPain,
+                    childbirth, otherEmergency, smallFire, largeFire, conflagration, carAccident, multiVehicleAccidentFireBrigade,
+                    accidentInHome, animalInNeed, otherFireBrigade);
 
-            var centrumZarzadzaniaKryzysowegoWroclaw = new Institution
-            {
-                Name = "Dolnoslaskie Centrum Zarzadzania Kryzysowego",
-                Address = centrumZarzadzaniaKryzysowegoWroclawAddress
-            };
-            context.Institutions.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclaw);
+                var centrumZarzadzaniaKryzysowegoWroclawCoordinates = new Coordinate
+                {
+                    Location = GeoUtils.CreatePoint(51.114265, 16.972300)
+                };
+                context.Coordinates.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclawCoordinates);
 
-            var centrumZarzadzaniaKryzysowegoLodzCoordinates = new Coordinate
-            {
-                Location = GeoUtils.CreatePoint(51.765161, 19.457474)
-            };
-            context.Coordinates.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodzCoordinates);
+                var centrumZarzadzaniaKryzysowegoWroclawAddress = new Address
+                {
+                    Country = poland,
+                    ZipCode = "50-153",
+                    City = "Wroclaw",
+                    Street = "Pl. Powstancow Warszawy",
+                    HouseNo = 1,
+                    Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates
+                };
+                context.Addresses.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclawAddress);
 
-            var centrumZarzadzaniaKryzysowegoLodzAddress = new Address
-            {
-                Country = poland,
-                ZipCode = "90-004",
-                City = "Lodz",
-                Street = "Piotrkowska",
-                HouseNo = 104,
-                Coordinate = centrumZarzadzaniaKryzysowegoLodzCoordinates
-            };
-            context.Addresses.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodzAddress);
+                var centrumZarzadzaniaKryzysowegoWroclaw = new Institution
+                {
+                    Name = "Dolnoslaskie Centrum Zarzadzania Kryzysowego",
+                    Address = centrumZarzadzaniaKryzysowegoWroclawAddress
+                };
+                context.Institutions.AddOrUpdate(centrumZarzadzaniaKryzysowegoWroclaw);
 
-            var centrumZarzadzaniaKryzysowegoLodz = new Institution
-            {
-                Name = "Wojewodzkie Centrum Zarzadzania Kryzysowego w Lodzi",
-                Address = centrumZarzadzaniaKryzysowegoLodzAddress
-            };
-            context.Institutions.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodz);
+                var centrumZarzadzaniaKryzysowegoLodzCoordinates = new Coordinate
+                {
+                    Location = GeoUtils.CreatePoint(51.765161, 19.457474)
+                };
+                context.Coordinates.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodzCoordinates);
 
-            var defaultUserRole = new Role
-            {
-                Institution = centrumZarzadzaniaKryzysowegoWroclaw,
-                RoleType = RoleType.User
-            };
-            defaultUserRole.Users.Add(defaultUser);
-            context.Roles.AddOrUpdate(defaultUserRole);
+                var centrumZarzadzaniaKryzysowegoLodzAddress = new Address
+                {
+                    Country = poland,
+                    ZipCode = "90-004",
+                    City = "Lodz",
+                    Street = "Piotrkowska",
+                    HouseNo = 104,
+                    Coordinate = centrumZarzadzaniaKryzysowegoLodzCoordinates
+                };
+                context.Addresses.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodzAddress);
 
-            var secondUserRole = new Role
-            {
-                Institution = centrumZarzadzaniaKryzysowegoWroclaw,
-                RoleType = RoleType.User
-            };
-            context.Roles.AddOrUpdate(secondUserRole);
+                var centrumZarzadzaniaKryzysowegoLodz = new Institution
+                {
+                    Name = "Wojewodzkie Centrum Zarzadzania Kryzysowego w Lodzi",
+                    Address = centrumZarzadzaniaKryzysowegoLodzAddress
+                };
+                context.Institutions.AddOrUpdate(centrumZarzadzaniaKryzysowegoLodz);
 
-            var defaultAdminRole = new Role
-            {
-                Institution = centrumZarzadzaniaKryzysowegoWroclaw,
-                RoleType = RoleType.Admin
-            };
-            defaultAdminRole.Users.Add(defaultAdmin);
-            context.Roles.AddOrUpdate(defaultAdminRole);
+                var defaultUserRole = new Role
+                {
+                    Institution = centrumZarzadzaniaKryzysowegoWroclaw,
+                    RoleType = RoleType.User
+                };
+                defaultUserRole.Users.Add(defaultUser);
+                context.Roles.AddOrUpdate(defaultUserRole);
 
-            var exampleNotification = new Notification
-            {
-                Event = police,
-                EventId = 102,
-                Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates,
-                Institution = centrumZarzadzaniaKryzysowegoWroclaw
-            };
-            context.Notifications.Add(exampleNotification);
+                var secondUserRole = new Role
+                {
+                    Institution = centrumZarzadzaniaKryzysowegoWroclaw,
+                    RoleType = RoleType.User
+                };
+                context.Roles.AddOrUpdate(secondUserRole);
 
-            var exmapleAdditionalData = new List<AdditionalData>();
+                var defaultAdminRole = new Role
+                {
+                    Institution = centrumZarzadzaniaKryzysowegoWroclaw,
+                    RoleType = RoleType.Admin
+                };
+                defaultAdminRole.Users.Add(defaultAdmin);
+                context.Roles.AddOrUpdate(defaultAdminRole);
 
-            var exampleUserName = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Name,
-                Text = "Jan Kowalski",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleUserName);
+                var exampleNotification = new Notification
+                {
+                    Event = carCollision,
+                    EventId = 1,
+                    Coordinate = centrumZarzadzaniaKryzysowegoWroclawCoordinates,
+                    Institution = centrumZarzadzaniaKryzysowegoWroclaw
+                };
+                context.Notifications.Add(exampleNotification);
 
-            var examplePhoneNumber = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.PhoneNumber,
-                Text = "123456789",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(examplePhoneNumber);
+                var exmapleAdditionalData = new List<AdditionalData>();
 
+                var exampleUserName = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Name,
+                    Text = "Jan Kowalski",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleUserName);
 
-            var exampleUserYearOfBirth = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Birthday,
-                Text = "1992",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleUserYearOfBirth);
+                var examplePhoneNumber = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.PhoneNumber,
+                    Text = "123456789",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(examplePhoneNumber);
 
-            var exampleUserAddress = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.HomeAddress,
-                Text = "Ul. Œmieszna 4\nWroclaw",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleUserAddress);
+                var exampleUserYearOfBirth = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Birthday,
+                    Text = "1992",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleUserYearOfBirth);
 
-            var exampleUserDiseases = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Diseases,
-                Text = "Alergia na trawy",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleUserDiseases);
+                var exampleUserAddress = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.HomeAddress,
+                    Text = "Ul. Œmieszna 4, Wroclaw",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleUserAddress);
 
-            var exampleUserMedicines = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Medicines,
-                Text = "Brak",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleUserMedicines);
+                var exampleUserDiseases = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Diseases,
+                    Text = "Alergia na trawy",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleUserDiseases);
 
-            var exampleUserAppearance = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Appearance,
-                Text = "?",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleUserAppearance);
+                var exampleUserMedicines = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Medicines,
+                    Text = "Claritine Allergy",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleUserMedicines);
 
-            var exampleUserBloodGroup = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.BloodGroup,
-                Text = "0",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleUserBloodGroup);
+                var exampleUserAppearance = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Appearance,
+                    Text = "Wysoki blondyn",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleUserAppearance);
 
-            var exampleLocalization = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Localization,
-                Text = "Micha³a Wroc³awczyka 10\n50-380 Wroc³aw\n",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleLocalization);
+                var exampleUserBloodGroup = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.BloodGroup,
+                    Text = "0",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleUserBloodGroup);
 
-            var exampleOther = new AdditionalData
-            {
-                AdditionalDataType = AdditionalDataType.Other,
-                Text = "W domu groŸny pies",
-                Notification = exampleNotification
-            };
-            exmapleAdditionalData.Add(exampleOther);
+                var exampleLocalization = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Localization,
+                    Text = "Micha³a Wroc³awczyka 10, 50-380 Wroc³aw",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleLocalization);
 
-            context.AdditionalData.AddRange(exmapleAdditionalData);
+                var exampleOther = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Other,
+                    Text = "W domu groŸny pies",
+                    Notification = exampleNotification
+                };
+                exmapleAdditionalData.Add(exampleOther);
 
-            context.SaveChanges();*/
+                context.AdditionalData.AddRange(exmapleAdditionalData);
+
+                context.SaveChanges();
+
+                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Events OFF");
+
+                ts.Commit();
+            }
         }
 
         private void ClearData(DbContext context)

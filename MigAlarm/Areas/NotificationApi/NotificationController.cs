@@ -8,7 +8,7 @@ using MigAlarm.Models;
 using MigAlarm.Utils;
 using System.Data.Entity;
 
-namespace MigAlarm.Areas.NofiticationApi
+namespace MigAlarm.Areas.NotificationApi
 {
     public class NotificationController : ApiController
     {

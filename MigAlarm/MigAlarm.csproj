@@ -221,6 +221,10 @@
     <Compile Include="Migrations\201604192127039_user-loggedin-info.Designer.cs">
       <DependentUpon>201604192127039_user-loggedin-info.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605041944338_EventId-explicit.cs" />
+    <Compile Include="Migrations\201605041944338_EventId-explicit.Designer.cs">
+      <DependentUpon>201605041944338_EventId-explicit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
     <Compile Include="Models\AdditionalDataType.cs" />
@@ -229,7 +233,6 @@
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventNode.cs" />
-    <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\JsonReceiveItem.cs" />
@@ -370,6 +373,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604192127039_user-loggedin-info.resx">
       <DependentUpon>201604192127039_user-loggedin-info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605041944338_EventId-explicit.resx">
+      <DependentUpon>201605041944338_EventId-explicit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

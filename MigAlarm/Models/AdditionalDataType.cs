@@ -9,7 +9,7 @@ namespace MigAlarm.Models
     public enum AdditionalDataType
     {
         [Display(Name = "Imię i nazwisko: ")]
-        Name = 1, //imie i nazwisko
+        Name = 1,
         [Display(Name = "Rok urodzenia: ")]
         Birthday,
         [Display(Name = "Miejsce zamieszkania: ")]
@@ -17,11 +17,11 @@ namespace MigAlarm.Models
         [Display(Name = "Choroby: ")]
         Diseases,
         [Display(Name = "Przyjmowane leki: ")]
-        Medicines, //przyjmowane leki
+        Medicines,
         [Display(Name = "Grupa krwi: ")]
         BloodGroup,
-        [Display(Name = "???: ")]
-        Appearance, //wyglad
+        [Display(Name = "Wygląd: ")]
+        Appearance,
         [Display(Name = "Numer telefonu: ")]
         PhoneNumber,
         [Display(Name = "Obecna lokalizacja: ")]
