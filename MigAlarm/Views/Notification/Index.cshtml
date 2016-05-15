@@ -2,13 +2,15 @@
     ViewBag.Title = "Zarządzaj zdarzeniami";
 }
 
+<script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+
 <br />
 <ol class="breadcrumb">
     <li><a href="@Url.Action("Index", "Home")">Strona główna</a></li>
     <li class="active">Zarządzaj zdarzeniami</li>
 </ol>
 <h2>Zarządzanie zdarzeniami</h2>
-<h4>Zawartość zakładek odświażana jest co 5 sekund</h4>
+<h4>Zawartość zakładek odświeżana jest co 5 sekund</h4>
 
 
 <div id="tabs">
@@ -39,39 +41,38 @@
 
 @Html.Partial("_Modal")
 
-
 <script>
     $(document).ready(function() {
-        setInterval(function () {
+        setInterval(function() {
             $.ajax({
                 url: '/Notification/GetNewNotifications',
-                success: function (data) {
+                success: function(data) {
                     $('.new-table').html(data);
                 }
             });
-        }, 50000);
+        }, 5000);
     });
 
-    $(document).ready(function () {
-        setInterval(function () {
+    $(document).ready(function() {
+        setInterval(function() {
             $.ajax({
                 url: '/Notification/GetActiveNotifications',
-                success: function (data) {
+                success: function(data) {
                     $('.active-table').html(data);
                 }
             });
-        }, 50000);
+        }, 5000);
     });
 
-    $(document).ready(function () {
-        setInterval(function () {
+    $(document).ready(function() {
+        setInterval(function() {
             $.ajax({
                 url: '/Notification/GetDoneNotifications',
-                success: function (data) {
+                success: function(data) {
                     $('.done-table').html(data);
                 }
             });
-        }, 50000);
+        }, 5000);
     });
 
     function removeRow(id) {

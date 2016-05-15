@@ -12,7 +12,25 @@
                     @Html.DisplayFor(x => displayName)
                 }
                 <td>
-                    @Html.DisplayFor(x => item.Text)
+                    @if (item.AdditionalDataType == AdditionalDataType.Skype)
+                    {
+                        if (!string.IsNullOrEmpty(item.Text))
+                        {
+                            <div id="SkypeButton_Call_@item.Text" style="display: inline-block">
+                                <script type="text/javascript">
+                                    Skype.ui({
+                                        "name": "call",
+                                        "element": "SkypeButton_Call_@item.Text",
+                                        "participants": ['@item.Text']
+                                    });
+                                </script>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(x => item.Text)
+                    }
                 </td>
             </th>
         </tr>

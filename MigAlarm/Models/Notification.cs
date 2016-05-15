@@ -58,5 +58,10 @@ namespace MigAlarm.Models
         public string CurrentUser
             =>
                 User != null ? $"{User.Forname} {User.Surname}" : "";
+
+        [NotMapped]
+        public string SkypeContact => AdditionalData.Any(x => x.AdditionalDataType == AdditionalDataType.Skype)
+                    ? AdditionalData.First(x => x.AdditionalDataType == AdditionalDataType.Skype).Text
+                    : string.Empty;
     }
 }
