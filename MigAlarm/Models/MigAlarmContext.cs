@@ -26,7 +26,6 @@ namespace MigAlarm.Models
         public DbSet<Institution> Institutions { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<EventNode> EventNodes { get; set; }
         public DbSet<AdditionalData> AdditionalData { get; set; }
 
         public override int SaveChanges()

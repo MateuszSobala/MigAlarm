@@ -24,3 +24,8 @@ textarea {
 #map {
     display: None;
 }
+
+.ImageEvent {
+    max-width: 400px;
+    max-height: 400px;
+}
