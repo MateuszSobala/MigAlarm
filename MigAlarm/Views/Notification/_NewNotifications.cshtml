@@ -1,7 +1,7 @@
 ﻿@using MigAlarm.Helpers
 @model MigAlarm.Models.Views.NotificationViewModel
 
-<table class="table">
+<table class="table new-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().Event.Name)
@@ -17,7 +17,7 @@
 
     @foreach (var item in Model.Notifications)
     {
-        <tr>
+        <tr id="@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.Event.Name)
             </td>
@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.DateAdded)
             </td>
             <td>
-                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/start.png"), "Przyjmij", "SetActive", new {id = item.Id}, new AjaxOptions {HttpMethod = "POST"}, new { @class = "image-size" })
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/start.png"), "Przyjmij", "SetActive", new {id = item.Id}, new AjaxOptions { OnSuccess = "removeRow(" + @item.Id + ");", HttpMethod = "POST"}, new { @class = "image-size" })
                 @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.Id }, new AjaxOptions { OnSuccess = "loadDetails(data);" }, new { @class = "image-size" })
             </td>
         </tr>

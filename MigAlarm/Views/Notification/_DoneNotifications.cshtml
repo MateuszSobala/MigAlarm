@@ -1,7 +1,7 @@
 ﻿@using MigAlarm.Helpers
 @model MigAlarm.Models.Views.NotificationViewModel
 
-<table class="table">
+<table class="table done-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().Event.Name)
@@ -20,7 +20,7 @@
 
     @foreach (var item in Model.Notifications)
     {
-        <tr>
+        <tr id="@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.Event.Name)
             </td>

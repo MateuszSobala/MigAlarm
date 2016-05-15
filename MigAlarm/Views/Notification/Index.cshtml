@@ -8,6 +8,7 @@
     <li class="active">Zarządzaj zdarzeniami</li>
 </ol>
 <h2>Zarządzanie zdarzeniami</h2>
+<h4>Zawartość zakładek odświażana jest co 5 sekund</h4>
 
 
 <div id="tabs">
@@ -37,3 +38,43 @@
 </div>
 
 @Html.Partial("_Modal")
+
+
+<script>
+    $(document).ready(function() {
+        setInterval(function () {
+            $.ajax({
+                url: '/Notification/GetNewNotifications',
+                success: function (data) {
+                    $('.new-table').html(data);
+                }
+            });
+        }, 50000);
+    });
+
+    $(document).ready(function () {
+        setInterval(function () {
+            $.ajax({
+                url: '/Notification/GetActiveNotifications',
+                success: function (data) {
+                    $('.active-table').html(data);
+                }
+            });
+        }, 50000);
+    });
+
+    $(document).ready(function () {
+        setInterval(function () {
+            $.ajax({
+                url: '/Notification/GetDoneNotifications',
+                success: function (data) {
+                    $('.done-table').html(data);
+                }
+            });
+        }, 50000);
+    });
+
+    function removeRow(id) {
+        document.getElementById(id).remove();
+    };
+</script>
