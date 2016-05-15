@@ -14,6 +14,8 @@ namespace MigAlarm.Areas.NotificationApi
     {
         private readonly MigAlarmContext _db = new MigAlarmContext();
 
+        private readonly int _otherEventId = 300;
+
         [HttpPost]
         public IHttpActionResult AddNotification(JsonReceiveItem json)
         {
@@ -29,7 +31,13 @@ namespace MigAlarm.Areas.NotificationApi
 
             var notificationEvent = _db.Events.Find(json.EventId);
             if (notificationEvent == null)
-                return BadRequest("Invalid EventId");
+            {
+                if (string.IsNullOrWhiteSpace(json.EventName))
+                    return BadRequest("Invalid Event");
+
+                notificationEvent = _db.Events.Find(_otherEventId);
+            }
+                
 
             var notification = new Notification
             {
@@ -158,15 +166,26 @@ namespace MigAlarm.Areas.NotificationApi
                 additionalData.Add(userSkype);
             }
 
-            if (!string.IsNullOrWhiteSpace(json.Users.Image))
+            if (!string.IsNullOrWhiteSpace(json.Photo))
             {
                 var userImage = new AdditionalData
                 {
                     AdditionalDataType = AdditionalDataType.Image,
-                    Text = json.Users.Image,
+                    Text = json.Photo,
                     Notification = notification
                 };
                 additionalData.Add(userImage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(json.EventName))
+            {
+                var  customEvent = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.CustomEvent,
+                    Text = json.EventName,
+                    Notification = notification
+                };
+                additionalData.Add(customEvent);
             }
 
             if (!string.IsNullOrWhiteSpace(json.Users.Other))

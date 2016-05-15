@@ -253,12 +253,17 @@ namespace MigAlarm.Migrations
                     EventId = 299,
                     Name = "Stra¿ po¿arna"
                 };
+                var other = new Event
+                {
+                    EventId = 300,
+                    Name = "Inne"
+                };
                 context.Events.AddOrUpdate(carCollision, carAccidentWithInjured, hitPedestrian, multiVehicleAccident, theft, burglar,
                     physicalViolence, psychologicalViolence, sexualViolence, criminalDamage, breachOfTheDutyToCare, murder,
                     rape, assaultWithWeapon, otherPolice, faint, lossOfVitalFunctions, seriousRoadAccident, severeInjury,
                     severeBurns, drowningOrElectricShock, painInChest, headache, stomachAche, limbPain, backPain, otherPain,
                     childbirth, otherEmergency, smallFire, largeFire, conflagration, carAccident, multiVehicleAccidentFireBrigade,
-                    accidentInHome, animalInNeed, otherFireBrigade);
+                    accidentInHome, animalInNeed, otherFireBrigade, other);
 
                 var centrumZarzadzaniaKryzysowegoWroclawCoordinates = new Coordinate
                 {

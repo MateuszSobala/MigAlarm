@@ -30,6 +30,8 @@ namespace MigAlarm.Models
         Skype,
         [Display(Name = "Zdjęcie z miejsca zdarzenia: ")]
         Image,
+        [Display(Name = "Zdarzenie określone przez użytkownika: ")]
+        CustomEvent,
         [Display(Name = "Inne: ")]
         Other = 100
     }

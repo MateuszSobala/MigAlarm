@@ -10,6 +10,8 @@ namespace MigAlarm.Models
         public User Users { get; set; }
         [Required]
         public Localization Localizations { get; set; }
+        public string EventName { get; set; }
+        public string Photo { get; set; }
 
         public class User
         {
@@ -24,7 +26,6 @@ namespace MigAlarm.Models
             [Required]
             public string PhoneNumber { get; set; }
             public string Skype { get; set; }
-            public string Image { get; set; }
             public string Other { get; set; }
         }
 
