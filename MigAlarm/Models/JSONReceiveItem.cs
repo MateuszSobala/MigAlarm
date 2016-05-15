@@ -23,6 +23,8 @@ namespace MigAlarm.Models
             public string Appearance { get; set; }
             [Required]
             public string PhoneNumber { get; set; }
+            public string Skype { get; set; }
+            public string Image { get; set; }
             public string Other { get; set; }
         }
 

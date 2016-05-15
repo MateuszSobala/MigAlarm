@@ -26,6 +26,10 @@ namespace MigAlarm.Models
         PhoneNumber,
         [Display(Name = "Obecna lokalizacja: ")]
         Localization,
+        [Display(Name = "Skype: ")]
+        Skype,
+        [Display(Name = "Zdjęcie z miejsca zdarzenia: ")]
+        Image,
         [Display(Name = "Inne: ")]
         Other = 100
     }

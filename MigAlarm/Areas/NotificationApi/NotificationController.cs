@@ -147,6 +147,28 @@ namespace MigAlarm.Areas.NotificationApi
                 additionalData.Add(localization);
             }
 
+            if (!string.IsNullOrWhiteSpace(json.Users.Skype))
+            {
+                var userSkype = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Skype,
+                    Text = json.Users.Skype,
+                    Notification = notification
+                };
+                additionalData.Add(userSkype);
+            }
+
+            if (!string.IsNullOrWhiteSpace(json.Users.Image))
+            {
+                var userImage = new AdditionalData
+                {
+                    AdditionalDataType = AdditionalDataType.Image,
+                    Text = json.Users.Image,
+                    Notification = notification
+                };
+                additionalData.Add(userImage);
+            }
+
             if (!string.IsNullOrWhiteSpace(json.Users.Other))
             {
                 var other = new AdditionalData
