@@ -37,7 +37,6 @@ namespace MigAlarm.Areas.NotificationApi
 
                 notificationEvent = _db.Events.Find(_otherEventId);
             }
-                
 
             var notification = new Notification
             {

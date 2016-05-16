@@ -320,6 +320,7 @@ namespace MigAlarm.Migrations
                     RoleType = RoleType.User
                 };
                 defaultUserRole.Users.Add(defaultUser);
+                defaultUserRole.Users.Add(secondUser);
                 context.Roles.AddOrUpdate(defaultUserRole);
 
                 var secondUserRole = new Role

@@ -89,7 +89,6 @@ namespace MigAlarm.Controllers
                         .Include("Institution")
                         .First(x => x.Id == id && x.UserId == IdentityHelper.User.UserId && x.DateAccepted.HasValue);
                 notification.DateClosed = DateTime.Now;
-                notification.UserId = IdentityHelper.User.UserId;
                 _db.SaveChanges();
 
                 return Json(new { Success = "True" }, JsonRequestBehavior.AllowGet);
@@ -101,6 +100,31 @@ namespace MigAlarm.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult Takeover(int id)
+        {
+            try
+            {
+                var notification =
+                    _db.Notifications.Include("Event")
+                        .Include("Coordinate")
+                        .Include("Institution")
+                        .First(x => x.Id == id && x.UserId != IdentityHelper.User.UserId && x.DateAccepted.HasValue && !x.DateClosed.HasValue);
+                var isFromTheSameInstitution = _db.Users.First(u => u.UserId == IdentityHelper.User.UserId).Roles.Any(r => r.InstitutionId == notification.InstitutionId);
 
+                if (!isFromTheSameInstitution)
+                    throw new ArgumentException();
+
+                notification.UserId = IdentityHelper.User.UserId;
+                _db.SaveChanges();
+
+                return Json(new { Success = "True" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
+
+            }
+        }
     }
 }

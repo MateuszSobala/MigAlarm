@@ -36,9 +36,7 @@
             <td>
                 @if (item.UserId != IdentityHelper.User.UserId)
                 {
-                    <a href=''>
-                        <img style="height: 20px;" src='@Url.Content("~/Content/Images/change.png")' alt=""/>
-                    </a>
+                    @Ajax.ImageActionLink(@Url.Content("~/Content/Images/switch-user.png"), "Przejmij", "Takeover", new { id = item.Id }, new AjaxOptions { OnSuccess = "refreshNotifications();", HttpMethod = "POST" }, new { @class = "image-size" })
                 }
                 else
                 {

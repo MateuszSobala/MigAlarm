@@ -43,7 +43,12 @@
 
 <script>
     $(document).ready(function() {
-        setInterval(function() {
+        setInterval(function () {
+            $.ajaxSetup({
+                // Disable caching of AJAX responses */
+                cache: false
+            });
+
             $.ajax({
                 url: '/Notification/GetNewNotifications',
                 success: function(data) {
@@ -54,7 +59,12 @@
     });
 
     $(document).ready(function() {
-        setInterval(function() {
+        setInterval(function () {
+            $.ajaxSetup({
+                // Disable caching of AJAX responses */
+                cache: false
+            });
+
             $.ajax({
                 url: '/Notification/GetActiveNotifications',
                 success: function(data) {
@@ -65,7 +75,12 @@
     });
 
     $(document).ready(function() {
-        setInterval(function() {
+        setInterval(function () {
+            $.ajaxSetup({
+                // Disable caching of AJAX responses */
+                cache: false
+            });
+
             $.ajax({
                 url: '/Notification/GetDoneNotifications',
                 success: function(data) {
@@ -78,4 +93,57 @@
     function removeRow(id) {
         document.getElementById(id).remove();
     };
+
+    function refreshNotifications() {
+        $.ajaxSetup({
+            // Disable caching of AJAX responses */
+            cache: false
+        });
+
+        $.ajax({
+            url: '/Notification/GetActiveNotifications',
+            success: function (data) {
+                $('.active-table').html(data);
+            }
+        });
+    }
+
+    $('#New').click(function (evt) {
+        $.ajaxSetup({
+            // Disable caching of AJAX responses */
+            cache: false
+        });
+        $.ajax({
+            url: '/Notification/GetNewNotifications',
+            success: function (data) {
+                $('.new-table').html(data);
+            }
+        });
+    });
+
+    $('#Active').click(function (evt) {
+        $.ajaxSetup({
+            // Disable caching of AJAX responses */
+            cache: false
+        });
+        $.ajax({
+            url: '/Notification/GetActiveNotifications',
+            success: function (data) {
+                $('.new-table').html(data);
+            }
+        });
+    });
+
+    $('#Done').click(function (evt) {
+        $.ajaxSetup({
+            // Disable caching of AJAX responses */
+            cache: false
+        });
+        $.ajax({
+            url: '/Notification/GetDoneNotifications',
+            success: function (data) {
+                $('.new-table').html(data);
+            }
+        });
+    });
 </script>
