@@ -27,6 +27,13 @@
                             </div>
                         }
                     }
+                    else if (item.AdditionalDataType == AdditionalDataType.Image)
+                    {
+                        if (!string.IsNullOrEmpty(item.Text))
+                        {
+                            <img src="data:image/gif;base64,@item.Text" class="ImageEvent"/>
+                         }
+                    }
                     else
                     {
                         @Html.DisplayFor(x => item.Text)

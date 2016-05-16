@@ -10,6 +10,8 @@ namespace MigAlarm.Models
         public int NotificationId { get; set; }
 
         [Required]
+        [Column(TypeName = "ntext")]
+        [MaxLength]
         public string Text { get; set; }
 
         public AdditionalDataType AdditionalDataType { get; set; }

@@ -23,16 +23,5 @@ namespace MigAlarm.Models
         public Event ParentEvent { get; set; }
         public ICollection<Event> ChildEvents { get; set; }
         public ICollection<Notification> Notifications { get; set; }
-
-        public ICollection<EventNode> Ancestors { get; set; }
-        public ICollection<EventNode> Offspring { get; set; }
-
-        /**
-         * In order to get all ancestors or offspring the EventNode entity was provided.
-         * 
-         * It can be used in a following way:
-         * IEnumerable<Event> allParentsOfRobbery = 
-         *      dbContext.Set<Event>().Find(ev => ev.Name == "Robbery").Ancestors.Select(x => x.Ancestor);
-         */
     }
 }

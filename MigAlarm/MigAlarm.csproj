@@ -225,6 +225,14 @@
     <Compile Include="Migrations\201605041944338_EventId-explicit.Designer.cs">
       <DependentUpon>201605041944338_EventId-explicit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605152222166_Large-Additional-Data.cs" />
+    <Compile Include="Migrations\201605152222166_Large-Additional-Data.Designer.cs">
+      <DependentUpon>201605152222166_Large-Additional-Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605152316435_Remove-Event-Node.cs" />
+    <Compile Include="Migrations\201605152316435_Remove-Event-Node.Designer.cs">
+      <DependentUpon>201605152316435_Remove-Event-Node.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
     <Compile Include="Models\AdditionalDataType.cs" />
@@ -232,7 +240,6 @@
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\EventNode.cs" />
     <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\JsonReceiveItem.cs" />
@@ -376,6 +383,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605041944338_EventId-explicit.resx">
       <DependentUpon>201605041944338_EventId-explicit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605152222166_Large-Additional-Data.resx">
+      <DependentUpon>201605152222166_Large-Additional-Data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605152316435_Remove-Event-Node.resx">
+      <DependentUpon>201605152316435_Remove-Event-Node.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
