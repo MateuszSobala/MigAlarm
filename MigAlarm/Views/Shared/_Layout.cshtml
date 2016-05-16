@@ -18,12 +18,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("MigAlarm", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("MigAlarm - obsługa zdarzeń", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Strona Główna", "Index", "Home", new {area = ""}, null)</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
