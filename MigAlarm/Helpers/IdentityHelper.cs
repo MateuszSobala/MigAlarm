@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
@@ -20,12 +22,10 @@ namespace MigAlarm.Helpers
             {
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    // The user is authenticated. Return the user from the forms auth ticket.
                     return Db.Users.First(x => x.UserId == ((AppPrincipal)HttpContext.Current.User).User.UserId);
                 }
                 if (HttpContext.Current.Items.Contains("User"))
                 {
-                    // The user is not authenticated, but has successfully logged in.
                     return (User)HttpContext.Current.Items["User"];
                 }
                 return null;
@@ -46,19 +46,28 @@ namespace MigAlarm.Helpers
 
             if (user == null) return false;
             {
-                //var role = user.Roles.FirstOrDefault(x => x.Institution.Id == institutionId);
                 var role = user.Roles.FirstOrDefault(x => x.InstitutionId == institutionId);
                 return role != null;
             }
         }
 
-        public static bool ValidateUser(LoginViewModel logon, HttpResponseBase response)
+        public static Dictionary<string, string> ValidateUser(LoginViewModel logon, HttpResponseBase response)
         {
+            var result = new Dictionary<string, string>();
             if (!CheckUserInstitutionRights(logon.Email, logon.SelectedInstitutionId))
-                return false;
+            {
+                result.Add("SelectedInstitutionId", "Brak uprawnień do podanej instytucji");
+            }
 
             if (!Membership.ValidateUser(logon.Email, logon.Password))
-                return false;
+            {
+                result.Add("Email", "Niepoprawny login lub hasło");
+            }
+
+            if (result.Count != 0)
+            {
+                return result;
+            }
 
             Db.Configuration.LazyLoadingEnabled = false;
             Db.Configuration.ProxyCreationEnabled = false;
@@ -97,7 +106,7 @@ namespace MigAlarm.Helpers
             myCookie.Expires = DateTime.Now.AddMinutes(30);
             response.SetCookie(myCookie);
 
-            return true;
+            return result;
         }
 
         public static void Logoff(HttpSessionStateBase session, HttpResponseBase response)

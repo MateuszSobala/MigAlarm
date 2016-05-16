@@ -6,7 +6,7 @@ namespace MigAlarm.Models.Views
 {
     public class LoginViewModel
     {
-        private readonly List<Item> _institutions;
+        public List<Item> _institutions;
 
         public LoginViewModel() { }
 
@@ -15,17 +15,18 @@ namespace MigAlarm.Models.Views
             _institutions = institutions;
         }
 
-        [Required]
+        [EmailAddress(ErrorMessage = "Niepoprawny adres email")]
+        [Required(ErrorMessage = "Pole jest wymagane")]
         [Display(Name = "Adres email")]
         public string Email { get; set; }
 
-        [Required]
         [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Pole jest wymagane")]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
 
-        [Required]
         [Display(Name = "Instytucja")]
+        [Required(ErrorMessage = "Pole jest wymagane")]
         public int SelectedInstitutionId { get; set; }
 
         public IEnumerable<SelectListItem> InstitutionItems => _institutions != null ? new SelectList(_institutions, "Id", "Name") : null;

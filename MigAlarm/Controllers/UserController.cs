@@ -15,33 +15,45 @@ namespace MigAlarm.Controllers
         public ActionResult Login()
         {
             var allInstitutions = _db.Institutions.Select(x => new Item { Id = x.Id, Name = x.Name }).ToList();
-            var logon = new LoginViewModel(allInstitutions);
+            var logon = new LoginViewModel(allInstitutions)
+            {
+                SelectedInstitutionId =
+                    Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : 0
+            };
             return View(logon);
         }
 
         [HttpPost]
         public ActionResult Login(LoginViewModel logon)
         {
+            var allInstitutions = _db.Institutions.Select(x => new Item { Id = x.Id, Name = x.Name }).ToList();
+            logon._institutions = allInstitutions;
+
+            if (!ModelState.IsValid)
+            {
+                return View(logon);
+            }
+
             logon.RedirectUrl = "~/";
-            // Verify the fields.
-            if (!ModelState.IsValid) return Redirect(logon.RedirectUrl);
-            // Authenticate the user.
-            if (IdentityHelper.ValidateUser(logon, Response))
+            var identityResult = IdentityHelper.ValidateUser(logon, Response);
+            if (identityResult.Count == 0)
             {
                 TempData["Institution"] = logon.SelectedInstitutionId;
 
-                // Redirect to the secure area.
                 if (string.IsNullOrWhiteSpace(logon.RedirectUrl))
                 {
                     logon.RedirectUrl = "~/User/Login";
                 }
+
+                return Redirect(logon.RedirectUrl);
             }
-            else
+
+            foreach (var item in identityResult)
             {
-                // Invalid email or password or data not in db
-                logon.RedirectUrl = "~/User/Login";
+                ModelState.AddModelError(item.Key, item.Value);
             }
-            return Redirect(logon.RedirectUrl);
+
+            return View(logon);
         }
 
         public ActionResult Logout()
