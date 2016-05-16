@@ -260,7 +260,6 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\change.png" />
     <Content Include="Content\Images\close.png" />
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\info.png" />
@@ -268,8 +267,8 @@
     <Content Include="Content\Images\Login\loginbutton_u2_mouseOver.png" />
     <Content Include="Content\Images\Login\u4_line.png" />
     <Content Include="Content\Images\Login\u8.png" />
+    <Content Include="Content\Images\migalarm_pomocgluchym.png" />
     <Content Include="Content\Images\remove.png" />
-    <Content Include="Content\Images\shift-change.png" />
     <Content Include="Content\Images\start.png" />
     <Content Include="Content\Images\switch-user.png" />
     <Content Include="Content\PagedList.css" />
