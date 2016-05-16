@@ -17,19 +17,19 @@ namespace MigAlarm.Models
 
         public int UserId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pole jest wymagane")]
         [DisplayName("Imię")]
         public string Forname { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pole jest wymagane")]
         [DisplayName("Nazwisko")]
         public string Surname { get; set; }
 
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [DataType(DataType.EmailAddress)]
-        [Required]
+        [EmailAddress(ErrorMessage = "Niepoprawny adres email")]
+        [Required(ErrorMessage = "Pole jest wymagane")]
         [DisplayName("Adres email")]
         public string Email { get; set; }
 

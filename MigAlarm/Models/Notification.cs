@@ -22,12 +22,15 @@ namespace MigAlarm.Models
         public int InstitutionId { get; set; }
 
         [Column(TypeName = "datetime2"), Required]
+        [Display(Name = "Data zgłoszenia")]
         public DateTime DateAdded { get; set; }
 
         [Column(TypeName = "datetime2")]
+        [Display(Name = "Data przyjęcia")]
         public DateTime? DateAccepted { get; set; }
 
         [Column(TypeName = "datetime2")]
+        [Display(Name = "Data zamknięcia")]
         public DateTime? DateClosed { get; set; }
 
         [Required]
@@ -46,7 +49,7 @@ namespace MigAlarm.Models
         public virtual ICollection<AdditionalData> AdditionalData { get; set; }
 
         [NotMapped]
-        [DisplayName("Adres")]
+        [DisplayName("Adres zgłoszenia")]
         public string NotificationAddress
             =>
                 AdditionalData.Any(x => x.AdditionalDataType == AdditionalDataType.Localization)
@@ -54,7 +57,7 @@ namespace MigAlarm.Models
                     : "";
 
         [NotMapped]
-        [DisplayName("Użytkownik")]
+        [DisplayName("Użytkownik obsługujący")]
         public string CurrentUser
             =>
                 User != null ? $"{User.Forname} {User.Surname}" : "";

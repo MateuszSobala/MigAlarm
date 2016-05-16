@@ -15,13 +15,18 @@ namespace MigAlarm.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EventId { get; set; }
+
         [Required]
+        [Display(Name = "Typ zgłoszenia")]
         public string Name { get; set; }
+
         public int? ParentEventId { get; set; }
 
         [ForeignKey("ParentEventId")]
         public Event ParentEvent { get; set; }
+
         public ICollection<Event> ChildEvents { get; set; }
+
         public ICollection<Notification> Notifications { get; set; }
     }
 }
