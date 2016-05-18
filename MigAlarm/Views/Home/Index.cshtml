@@ -4,6 +4,7 @@
     var user = IdentityHelper.User;
     ViewBag.Title = "MigAlarm";
 
+    var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
 }
 
 <br/>
@@ -11,32 +12,28 @@
     <li>Strona główna</li>
 </ol>
 <div class="row">
-    <div class="col-md-6">
-        <h2>Zarządzaj użytkownikami</h2>
-        <p>W tym miejscu możesz dodawać, usuwać oraz edytować pracowników w wybranym przy logowaniu Centrum Zarządzania Kryzysowego.</p>
-        <p>
-            @if (user.Roles.Any(x => x.RoleType == RoleType.Admin))
-            {
+    <div class="col-md-12">
+        @if (user.Roles.Any(x => x.RoleType == RoleType.Admin && x.InstitutionId == selectedInstitution))
+        {
+            <h2>Zarządzaj użytkownikami</h2>
+            <p>W tym miejscu możesz dodawać, usuwać oraz edytować pracowników w wybranym przy logowaniu Centrum Zarządzania Kryzysowego.</p>
+            <p>
                 <a class="btn btn-default" href="@Url.Action("Index", "Management")">Przejdź &raquo;</a>
-            }
-            else
-            {
-                <p class="btn btn-default">Opcja niedostępna</p>
-            }
-        </p>
-    </div>
-    <div class="col-md-6">
-        <h2>Zarządzaj zdarzeniami</h2>
-        <p>W tym miejscu znajdują się zdarzenia alarmowe napływające do systemu. Dostępne jedynie dla pracowników Centrum Zarządzania Kryzysowego.</p>
-        <p>
-            @if (user.Roles.Any(x => x.RoleType == RoleType.User))
-            {
+            </p>
+        }
+        else if (user.Roles.Any(x => x.RoleType == RoleType.User && x.InstitutionId == selectedInstitution))
+        {
+            <h2>Zarządzaj zdarzeniami</h2>
+            <p>W tym miejscu znajdują się zdarzenia alarmowe napływające do systemu. Dostępne jedynie dla pracowników Centrum Zarządzania Kryzysowego.</p>
+            <p>
                 <a class="btn btn-default" href="@Url.Action("Index", "Notification")">Przejdź &raquo;</a>
-            }
-            else
-            {
-                <p class="btn btn-default">Opcja niedostępna</p>
-            }
-        </p>
+            </p>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <strong>Błąd</strong> Spróbuj zalogować się ponownie bądź skontaktuj się z administratorem systemu.
+            </div>
+        }
     </div>
 </div>
