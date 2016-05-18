@@ -209,11 +209,13 @@ namespace MigAlarm.Controllers
         [Authorize]
         public ActionResult GetDetails(int id)
         {
+            var user = _db.Users.Find(id);
+
             var model = new UserDetailsViewModel
             {
-                Username = $"{IdentityHelper.User.Forname} {IdentityHelper.User.Forname}",
-                IsOnline = IdentityHelper.User.IsLoggedIn,
-                LastLoginDate = IdentityHelper.User.LastLogin,
+                Username = $"{user.Forname} {user.Surname}",
+                IsOnline = user.IsLoggedIn,
+                LastLoginDate = user.LastLogin,
                 ActiveEventsCounter =
                     _db.Notifications.Count(x => x.UserId == id && x.DateAccepted.HasValue && !x.DateClosed.HasValue),
                 ClosedEventsCounter = 

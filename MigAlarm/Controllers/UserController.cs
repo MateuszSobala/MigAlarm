@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Security;
 using MigAlarm.Helpers;
 using MigAlarm.Models;
@@ -40,6 +41,11 @@ namespace MigAlarm.Controllers
             {
                 TempData["Institution"] = logon.SelectedInstitutionId;
 
+                var user = _db.Users.Find(IdentityHelper.User.UserId);
+                user.IsLoggedIn = true;
+                user.LastLogin = DateTime.Now;
+                _db.SaveChanges();
+
                 if (string.IsNullOrWhiteSpace(logon.RedirectUrl))
                 {
                     logon.RedirectUrl = "~/User/Login";
@@ -58,7 +64,13 @@ namespace MigAlarm.Controllers
 
         public ActionResult Logout()
         {
+            var user = _db.Users.Find(IdentityHelper.User.UserId);
+            user.IsLoggedIn = false;
+
             FormsAuthentication.SignOut();
+
+            _db.SaveChanges();
+
             return RedirectToAction("Index", "Home");
         }
 

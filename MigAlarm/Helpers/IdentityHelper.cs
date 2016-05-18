@@ -103,7 +103,7 @@ namespace MigAlarm.Helpers
             response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
 
             HttpCookie myCookie = new HttpCookie("institution", logon.SelectedInstitutionId.ToString());
-            myCookie.Expires = DateTime.Now.AddMinutes(30);
+            myCookie.Expires = DateTime.Now.AddDays(7);
             response.SetCookie(myCookie);
 
             return result;

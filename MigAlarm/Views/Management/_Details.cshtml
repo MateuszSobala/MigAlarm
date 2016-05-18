@@ -1,6 +1,11 @@
 ﻿@model MigAlarm.Models.Views.UserDetailsViewModel
 
-<h4>@Model.Username</h4>
+@{
+    var loggedText = Model.IsOnline ? "Zalogowany w systemie" : "Niezalogowany w systemie";
+}
+
+<h2>@Model.Username</h2>
+<h4>@loggedText</h4>
 
 @Html.DisplayNameFor(x => x.LastLoginDate)
 <span class="badge">@Html.DisplayFor(x => x.LastLoginDate)</span>
