@@ -223,6 +223,29 @@ namespace MigAlarm.Controllers
             return PartialView("_Details", model);
         }
 
+        [Authorize]
+        public ActionResult ResetPassword(int id)
+        {
+            try
+            {
+                var user = _db.Users.Find(id);
+
+                user.Password = System.Web.Security.Membership.GeneratePassword(8, 4);
+
+                _mailClient.Send(user.Email, "Zmiana hasła w aplikacji MigAlarm", $"Twoje nowe hasło to: {user.Password}", false);
+
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+
+            return RedirectToAction("GetDetails", id);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

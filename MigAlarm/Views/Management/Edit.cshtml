@@ -11,6 +11,9 @@
 </ol>
 <h2>@($"Edytuj użytkownika {Model.Forname} {Model.Surname}")</h2>
 
+<p>
+    @Html.ActionLink("Zresetuj hasło użytkownika", "ResetPassword", new { Id = Model.UserId })
+</p>
 
 @using (Html.BeginForm())
 {
