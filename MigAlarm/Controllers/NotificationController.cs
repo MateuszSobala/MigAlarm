@@ -42,9 +42,19 @@ namespace MigAlarm.Controllers
         {
             var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
 
-            var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.DateClosed.HasValue);
+            var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.DateClosed.HasValue && !x.Rejected);
 
             return PartialView("_DoneNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
+        }
+
+        [Authorize]
+        public ActionResult GetRejectedNotifications()
+        {
+            var selectedInstitution = Request.Cookies["institution"] != null ? int.Parse(Request.Cookies["institution"].Value) : -1;
+
+            var notifications = _db.Notifications.Where(x => x.Institution.Id == selectedInstitution && x.Rejected);
+
+            return PartialView("_RejectedNotifications", new NotificationViewModel { Notifications = notifications.ToList() });
         }
 
         [Authorize]
@@ -53,6 +63,14 @@ namespace MigAlarm.Controllers
             var selectedNotification = _db.Notifications.First(x => x.Id == id);
 
             return PartialView("_Details", new NotificationViewModel { Notification = selectedNotification});
+        }
+
+        [Authorize]
+        public ActionResult GetConfirm(int id)
+        {
+            var selectedNotification = _db.Notifications.First(x => x.Id == id);
+
+            return PartialView("_Confirm", new NotificationViewModel { Notification = selectedNotification });
         }
 
         [Authorize]
@@ -97,6 +115,29 @@ namespace MigAlarm.Controllers
             {
                 return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
 
+            }
+        }
+
+        [Authorize]
+        public ActionResult SetRejected(NotificationViewModel model)
+        {
+            try
+            {
+                var notification =
+                _db.Notifications.Include("Event")
+                    .Include("Coordinate")
+                    .Include("Institution")
+                    .First(x => x.Id == model.Notification.Id && x.UserId == IdentityHelper.User.UserId && x.DateAccepted.HasValue);
+                notification.Comment = model.Notification.Comment;
+                notification.Rejected = true;
+                notification.DateClosed = DateTime.Now;
+                _db.SaveChanges();
+
+                return Json(new { Success = "True", Id = model.Notification.Id }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = "False" }, JsonRequestBehavior.AllowGet);
             }
         }
 

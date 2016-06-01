@@ -42,7 +42,11 @@
                 {
                     @Ajax.ImageActionLink(@Url.Content("~/Content/Images/close.png"), "Zamknij", "SetClosed", new {id = item.Id}, new AjaxOptions { OnSuccess = "removeRow(" + @item.Id + ");", HttpMethod = "POST"}, new {@class = "image-size"})
                 }
-                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new {id = item.Id}, new AjaxOptions {OnSuccess = "loadDetails(data);"}, new {@class = "image-size"})
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new {id = item.Id}, new AjaxOptions {OnSuccess = "loadDetails(data, 'Szczegóły zgłoszenia');"}, new {@class = "image-size"})
+                @if (item.UserId == IdentityHelper.User.UserId)
+                {
+                    @Ajax.ImageActionLink(@Url.Content("~/Content/Images/delete.png"), "Odrzuć", "GetConfirm", new { id = item.Id }, new AjaxOptions { OnSuccess = "loadDetails(data, 'Odrzucenie zgłoszenia');" }, new { @class = "image-size" })
+                }
             </td>
         </tr>
     }

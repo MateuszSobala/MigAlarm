@@ -60,7 +60,7 @@
                 </span>
             </td>
             <td>
-                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.UserId }, new AjaxOptions { OnSuccess = "loadDetails(data);" }, new { @class = "image-size" })
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.UserId }, new AjaxOptions { OnSuccess = "loadDetails(data, 'Informacje o użytkowniku');" }, new { @class = "image-size" })
                 <a href='@Url.Action("Edit", new { id = item.UserId })'>
                     <img style="height: 20px" src='@Url.Content("~/Content/Images/edit.png")'/>
                 </a>

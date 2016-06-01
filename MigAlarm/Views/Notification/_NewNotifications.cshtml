@@ -29,7 +29,7 @@
             </td>
             <td>
                 @Ajax.ImageActionLink(@Url.Content("~/Content/Images/start.png"), "Przyjmij", "SetActive", new {id = item.Id}, new AjaxOptions { OnSuccess = "removeRow(" + @item.Id + ");", HttpMethod = "POST"}, new { @class = "image-size" })
-                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.Id }, new AjaxOptions { OnSuccess = "loadDetails(data);" }, new { @class = "image-size" })
+                @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new { id = item.Id }, new AjaxOptions { OnSuccess = "loadDetails(data, 'Szczegóły zgłoszenia');" }, new { @class = "image-size" })
             </td>
         </tr>
     }

@@ -21,6 +21,12 @@ namespace MigAlarm.Models
         public int? UserId { get; set; }
         public int InstitutionId { get; set; }
 
+        [Display(Name = "Uzasadnienie odrzucenia")]
+        [Column(TypeName = "ntext")]
+        public string Comment { get; set; }
+
+        public bool Rejected { get; set; }
+
         [Column(TypeName = "datetime2"), Required]
         [Display(Name = "Data zgłoszenia")]
         public DateTime DateAdded { get; set; }

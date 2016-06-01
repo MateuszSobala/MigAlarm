@@ -16,13 +16,16 @@
 <div id="tabs">
     <ul class="nav nav-tabs">
         <li class="active">
-            <a href="#New" data-toggle="tab">Nowe</a>
+            <a href="#New" id="Newtab" data-toggle="tab">Nowe</a>
         </li>
         <li>
-            <a href="#Active" data-toggle="tab">Przyjęte</a>
+            <a href="#Active" id="Activetab" data-toggle="tab">Przyjęte</a>
         </li>
         <li>
-            <a href="#Done" data-toggle="tab">Wykonane</a>
+            <a href="#Done" id="Donetab" data-toggle="tab">Wykonane</a>
+        </li>
+        <li>
+            <a href="#Rejected" id="Rejectedtab" data-toggle="tab">Odrzucone</a>
         </li>
     </ul>
 
@@ -36,114 +39,55 @@
         <div class="tab-pane" id="Done">
             @{Html.RenderAction("GetDoneNotifications");}
         </div>
+        <div class="tab-pane" id="Rejected">
+            @{Html.RenderAction("GetRejectedNotifications");}
+        </div>
     </div>
 </div>
 
 @Html.Partial("_Modal")
 
 <script>
-    $(document).ready(function() {
-        setInterval(function () {
-            $.ajaxSetup({
-                // Disable caching of AJAX responses */
-                cache: false
-            });
-
-            $.ajax({
-                url: '/Notification/GetNewNotifications',
-                success: function(data) {
-                    $('.new-table').html(data);
-                }
-            });
-        }, 5000);
-    });
-
-    $(document).ready(function() {
-        setInterval(function () {
-            $.ajaxSetup({
-                // Disable caching of AJAX responses */
-                cache: false
-            });
-
-            $.ajax({
-                url: '/Notification/GetActiveNotifications',
-                success: function(data) {
-                    $('.active-table').html(data);
-                }
-            });
-        }, 5000);
-    });
-
-    $(document).ready(function() {
-        setInterval(function () {
-            $.ajaxSetup({
-                // Disable caching of AJAX responses */
-                cache: false
-            });
-
-            $.ajax({
-                url: '/Notification/GetDoneNotifications',
-                success: function(data) {
-                    $('.done-table').html(data);
-                }
-            });
-        }, 5000);
-    });
-
-    function removeRow(id) {
-        document.getElementById(id).remove();
-    };
-
-    function refreshNotifications() {
+    function refreshNotifications(type) {
         $.ajaxSetup({
             // Disable caching of AJAX responses */
             cache: false
         });
 
         $.ajax({
-            url: '/Notification/GetActiveNotifications',
+            url: '/Notification/Get' + type + 'Notifications',
             success: function (data) {
-                $('.active-table').html(data);
+                $('.' + type.toLowerCase() + '-table').html(data);
             }
         });
     }
 
-    $('#New').click(function (evt) {
-        $.ajaxSetup({
-            // Disable caching of AJAX responses */
-            cache: false
-        });
-        $.ajax({
-            url: '/Notification/GetNewNotifications',
-            success: function (data) {
-                $('.new-table').html(data);
-            }
-        });
+    $(document).ready(function() {
+        setInterval(function () {
+            refreshNotifications("New");
+            refreshNotifications("Active");
+            refreshNotifications("Done");
+            refreshNotifications("Rejected");
+        }, 5000);
+    }); 
+
+    function removeRow(id) {
+        document.getElementById(id).remove();
+        refreshNotifications("Active");
+    };
+
+    $('#Newtab').click(function (evt) {
+        refreshNotifications("New");
     });
 
-    $('#Active').click(function (evt) {
-        $.ajaxSetup({
-            // Disable caching of AJAX responses */
-            cache: false
-        });
-        $.ajax({
-            url: '/Notification/GetActiveNotifications',
-            success: function (data) {
-                $('.new-table').html(data);
-            }
-        });
+    $('#Activetab').click(function (evt) {
+        refreshNotifications("Active");
     });
 
-    $('#Done').click(function (evt) {
-        $.ajaxSetup({
-            // Disable caching of AJAX responses */
-            cache: false
-        });
-        $.ajax({
-            url: '/Notification/GetDoneNotifications',
-            success: function (data) {
-                $('.new-table').html(data);
-            }
-        });
+    $('#Donetab').click(function (evt) {
+        refreshNotifications("Done");
+    });
+    $('#Rejectedtab').click(function (evt) {
+        refreshNotifications("Rejected");
     });
 </script>

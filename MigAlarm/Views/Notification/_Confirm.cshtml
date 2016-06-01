@@ -1,0 +1,55 @@
+﻿@using MigAlarm.Helpers
+@using MigAlarm.Models
+@model MigAlarm.Models.Views.NotificationViewModel
+
+@using (@Html.BeginRouteForm("Default",
+   new { controller = "Notification", action = "SetRejected" }, FormMethod.Post, new { @id = "rejectform" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Notification.Id)
+
+    @Html.DisplayNameFor(model => Model.Notification.Event.Name)
+    <span class="badge">
+        @Html.DisplayFor(model => Model.Notification.Event.Name)
+    </span>
+    <br />
+    @Html.DisplayNameFor(model => Model.Notification.NotificationAddress)
+    <span class="badge">
+        @Html.DisplayFor(model => Model.Notification.NotificationAddress)
+    </span>
+    <br />
+    @Html.DisplayNameFor(model => Model.Notification.DateAccepted)
+    <span class="badge">
+        @Html.DisplayFor(model => Model.Notification.DateAccepted)
+    </span>
+    <br />
+    <br />
+    @Html.LabelFor(Model => Model.Notification.Comment)
+    <br />
+    @Html.TextBoxFor(Model => Model.Notification.Comment)
+    <br />
+    <br />
+    <input onclick="submitForm()" value="Potwierdź" class="btn btn-default" />
+}
+
+<script type="text/javascript">
+    function submitForm() {
+
+        var frm = $('#rejectform');
+
+        $.ajax({
+            url: '/Notification/SetRejected',
+            type: 'POST',
+            data: frm.serialize(),
+            success: function (result) {
+                removeRow(result.Id);
+                $("#closeModal").click();
+            },
+            error: function () {
+                alert("Błąd!")
+            }
+        });
+    }
+</script>

@@ -233,6 +233,14 @@
     <Compile Include="Migrations\201605152316435_Remove-Event-Node.Designer.cs">
       <DependentUpon>201605152316435_Remove-Event-Node.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606011810282_Notification-Comment.cs" />
+    <Compile Include="Migrations\201606011810282_Notification-Comment.Designer.cs">
+      <DependentUpon>201606011810282_Notification-Comment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606011954588_Notification-Rejected-flag.cs" />
+    <Compile Include="Migrations\201606011954588_Notification-Rejected-flag.Designer.cs">
+      <DependentUpon>201606011954588_Notification-Rejected-flag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalData.cs" />
     <Compile Include="Models\AdditionalDataType.cs" />
@@ -261,6 +269,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\close.png" />
+    <Content Include="Content\Images\delete.png" />
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\info.png" />
     <Content Include="Content\Images\Login\loginbutton_u2.png" />
@@ -346,6 +355,8 @@
     <Content Include="Views\Management\_Details.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_Modal.cshtml" />
+    <Content Include="Views\Notification\_Confirm.cshtml" />
+    <Content Include="Views\Notification\_RejectedNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -390,6 +401,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605152316435_Remove-Event-Node.resx">
       <DependentUpon>201605152316435_Remove-Event-Node.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606011810282_Notification-Comment.resx">
+      <DependentUpon>201606011810282_Notification-Comment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606011954588_Notification-Rejected-flag.resx">
+      <DependentUpon>201606011954588_Notification-Rejected-flag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

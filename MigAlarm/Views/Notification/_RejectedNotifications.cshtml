@@ -1,7 +1,7 @@
 ﻿@using MigAlarm.Helpers
 @model MigAlarm.Models.Views.NotificationViewModel
 
-<table class="table done-table">
+<table class="table rejected-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().Event.Name)
@@ -14,6 +14,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().CurrentUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notifications.FirstOrDefault().Comment)
         </th>
         <th></th>
     </tr>
@@ -32,6 +35,9 @@
             </td>
             <td>
                 @Html.DisplayFor(model => item.CurrentUser)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Comment)
             </td>
             <td>
                 @Ajax.ImageActionLink(@Url.Content("~/Content/Images/info.png"), "Szczegóły", "GetDetails", new {id = item.Id}, new AjaxOptions {OnSuccess = "loadDetails(data, 'Szczegóły zgłoszenia');" }, new {@class = "image-size"})
